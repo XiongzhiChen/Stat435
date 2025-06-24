@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 1a</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 1a</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="review-random-variables" class="titleslide slide level1"><h1>Review: random variables</h1></section><section id="random-variables" class="slide level2">
+<h1>Random variables</h1>
+<p>A random variable describes a data-generating process, and probability gauges how likely an event associated with a random variable can happen.</p>
+<p>Examples of random variables:</p>
+<ul>
+<li>Bernoulli and binomial random variable</li>
+<li>Poisson random variable</li>
+<li>Uniform random variable</li>
+<li>Normal (i.e., Gaussian) random variable</li>
+<li>Student t random variable</li>
+</ul>
+</section><section id="bernoulli-random-variable" class="slide level2">
+<h1>Bernoulli random variable</h1>
+<p>A Bernoulli random variable describes a data-generating process that assumes one of two feasible values or cases. For example, it can be used to describe</p>
+<ul>
+<li>Whether a coin lands on <code>head</code> or <code>tail</code> when it is flipped once</li>
+<li>Whether the return of a stock today is <code>positive</code> or <code>negative</code></li>
+<li>Whether it is going to <code>rain</code> or <code>not rain</code> in 5 hours</li>
+</ul>
+</section><section id="short-discussion" class="slide level2">
+<h1>Short discussion</h1>
+<p>Other examples of Bernoulli random variables:</p>
+</section><section id="bernoulli-random-variable-1" class="slide level2">
+<h1>Bernoulli random variable</h1>
+<ul>
+<li>Let <span class="math inline">\(X\)</span> denote if a “fair coin” lands on <code>tail</code> and <code>face</code> with equal probability. Then <span class="math inline">\(\Pr(X=\text{Tail})=0.5\)</span>.</li>
+<li>Let <span class="math inline">\(X\)</span> denote if the return of a stock today is <code>positive</code> or or <code>negative</code>. We may have <span class="math inline">\(\Pr(X=\text{positive})=0.1\)</span>.</li>
+</ul>
+<p><strong>Definition:</strong></p>
+<p>A Bernoulli random variable <span class="math inline">\(X\)</span> takes value <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span> (and is a <em>discrete random variable</em>), such that <span class="math display">\[\Pr(X=0)=p \text{  for  some  } p\in [0,1],\]</span> where <span class="math inline">\(\Pr\)</span> denotes “probability”. Equivalently, <span class="math display">\[\Pr(X=1)= 1 - p.\]</span></p>
+</section><section id="remarks" class="slide level2">
+<h1>Remarks</h1>
+<p>Bernoulli random variables</p>
+<ul>
+<li>are possibly the simplest random variables</li>
+<li>can induce binomial random variables under independence</li>
+<li>will be used later in mixture models for classification tasks</li>
+</ul>
+</section><section id="uniform-random-variable" class="slide level2">
+<h1>Uniform random variable</h1>
+<p>A uniform random variable describes a data-generating process that assumes each feasible value or setting equally likely. For example, it can be used to describe</p>
+<ul>
+<li>A chosen digit from the 10 digits <span class="math inline">\(0,\ldots,9\)</span> that are equally likely to be picked</li>
+<li>The number on the up-facing side of a 6-face dice when all faces are equally likely to appear and the dice is rolled</li>
+<li>The landing location of a seed dropped onto a field under ideal conditions</li>
+<li>The position of a point dropped randomly onto the unit interval <span class="math inline">\([0,1]\)</span></li>
+</ul>
+</section><section id="uniform-random-variable-1" class="slide level2">
+<h1>Uniform random variable</h1>
+<ul>
+<li><p>If all digits from <span class="math inline">\(0,\ldots,9\)</span> are equally likely to be picked and we let <span class="math inline">\(X\)</span> be the chosen digit in one pick, then <span class="math display">\[\Pr(X=i) = 0.1\]</span> for each <span class="math inline">\(i \in \left\{0,\ldots,9\right\}\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(X\)</span> be the position of a point dropped randomly onto the unit interval <span class="math inline">\([0,1]\)</span>. Then <span class="math display">\[\Pr(x_0 \le X \le x_1) = x_1 - x_0\]</span> for all <span class="math inline">\(0 \le x_0 \le x_1 \le 1\)</span>.</p></li>
+</ul>
+</section><section id="uniform-random-variable-2" class="slide level2">
+<h1>Uniform random variable</h1>
+<p><strong>Definition</strong>:</p>
+<ul>
+<li><p>A <em>discrete uniform random variable</em> that takes one of <span class="math inline">\(n\)</span> values or settings assumes each value or setting with probability <span class="math inline">\(1/n\)</span>.</p></li>
+<li><p>A <em>continuous uniform random variable</em> <span class="math inline">\(X\)</span> has a constant density function <span class="math inline">\(f(x) \equiv c\)</span> with <span class="math inline">\(c&gt;0\)</span> such that <span class="math display">\[\Pr(x_0 \le X \le x_1) = \int_{x_0}^{x_1} f(x)dx= c (x_1 - x_0)\]</span> for all feasible <span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_1\)</span> with <span class="math inline">\(x_0 \le x_1\)</span>.</p></li>
+</ul>
+</section><section id="normal-random-variables" class="slide level2">
+<h1>Normal random variables</h1>
+<p>A Normal (i.e. Gaussian) random variable can be used to <em>approximately</em> describe</p>
+<ul>
+<li>the heights of men or women</li>
+<li>the length of human pregnancies from conception to birth</li>
+<li>the displacements of particles suspended in a fluid resulting from their collision with the fast-moving molecules in the fluid</li>
+</ul>
+</section><section id="short-discussion-1" class="slide level2">
+<h1>Short discussion</h1>
+<p>Other examples of Normal random variables:</p>
+</section><section id="normal-random-variables-1" class="slide level2">
+<h1>Normal random variables</h1>
+<p>A Normal random variable <span class="math inline">\(X\)</span> can take any real value, is a <em>continuous random variable</em>, and has density function <span class="math display">\[f(x)=\frac{1}{\sqrt{2 \pi} \sigma} \exp{\left[-\frac{(x-\mu)^2}{2 \sigma^2}\right]},\]</span> where <span class="math inline">\(\mu\)</span> is the “mean” parameter and <span class="math inline">\(\sigma\)</span> the “standard deviation” parameter.</p>
+<ul>
+<li>Intuitively speaking, <span class="math inline">\(\mu\)</span> is the expected location and <span class="math inline">\(\sigma^2\)</span> the variability of a set of random observations from <span class="math inline">\(X\)</span>.</li>
+<li>When <span class="math inline">\(\mu=0\)</span> and <span class="math inline">\(\sigma=1\)</span>, <span class="math inline">\(X\)</span> is called the “standard Normal random variable”.</li>
+</ul>
+</section><section id="normal-random-variables-2" class="slide level2">
+<h1>Normal random variables</h1>
+<p>Density functions (<span class="math inline">\(\mu\)</span> for location, <span class="math inline">\(\sigma\)</span> for scale):</p>
+<p><img src="Stat435LectureNotes1a_files/figure-revealjs/unnamed-chunk-1-1.png" width="633.6" style="display: block; margin: auto;" /></p>
+</section><section id="normal-random-variables-3" class="slide level2">
+<h1>Normal random variables</h1>
+<p>A Normal random variable <span class="math inline">\(X\)</span> with density <span class="math inline">\(f(x)\)</span> takes values in an interval <span class="math inline">\(I_0=(x_1,x_2)\)</span> that contains a specific value <span class="math inline">\(x_0\)</span> and has small length <span class="math inline">\(\delta\)</span> according to the <em>probability rule</em></p>
+<p><span class="math display">\[\Pr(X \in I_0) = \int_{x_1}^{x_2} f(x)dx \approx f(x_0) \times \delta.\]</span> <em>However, the probability that <span class="math inline">\(X\)</span> takes any specific value is <span class="math inline">\(0\)</span>.</em></p>
+</section><section id="normal-random-variables-4" class="slide level2">
+<h1>Normal random variables</h1>
+<p>Probability rule, where <span class="math inline">\(\mu=0\)</span>, <span class="math inline">\(\sigma=1\)</span>, <span class="math inline">\(x_0 = 0.6\)</span>, <span class="math inline">\(I_0=(0.5,0.7)\)</span> and <span class="math inline">\(f(x_0) \approx 0.333\)</span>:</p>
+<p><img src="Stat435LectureNotes1a_files/figure-revealjs/unnamed-chunk-2-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="normal-random-variables-5" class="slide level2">
+<h1>Normal random variables</h1>
+<ul>
+<li><p>If <span class="math inline">\(X\)</span> is a Normal random variable, then <span class="math inline">\(aX+b\)</span> is also a Normal random variable for any constants <span class="math inline">\(a \ne 0\)</span> and <span class="math inline">\(b\)</span></p></li>
+<li><p>If <span class="math inline">\(X\)</span> is a Normal random vector and <span class="math inline">\(A\)</span> is a matrix (such that <span class="math inline">\(Ax\)</span> is defined and not <span class="math inline">\(0\)</span>), then <span class="math inline">\(Ax\)</span> is also a Normal random vector</p></li>
+</ul>
+</section><section id="remarks-1" class="slide level2">
+<h1>Remarks</h1>
+<p><em>The standard Normal random variable arises as the limiting distribution of the sum of a large number of weakly interacting random variables after the sum is suitably standardized.</em> Namely, it approximately describes the probabilistic behavior of these standardized sums when there are many such random variables. This is the essence of the <strong>central limit theorem</strong>.</p>
+<p><em>However, in reality no data-generating process exactly follows a Normal distribution.</em></p>
+</section></section>
+<section><section id="review-expectation-and-variance" class="titleslide slide level1"><h1>Review: expectation and variance</h1></section><section id="expectation-and-variance" class="slide level2">
+<h1>Expectation and variance</h1>
+<ul>
+<li><p>“Expectation” measures the central location or tendency of a random variable, and “variance” measures the variability of a random variable with respect to its expectation.</p></li>
+<li><p>For many random variables, their expectations are values that these random variables approximately mostly likely assume.</p></li>
+<li><p>There are random variables whose expectations or variances are infinite, i.e., they do not have finite central locations or finite variability; e.g., <em>the one-sided Cauchy random variable has infinite expectation and infinite variance</em>.</p></li>
+</ul>
+</section><section id="expectation-and-variance-1" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>Illustration by Normal random variables:</p>
+<p><img src="Stat435LectureNotes1a_files/figure-revealjs/unnamed-chunk-3-1.png" width="633.6" style="display: block; margin: auto;" /></p>
+</section><section id="expectation-and-variance-2" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>For a discrete random variable <span class="math inline">\(X\)</span> that takes values <span class="math inline">\(a_1,a_2,\ldots\)</span> with probability mass function <span class="math inline">\(f\)</span> such that <span class="math inline">\(f(a_k)=p_k\)</span>,</p>
+<ul>
+<li>its expectation <span class="math inline">\(E(X)\)</span> is defined as <span class="math display">\[E(X)= \sum_{i=1}^{\infty} a_i p_i = a_1 p_1 + a_2 p_2 + \ldots\]</span></li>
+<li>its variance <span class="math inline">\(Var(X)\)</span> is defined as <span class="math display">\[
+\begin{aligned}
+Var(X) &amp;= \sum_{i=1}^{\infty} p_i [a_i - E(X)]^2 \\
+&amp; = p_1 [a_1 - E(X)]^2 + p_2 [a_2 - E(X)]^2 + \ldots
+\end{aligned}
+\]</span></li>
+</ul>
+</section><section id="expectation-and-variance-3" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>For continuous random variable <span class="math inline">\(X\)</span> that takes value in the set <span class="math inline">\(\mathbb{R}\)</span> of real numbers and has density function <span class="math inline">\(f\)</span>,</p>
+<ul>
+<li>its expectation is defined as <span class="math display">\[E(X)= \int_{-\infty}^{\infty}x f(x)dx\]</span></li>
+<li>its variance is defined as <span class="math display">\[Var(X)= \int_{-\infty}^{\infty} [x-E(x)]^2 f(x)dx\]</span></li>
+</ul>
+</section><section id="standard-deviation" class="slide level2">
+<h1>Standard deviation</h1>
+<p>The “standard deviation” of a random variable <span class="math inline">\(X\)</span>, denoted often by <span class="math inline">\(\sigma\)</span> or <span class="math inline">\(\sigma_{X}\)</span>, is defined as <span class="math inline">\(\sigma = \sqrt{Var(X)}\)</span>, where <span class="math inline">\(Var(X)\)</span> is the variance of <span class="math inline">\(X\)</span>.</p>
+<p>Namely, the standard deviation of <span class="math inline">\(X\)</span> is the square root of the variance of <span class="math inline">\(X\)</span>.</p>
+<p>Notes:</p>
+<ul>
+<li><span class="math inline">\(\sigma_{X} \ge 0\)</span> for any random variable <span class="math inline">\(X\)</span>.</li>
+<li>These statements are equivalent: <span class="math inline">\(Var(X)=0\)</span>, <span class="math inline">\(\sigma_{X}=0\)</span>, and “<span class="math inline">\(X\)</span> is a constant with probability <span class="math inline">\(1\)</span>”.</li>
+</ul>
+</section><section id="expectation-and-variance-4" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>Let <span class="math inline">\(X\)</span> be a Bernoulli random variable that takes value <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, such that <span class="math inline">\(\Pr(X=0)=p\)</span>. Compute its expectation and variance.</p>
+</section><section id="expectation-and-variance-5" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>(Computation continued…)</p>
+</section><section id="expectation-and-variance-6" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>Let <span class="math inline">\(X\)</span> be a uniform random variable on the closed interval <span class="math inline">\([0,1]\)</span> that has density <span class="math inline">\(f(x) \equiv 1\)</span>. Compute its expectation and variance.</p>
+</section><section id="expectation-and-variance-7" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>(Computation continued…)</p>
+</section><section id="expectation-and-variance-8" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>For any constants <span class="math inline">\(a,b\)</span> and <span class="math inline">\(c\)</span> and two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, the following are true:</p>
+<ul>
+<li><em>Linearity of expectation</em>: <span class="math display">\[E(aX+bY) = a E(X) + b E(Y)\]</span></li>
+<li><em>Quadratic scaling</em>: <span class="math inline">\(Var(cY) = c^2 Var(Y)\)</span></li>
+</ul>
+<p><strong>Caution</strong>: <span class="math display">\[Var(X+Y) \ne Var(X) + Var(Y)\]</span> unless <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>uncorrelated</em>; see definition of “uncorrelated” later on.</p>
+</section></section>
+<section><section id="review-covariance-correlation-and-independence" class="titleslide slide level1"><h1>Review: covariance, correlation and independence</h1></section><section id="covariance-and-correlation" class="slide level2">
+<h1>Covariance and correlation</h1>
+<p>“covariance” measures how <em>linearly related</em> two random variables are, and its standardized version is “correlation”.</p>
+<p>For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>,</p>
+<ul>
+<li>their covariance <span class="math inline">\(Cov(X,Y)\)</span> is defined as <span class="math display">\[Cov(X,Y) = E([X-E(X)][Y-E(Y)])\]</span></li>
+<li>their correlation <span class="math inline">\(Cor(X,Y)\)</span> is defined as <span class="math display">\[Cor(X,Y) = \frac{Cov(X,Y)}{\sqrt{Var(X)}\sqrt{Var(Y)}}\]</span></li>
+</ul>
+<p><em>Note: Correlation is covariance standardized by standard deviations. So, <span class="math inline">\(Cov(X,Y)=0\)</span> if and only if <span class="math inline">\(Cor(X,Y)=0\)</span>.</em></p>
+</section><section id="covariance-and-correlation-1" class="slide level2">
+<h1>Covariance and correlation</h1>
+<ul>
+<li><p>For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, <span class="math inline">\(Cor(X,Y)\)</span> is always between <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>.</p></li>
+<li><p>When <span class="math inline">\(Cor(X,Y)=0\)</span>, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are called “<em>uncorrelated</em>”. In this case, using a linear function of <span class="math inline">\(X\)</span> to predict <span class="math inline">\(Y\)</span> (or vice versa) will not work well.</p></li>
+<li><p><span class="math inline">\(Cor(X,Y)=1\)</span> (or <span class="math inline">\(-1\)</span>) if and only if with probability <span class="math inline">\(1\)</span> there are constants <span class="math inline">\(a&gt;0\)</span> (or <span class="math inline">\(a&lt;0\)</span>) and <span class="math inline">\(b\)</span> such that <span class="math inline">\(Y=aX+b\)</span>. This assertion explains partially why covariance and correlation measure <em>linear dependence</em>.</p></li>
+</ul>
+</section><section id="correlation" class="slide level2">
+<h1>Correlation</h1>
+<p>Nonzero correlation can suggest a trend:</p>
+<p><img src="Stat435LectureNotes1a_files/figure-revealjs/unnamed-chunk-4-1.png" width="816" style="display: block; margin: auto;" /></p>
+</section><section id="independence" class="slide level2">
+<h1>Independence</h1>
+<p>The concept of “independence” is fundamental to probabilistic reasoning, statistical learning, and data analytics.</p>
+<p>Intuitively speaking, two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em></p>
+<ul>
+<li>if information on <span class="math inline">\(X\)</span> does NOT help predict the behavior of <span class="math inline">\(Y\)</span> and vice versa, or</li>
+<li>whether an event for <span class="math inline">\(X\)</span> occurs has nothing to do with whether an event for <span class="math inline">\(Y\)</span> occurs and vice versa</li>
+</ul>
+</section><section id="independence-1" class="slide level2">
+<h1>Independence</h1>
+<p>The following random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> can be regarded as being independent:</p>
+<ul>
+<li><span class="math inline">\(X\)</span> as whether a coin flipped by someone lands on tail or face, and <span class="math inline">\(Y\)</span> the return of Microsoft stock right after the coin lands</li>
+<li><span class="math inline">\(X\)</span> as the number of resident orcas in the coast of New Zealand, and <span class="math inline">\(Y\)</span> that of (human) visits to the Space Needle in Seattle, WA, USA</li>
+<li><span class="math inline">\(X\)</span> as the chance of winning a lottery, and <span class="math inline">\(Y\)</span> the age of a randomly picked buyer of lottery tickets</li>
+</ul>
+</section><section id="independence-2" class="slide level2">
+<h1>Independence</h1>
+<p>The following random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> usually are NOT regarded as being independent:</p>
+<ul>
+<li><span class="math inline">\(X\)</span> as the average monthly temperature in a location, and <span class="math inline">\(Y\)</span> the yield of wheat in that location</li>
+<li><span class="math inline">\(X\)</span> as the gender of a randomly picked person, and <span class="math inline">\(Y\)</span> the preference on a type of activity (e.g., reading)</li>
+<li><span class="math inline">\(X\)</span> as the diet of a randomly picked person, and <span class="math inline">\(Y\)</span> the blood pressure of that person</li>
+</ul>
+</section><section id="independence-3" class="slide level2">
+<h1>Independence</h1>
+<p><strong>Formal definition</strong>:</p>
+<p>Two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if, for any event <span class="math inline">\(A\)</span> for <span class="math inline">\(X\)</span> and event <span class="math inline">\(B\)</span> for <span class="math inline">\(Y\)</span>, <span class="math display">\[
+\begin{aligned}
+\Pr(\text{event A for} X \text{ and } \text{event B for } Y \text{ both occur})\\
+=  
+\Pr(\text{event A for }X \text{ occurs}) \times \\
+\Pr(\text{event B for } Y \text{ occurs}),
+\end{aligned}
+\]</span> i.e., <span class="math display">\[\Pr(X \in A, Y \in B) = \Pr(X \in A) \times \Pr(Y \in B).\]</span></p>
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are NOT independent, they are called <em>dependent</em>.</p>
+</section><section id="independence-4" class="slide level2">
+<h1>Independence</h1>
+<p>Consider 2 <em>independent</em> Bernoulli variables <span class="math inline">\(X, Y \in \{0,1\}\)</span> such that <span class="math display">\[\Pr(X=0)=0.5 \text{ and } \Pr(Y=0)=0.6.\]</span> Compute <span class="math inline">\(\Pr(X=0,Y=0)\)</span>.</p>
+<p><!-- $$ --> <!-- \begin{aligned} --> <!-- &\Pr(X=0,Y=0) = \Pr(X=0) \times \Pr(Y=0) \\ --> <!-- &= 0.5 \times 0.6 = 0.3 --> <!-- \end{aligned} --> <!-- $$ --></p>
+</section><section id="independence-5" class="slide level2">
+<h1>Independence</h1>
+<p>Consider 2 <em>independent</em> standard Normal variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Compute <span class="math inline">\(\Pr( -0.5 \le X \le 0.5, 0 \le Y \le 1)\)</span>, given that <span class="math inline">\(\Pr(-0.5 \le X \le 0.5) = 0.383\)</span> and <span class="math inline">\(\Pr(0 \le Y \le 1) = 0.341\)</span>.</p>
+<!--   $$ -->
+<!--   \begin{aligned} -->
+<!--   &\Pr( -0.5 \le X \le 0.5, 0 \le Y \le 1) \\ -->
+<!--   &= \Pr(-0.5 \le X \le 0.5) \times \Pr(0 \le Y \le 1) \\ -->
+<!--   &= 0.383 \times 0.341 = 0.131 -->
+<!--   \end{aligned} -->
+<!--   $$ -->
+</section><section id="correlation-and-independence" class="slide level2">
+<h1>Correlation and independence</h1>
+<p>The following are true:</p>
+<ul>
+<li><p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then they are uncorrelated.</p></li>
+<li><p>Even if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are uncorrelated, they can still be dependent.</p></li>
+</ul>
+<p>For example, let <span class="math inline">\(X\)</span> be the standard Normal random variable and set <span class="math inline">\(Y=X^2\)</span>. Then <span class="math inline">\(Cov(X,Y)=0\)</span>, i.e., <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are uncorrelated. But clearly <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are dependent (<em>why</em>?).</p>
+</section></section>
+<section><section id="review-conditional-probability" class="titleslide slide level1"><h1>Review: conditional probability</h1></section><section id="conditional-probability" class="slide level2">
+<h1>Conditional probability</h1>
+<p>“Conditional probability” measures how likely an event for a random variable occurs, given that an event for another random variable has (or would have) occurred.</p>
+<p>This concept is closely connected to “independence” as we will see later.</p>
+</section><section id="conditional-probability-1" class="slide level2">
+<h1>Conditional probability</h1>
+<p>Example 1:</p>
+<ul>
+<li>Pick a number from 10 numbers 1, …, 10, where each number is equally likely to be picked. Given that an even number has been picked, the probability that it is a square number is a conditional probability.</li>
+</ul>
+<p>In this example, we can use <span class="math inline">\(Y\)</span> to denote if a picked number is even or not, and <span class="math inline">\(X\)</span> if a picked number is square number or not.</p>
+</section><section id="conditional-probability-2" class="slide level2">
+<h1>Conditional probability</h1>
+<p>Example 2:</p>
+<p>A car factory has 2 product lines, “PL1” and “PL2”, and manufacture materials are equally likely and randomly assigned to a product line to produce a car. Further, each product line has its own probability to produce a defective car. Given that a produced car is defective, the probability that it was produced by product line PL1 is a conditional probability.</p>
+<p>In this example, we can use <span class="math inline">\(X\)</span> to denote the product line that has produced the car, and <span class="math inline">\(Y\)</span> if a car is defective.</p>
+</section><section id="conditional-probability-3" class="slide level2">
+<h1>Conditional probability</h1>
+<p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be two random variables, and <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> two events for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> respectively.</p>
+<p>If <span class="math inline">\(\Pr(Y \in B) \ne 0\)</span>, then the <em>conditional probability of <span class="math inline">\(A\)</span> occurs for <span class="math inline">\(X\)</span> given that <span class="math inline">\(B\)</span> for <span class="math inline">\(Y\)</span> has (or would have) occurred</em>,</p>
+<ul>
+<li><p>is often denoted by <span class="math inline">\(\Pr(A|B)\)</span> when there is no confusion on what the random variable are, or by <span class="math inline">\(\Pr(X \in A| Y \in B)\)</span> (to explicitly show the random variables, and</p></li>
+<li><p>is defined as <span class="math display">\[
+\Pr(X \in A| Y \in B) = \frac{\Pr(X \in A, Y \in B)}{\Pr(Y \in B)}.
+\]</span></p></li>
+</ul>
+</section><section id="conditional-probability-4" class="slide level2">
+<h1>Conditional probability</h1>
+<ul>
+<li><p>When <span class="math inline">\(\Pr(Y \in B) = 0\)</span>, the conditional probability <span class="math inline">\(\Pr(X \in A| Y \in B)\)</span> is undefined. Namely, it is insensible to talk about if an event for a random variable occurs, given an impossible event for another random variable.</p></li>
+<li><p>For any events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> respectively, holds the identity <span class="math inline">\(\Pr(X \in A, Y \in B) = \Pr(X \in A| Y \in B) \Pr(Y \in B)\)</span>.</p></li>
+<li><p><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if and only if, for any events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> respectively, <span class="math inline">\(\Pr(X \in A|Y \in B)=\Pr(X \in A)\)</span>.</p></li>
+</ul>
+</section><section id="conditional-probability-5" class="slide level2">
+<h1>Conditional probability</h1>
+<p>Example 1: Pick a number from 10 numbers 1, …, 10, where each number is equally likely to be picked. Given that an even number has been picked, what is the probability that it is a square number?</p>
+<p>We can use <span class="math inline">\(Y\)</span> to denote if a picked number is even (“1”) or not (“0”), and <span class="math inline">\(X\)</span> if a picked number is square number (“1”) or not (“0”).</p>
+<p>Since <span class="math inline">\(4\)</span> is the only even, square number in this setting, we have <span class="math display">\[
+\Pr(X=1|Y=1)=\frac{\Pr(X=1,Y=1)}{\Pr(Y=1)} = \frac{1/10}{5/10}=\frac{1}{5}
+\]</span></p>
+</section><section id="conditional-probability-6" class="slide level2">
+<h1>Conditional probability</h1>
+<p>Example 2: A car factory has 2 product lines, “PL1” and “PL2”, and manufacture materials are equally likely and randomly assigned to a product line to produce a car. Further, PL1 has probability <span class="math inline">\(0.005\)</span> to produce a defective car, and overall defective product rate is <span class="math inline">\(0.008\)</span>. Given that a produced car is defective, what is the probability that the car was produced by PL1?</p>
+<p>Let <span class="math inline">\(X\)</span> denote the product line to which building materials are randomly assigned, and <span class="math inline">\(Y\)</span> if a car is defective (“1”) or not (“0”).</p>
+</section><section id="conditional-probability-7" class="slide level2">
+<h1>Conditional probability</h1>
+<p>Example 2 (continued):</p>
+<ul>
+<li>Firstly, “PL1 has probability <span class="math inline">\(0.005\)</span> to produce a defective car” is equivalent to <span class="math display">\[\Pr(Y=1|X=\text{PL1})=0.005.\]</span></li>
+<li>Secondly, since <span class="math inline">\(\Pr(X=\text{PL1})=0.5\)</span>, we have <span class="math display">\[
+\begin{aligned}
+\Pr(Y=1, X=\text{PL1})&amp;=\Pr(Y=1|X=\text{PL1})\Pr(X=\text{PL1})\\
+&amp;=0.005 \times 0.5 = 0.0025
+\end{aligned}
+\]</span></li>
+<li>So, <span class="math display">\[
+\begin{aligned}
+\Pr(X=\text{PL1}|Y=1) &amp;= \frac{\Pr(Y=1, X=\text{PL1})}{\Pr(Y=1)}\\
+&amp; = \frac{0.0025}{0.008} = \frac{5}{16} 
+\end{aligned}
+\]</span></li>
+</ul>
+</section><section id="bayes-rule" class="slide level2">
+<h1>Bayes rule</h1>
+<p>Recall from Example 2 the following computation: <span class="math display">\[
+\begin{aligned}
+\Pr(X=\text{PL1}|Y=1) &amp;= \frac{\Pr(Y=1, X=\text{PL1})}{\Pr(Y=1)}\\
+&amp; = \frac{\Pr(Y=1|X=\text{PL1})\Pr(X=\text{PL1})}{\Pr(Y=1)}
+\end{aligned}
+\]</span> where we have used <span class="math display">\[\Pr(Y=1, X=\text{PL1}) =\Pr(Y=1|X=\text{PL1}) \Pr(X=\text{PL1}).\]</span></p>
+<p>The above is the <strong>Bayes rule</strong>, i.e., <span class="math display">\[
+\Pr(X \in A| Y \in B) = \frac{\Pr(Y \in B|X \in A) \Pr(X \in A)}{\Pr(Y \in B)}.
+\]</span></p>
+</section></section>
+<section><section id="supplementary" class="titleslide slide level1"><h1>Supplementary</h1></section><section id="overview" class="slide level2">
+<h1>Overview</h1>
+<p>The rest of the slides contain information that might be helpful to a few students, but they are not required course materials.</p>
+</section><section id="poisson-random-variable" class="slide level2">
+<h1>Poisson random variable</h1>
+<p>A Poisson random variable is often used to describe the number of occurrences of an event, and can take as its value each non-negative integer. For example, it can (approximately) describe</p>
+<ul>
+<li>The number of phone calls received by a call center per hour</li>
+<li>The number of decay events per second from a radioactive source</li>
+<li>The number of car accidents at a particular intersection in a day</li>
+</ul>
+</section><section id="poisson-random-variable-1" class="slide level2">
+<h1>Poisson random variable</h1>
+<p><strong>Definition:</strong></p>
+<p>A Poisson random variable with rate <span class="math inline">\(\lambda &gt;0\)</span> has <em>probability mass function (PMF)</em> <span class="math inline">\(f\)</span> such that <span class="math display">\[\Pr(X = k) = f(k) \quad \text{ and } \quad  f(k)= \frac{\lambda^k e^{-\lambda}}{k!}\]</span> for <span class="math inline">\(k=0,1,2,\ldots\)</span></p>
+</section><section id="poisson-random-variable-2" class="slide level2">
+<h1>Poisson random variable</h1>
+<!-- ![Probability mass function](Poisson_pmf.png) -->
+<p>Probability mass function (PMF):</p>
+<p><img src="Stat435LectureNotes1a_files/figure-revealjs/unnamed-chunk-6-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="expectation-and-variance-9" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>Illustration by Poisson random variables:</p>
+<p><img src="Stat435LectureNotes1a_files/figure-revealjs/unnamed-chunk-7-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="expectation-and-variance-10" class="slide level2">
+<h1>Expectation and variance</h1>
+<p>For any constants <span class="math inline">\(a,b\)</span> and <span class="math inline">\(c\)</span> and two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, the following are true:</p>
+<ul>
+<li><em>Translation invariance</em>: <span class="math inline">\(Var(Y-a) = Var(Y)\)</span></li>
+<li><em>Convexity</em>: <span class="math inline">\(E(X^2) = Var(X) + [E(X)]^2\)</span></li>
+</ul>
+</section><section id="covariance-and-correlation-2" class="slide level2">
+<h1>Covariance and correlation</h1>
+<ul>
+<li><span class="math inline">\(|Cov(X,Y)| \le \sqrt{Var(X)}\sqrt{Var(Y)}\)</span></li>
+<li><em>Translation invariance</em>: for any two constants <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span>, <span class="math display">\[Cov(X,Y)=Cov(X+c,Y+d)\]</span> and <span class="math display">\[Cor(X,Y)=Cor(X+c,Y+d)\]</span></li>
+</ul>
+</section><section id="uncorrelated-but-dependent" class="slide level2">
+<h1>Uncorrelated but dependent</h1>
+<p>Consider a standard Normal random variable <span class="math inline">\(X\)</span> and set <span class="math inline">\(Y=X^2\)</span>. Then</p>
+<ul>
+<li><span class="math inline">\(E(Y)=E(X^2)=Var(X)+[E(X)]^2 = 1\)</span></li>
+<li><span class="math inline">\(Cov(X,Y)=E([X-E(X)][Y-E(Y)])\\=E[X(X^2-1)])=E(X^3)-E(X)=0-0=0\)</span></li>
+</ul>
+<p>Namely, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are uncorrelated. But clearly <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are dependent (<em>why</em>?).</p>
+<p><em>Note: there are many other examples of uncorrelated but dependent <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</em></p>
+</section><section id="conditional-probability-8" class="slide level2">
+<h1>Conditional probability</h1>
+<p>Example 3:</p>
+<ul>
+<li>A climber randomly chooses one of 3 available but dangerous routes, Route A, Route B and Route C, that all physically lead to his destination, a summit in the Himalayas, and following each route the climber has a specific chance of reaching the summit due to potential snow avalanches. Given that he has reached the summit, the probability that he has chosen Route A is a conditional probability.</li>
+</ul>
+<p>In this example, we can use <span class="math inline">\(X\)</span> to denote the route the climber has chosen, and <span class="math inline">\(Y\)</span> if he has reached the summit.</p>
+<!-- ## Bayes rule -->
+<!-- Recall from Example 2 the following quantities:  -->
+<!-- - "manufacture materials are randomly assigned to PL1 with probability $0.5$" means $$\Pr(X=\text{PL1})=0.5$$ -->
+<!-- - "PL1 has probability $0.005$ to produce a defective car" means $$\Pr(Y=1|X=\text{PL1})=0.005$$ -->
+<!-- - "overall defective product rate is $0.008$" means $$\Pr(Y=1)=0.008$$ -->
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 7 x64 (build 7601) Service Pack 1
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.12  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
