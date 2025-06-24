@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 2</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 2</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="simple-linear-regression" class="titleslide slide level1"><h1>Simple linear regression</h1></section><section id="overview" class="slide level2">
+<h1>Overview</h1>
+<p>Simple linear regression</p>
+<ul>
+<li>models <em>the expectation of a random variable as a linear function of another random variable</em></li>
+<li>is perhaps the simplest (useful) model</li>
+</ul>
+<p>For simple linear regression, we will cover its <em>methodology</em>, <em>diagnostics</em> and <em>application</em>.</p>
+</section><section id="motivation-example-1" class="slide level2">
+<h1>Motivation: Example 1</h1>
+<ul>
+<li><p>How is <code>sales</code> (in thousands of units) for a particular product related to advertising budgets (in thousands of dollars) for <code>TV</code>, <code>radio</code> or <code>newspaper</code>?</p></li>
+<li><p>How accurately can <code>sales</code> amount be predicted by advertising budgets for <code>TV</code>, <code>radio</code> or <code>newspaper</code>?</p></li>
+<li><p>Is splitting advertising budgets for <code>radio</code> and <code>TV</code> better than allocating it only to <code>TV</code> (or <code>radio</code>) in terms of increasing <code>sales</code> amount?</p></li>
+</ul>
+</section><section id="motivation-example-1-1" class="slide level2">
+<h1>Motivation: Example 1</h1>
+<p><img src="Stat435LectureNotes2_files/figure-revealjs/addata1-1.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="motivation-example-2" class="slide level2">
+<h1>Motivation: Example 2</h1>
+<ul>
+<li><p>How is <code>Balance</code> of credit card users related to <code>Gender</code> or marital status (<code>Married</code> or not)?</p></li>
+<li><p>How is <code>Balance</code> of credit card users related to <code>Age</code> or <code>Income</code>?</p></li>
+<li><p>Do users of different <code>Gender</code> in a given <code>Income</code> range have different <code>Balance</code>?</p></li>
+</ul>
+</section><section id="motivation-example-2-1" class="slide level2">
+<h1>Motivation: Example 2</h1>
+<p><img src="Stat435LectureNotes2_files/figure-revealjs/addata2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</section><section id="motivation-example-2-2" class="slide level2">
+<h1>Motivation: Example 2</h1>
+<p>How is <code>Balance</code> of a credit card user related to <code>Age</code> or <code>Income</code>? <img src="Stat435LectureNotes2_files/figure-revealjs/addata2a-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</section><section id="intuitive-model" class="slide level2">
+<h1>Intuitive Model</h1>
+<p>For the two motivating examples, simple linear models can be proposed as follows:</p>
+<ul>
+<li><code>Sales</code> <span class="math inline">\(\approx \beta_0\)</span> + <span class="math inline">\(\beta_1 \times\)</span> <code>TV</code> for some constants <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span></li>
+<li><code>Balance</code> <span class="math inline">\(\approx \beta_0\)</span> + <span class="math inline">\(\beta_1 \times\)</span> <code>Income</code> for some constants <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span></li>
+<li><code>Balance</code> <span class="math inline">\(\approx \beta_{0,0}\)</span> + <span class="math inline">\(\beta_{1,0} \times\)</span> <code>Income</code> for some constants <span class="math inline">\(\beta_{0,0}\)</span> and <span class="math inline">\(\beta_{1,0}\)</span> if <code>Gender=Female</code></li>
+<li><code>Balance</code> <span class="math inline">\(\approx \beta_{0,1}\)</span> + <span class="math inline">\(\beta_{1,1} \times\)</span> <code>Income</code> for some constants <span class="math inline">\(\beta_{0,1}\)</span> and <span class="math inline">\(\beta_{1,1}\)</span> if <code>Gender=Male</code></li>
+</ul>
+</section><section id="model-and-interpretation" class="slide level2">
+<h1>Model and interpretation</h1>
+<p>The model <span class="math display">\[ \textsf{Sales} \approx \beta_0 + \beta_1 \times \textsf{TV}\]</span> can be <em>interpreated</em> as <span class="math display">\[E(Y) = \beta_0 + \beta_1 X\]</span> with <span class="math inline">\(Y\)</span>=<code>Sales</code> and <span class="math inline">\(X\)</span>=<code>TV</code>.</p>
+<p><em>Note</em>: <span class="math inline">\(E(Y)\)</span> is modelled as a linear function of <span class="math inline">\(X\)</span>.</p>
+<!-- - $E(Y) = \beta_{0,1} + \beta_{1,1} X$ with $Y$=`Balance` and $X$=`Income` if $X_1$=`Gender` and $X_1=1$ (where `Male` is coded as $1$) -->
+<!-- - $E(Y) = \beta_0 + \beta_1 X$ with $Y$=`Balance` and $X$=`Income` -->
+</section><section id="model-and-intepretation" class="slide level2">
+<h1>Model and intepretation</h1>
+<p>The model <span class="math display">\[\textsf{Balance} \approx \beta_{0,0} + \beta_{1,0} \times \textsf{Income} \quad \text{if} \quad  \textsf{Gender=Female}\]</span> can be <em>interpreated</em> as <span class="math display">\[E(Y) = \beta_{0,0} + \beta_{1,0} X \quad \text{if} \quad X_1=0\]</span> with <span class="math inline">\(Y\)</span>=<code>Balance</code> and <span class="math inline">\(X\)</span>=<code>Income</code> if <span class="math inline">\(X_1\)</span>=<code>Gender</code> and <span class="math inline">\(X_1=0\)</span>, where <code>Female</code> is coded as <span class="math inline">\(0\)</span>.</p>
+</section></section>
+<section><section id="simple-linear-regression-with-a-quantitative-predictor" class="titleslide slide level1"><h1>Simple linear regression with a quantitative predictor</h1></section><section id="summary" class="slide level2">
+<h1>Summary</h1>
+<p><em>Simple linear regression with a quantitative predictor</em> is used to model <strong>the mean</strong> of a <em>quantitative</em> random variable (called <em>response variable</em>) as a linear function of another <em>quantitative</em> random variable (called <em>dependent variable</em>).</p>
+</section><section id="true-model" class="slide level2">
+<h1>True model</h1>
+<ul>
+<li><p>For two quantitative random varibles <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>, a simple linear model is <span class="math display">\[E(Y) = \beta_0 + \beta_1 X,\]</span> where <span class="math inline">\(\beta_0\)</span> (<em>intercept</em>) and <span class="math inline">\(\beta_1\)</span> (<em>slope</em>) are <em>unknown, true model</em> parameters (or <em>coefficients</em>), and <span class="math inline">\(\beta_1\)</span> is called the <em>regression coefficient</em>.</p></li>
+<li><p>The above model is equivalent to <span class="math display">\[Y = \beta_0 + \beta_1 X + \varepsilon \quad \text{ with } \quad E(\varepsilon)=0,\]</span> which is called the <em>population regression line</em>.</p></li>
+</ul>
+</section><section id="discussion-on-model" class="slide level2">
+<h1>Discussion on model</h1>
+<ul>
+<li><p>Why a model <span class="math display">\[Y = \beta_0^{\prime} + \beta_1^{\prime} X + \varepsilon^{\prime} \quad \text{ with } \quad E(\varepsilon^{\prime}) \ne 0\]</span> can always be written into <span class="math display">\[Y = \beta_0 + \beta_1 X + \varepsilon \quad \text{ with } \quad E(\varepsilon) = 0\]</span> when <span class="math inline">\(\varepsilon\)</span> is independent of <span class="math inline">\(X\)</span>?</p></li>
+<li><p>What does <span class="math inline">\(\varepsilon\)</span> represent?</p></li>
+</ul>
+</section><section id="intepretation" class="slide level2">
+<h1>Intepretation</h1>
+<p>The model <span class="math display">\[E(Y) = \beta_0 + \beta_1 X\]</span> and its equivalent <span class="math display">\[Y = \beta_0 + \beta_1 X + \varepsilon \quad \text{ with } \quad E(\varepsilon)=0\]</span> postulate the following:</p>
+<ul>
+<li>The values of <span class="math inline">\(Y\)</span> oscillate around the line <span class="math display">\[l(X)=\beta_0 + \beta_1 X\]</span> with “cancelling magnitudes”.</li>
+<li>For each unit change in <span class="math inline">\(X\)</span>, <span class="math inline">\(E(Y)\)</span> changes <span class="math inline">\(\beta_1\)</span> units, where the units for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> can be different.</li>
+<li>When <span class="math inline">\(X=0\)</span>, <span class="math inline">\(E(Y)=\beta_0\)</span>.</li>
+</ul>
+</section><section id="estimated-model" class="slide level2">
+<h1>Estimated model</h1>
+<p>With observations <span class="math inline">\((x_i,y_i),i=1,\ldots,n\)</span> for <span class="math inline">\((X,Y)\)</span>,</p>
+<ul>
+<li><p>the model postulates <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,\]</span> where <span class="math inline">\(\varepsilon_i\)</span> is an <em>unobservable</em> realization of <span class="math inline">\(\varepsilon\)</span>;</p></li>
+<li><p>an estimated model is <span class="math display">\[\hat{y}=\hat{\beta}_0 + \hat{\beta_1} x,\]</span> where <span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span> is an estimate of <span class="math inline">\(({\beta}_0,{\beta}_1)\)</span>, and <span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span> is a function of the data <span class="math inline">\((x_i,y_i)\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>.</p></li>
+</ul>
+</section><section id="residuals" class="slide level2">
+<h1>Residuals</h1>
+<p>Based on an estimated model <span class="math inline">\(\hat{y} = \hat{\beta}_0 + \hat{\beta_1} x\)</span>,</p>
+<ul>
+<li>each <span class="math inline">\(y_i\)</span> is estimated as <span class="math display">\[\hat{y}_i = \hat{\beta}_0 + \hat{\beta_1} x_i\]</span></li>
+<li>each <span class="math inline">\(y_i\)</span> has residual <span class="math inline">\(e_i = y_i- \hat{y}_i\)</span></li>
+<li>each <span class="math inline">\(e_i\)</span> is an estimate of the unobservable <span class="math inline">\(\varepsilon_i\)</span></li>
+</ul>
+<p><em>Note:</em> Almost all information on <span class="math inline">\(\varepsilon\)</span> is contained in the <span class="math inline">\(e_i\)</span>’s.</p>
+</section><section id="observations" class="slide level2">
+<h1>Observations</h1>
+<ul>
+<li>Let <span class="math inline">\(X\)</span> = <code>TV</code> and <span class="math inline">\(Y\)</span>=<code>sales</code></li>
+<li><span class="math inline">\(n=200\)</span> observations <span class="math inline">\((x_i,y_i),i=1,\ldots,n\)</span> for <span class="math inline">\((X,Y)\)</span></li>
+</ul>
+<p>Check correlation:</p>
+<pre class="r"><code>&gt; cor(adData$sales,adData$TV)
+[1] 0.7822244</code></pre>
+<p><em>Target</em>: Estimate the model <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X\)</span>.</p>
+</section><section id="scatterplot" class="slide level2">
+<h1>Scatterplot</h1>
+<p>Scatterplot of <span class="math inline">\(X\)</span>=<code>TV</code> and <span class="math inline">\(Y\)</span>=<code>sales</code>:</p>
+<p><img src="Stat435LectureNotes2_files/figure-revealjs/unnamed-chunk-2-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="an-estimated-model" class="slide level2">
+<h1>An estimated model</h1>
+<p>An estimated model <span class="math inline">\(\hat{y} = 5 + 0.05 x\)</span>:</p>
+<p><img src="Stat435LectureNotes2_files/figure-revealjs/unnamed-chunk-3-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="methods-of-estimation" class="slide level2">
+<h1>Methods of estimation</h1>
+<ul>
+<li><p>Since an estimate <span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span> is a function of the observations <span class="math inline">\((x_i,y_i)\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, there are infinitely many lines <span class="math display">\[\hat{l}(X)=\hat{\beta}_0 + \hat{\beta}_1X\]</span> with <span class="math inline">\(\hat{\beta}_0,\hat{\beta}_1 \in \mathbb{R}\)</span> that can be used as an estimate of <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X\)</span>.</p></li>
+<li><p>Which line to should we use?</p></li>
+</ul>
+</section><section id="an-optimal-estimate" class="slide level2">
+<h1>An optimal estimate</h1>
+<p>Estimate based on <em>least squares</em> <span class="math inline">\(\hat{y} = 7.03+0.047x\)</span>:</p>
+<p><img src="Stat435LectureNotes2_files/figure-revealjs/unnamed-chunk-4-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="comparison" class="slide level2">
+<h1>Comparison</h1>
+<p>An estimate and an optimal estimate:</p>
+<p><img src="Stat435LectureNotes2_files/figure-revealjs/unnamed-chunk-5-1.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="least-squares-ls-method" class="slide level2">
+<h1>Least squares (LS) method</h1>
+<p>Each fitted (or estimated) model <span class="math inline">\(\hat{y}=\hat{\beta}_0 + \hat{\beta}_1 x\)</span> produces</p>
+<ul>
+<li>estimated <span class="math inline">\(y_i\)</span> as <span class="math inline">\(\hat{y}_i=\hat{\beta}_0 + \hat{\beta}_1 x_i\)</span></li>
+<li>residual <span class="math inline">\(e_i = y_i- \hat{y}_i\)</span></li>
+</ul>
+<p>So, we seek for <span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span> for which the corresponding <em>residual sum of squares (RSS)</em> <span class="math display">\[\textsf{RSS}=\sum_{i=1}^n e_i^2=\sum_{i=1}^n \left[y_i - \left(\hat{\beta}_0 + \hat{\beta}_1 x_i\right)\right]^2\]</span> is minimized. This is called the <em>least squares method</em>, and <span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span> the <em>least squares estimate</em> of <span class="math inline">\(\left({\beta}_0,{\beta}_1\right)\)</span>.</p>
+</section><section id="the-least-squares-estimate" class="slide level2">
+<h1>The least squares estimate</h1>
+<p>The LS method gives the <em>least squares estimate (LSE)</em>:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}\)</span> with <span class="math inline">\(\bar{y}=n^{-1}\sum_{i=1}^n y_i\)</span></p></li>
+<li><p><span class="math inline">\(\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\)</span> with <span class="math inline">\(\bar{x}=n^{-1}\sum_{i=1}^n x_i\)</span></p></li>
+</ul>
+<p>Namely, the fitted model is <span class="math display">\[\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x,\]</span> also called the <em>least squares line</em>.</p>
+<p><em>Note:</em> “fitted model” is the same as “estimated model”.</p>
+</section><section id="rss-surface" class="slide level2">
+<h1>RSS surface</h1>
+<p><img src="fig3_2.png" width="80%" style="display: block; margin: auto;" /></p>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19041)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.12  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

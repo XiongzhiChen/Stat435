@@ -1,0 +1,13 @@
+base
+knitr
+Matrix
+foreach
+glmnet
+knockoff
+lars
+scalreg
+hdi
+foreign
+nnet
+ggplot2
+reshape2

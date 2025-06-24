@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 5</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 5</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="logistic-regression-model" class="titleslide slide level1"><h1>Logistic regression: model</h1></section><section id="motivation" class="slide level2">
+<h1>Motivation</h1>
+<p>Logistic regression is used to model the probability of the status of a binary variable, such as</p>
+<ul>
+<li>Failure or success of an experiment</li>
+<li>Deficit or surplus of an asset return</li>
+<li>Win or lose of a game</li>
+</ul>
+</section><section id="coding-a-binary-variable" class="slide level2">
+<h1>Coding a binary variable</h1>
+<p>Suppose we are trying to predict the medical condition <span class="math inline">\(Y\)</span> of a patient in the emergency room on the basis of her symptoms</p>
+<ul>
+<li>Two diagnoses for <span class="math inline">\(Y\)</span>: “stroke”and “drug overdose”</li>
+<li>Code <span class="math inline">\(Y\)</span> into <span class="math display">\[
+Y=\left\{
+\begin{array}
+[c]{ccc}
+0 &amp; \text{if} &amp; \text{stroke}\\
+1 &amp; \text{if} &amp; \text{drug overdose}
+\end{array}
+\right.
+\]</span></li>
+</ul>
+<p><em>Note:</em> the roles of 1 and 0 for <span class="math inline">\(Y\)</span> can be switched, and that different coding for <span class="math inline">\(Y\)</span> can be used</p>
+</section><section id="modeling-a-binary-variable" class="slide level2">
+<h1>Modeling a binary variable</h1>
+<ul>
+<li>Suppose we have two predictors <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, a naive way to model <span class="math inline">\(Y\)</span> is by a linear mode
+<span class="math display">\[\begin{equation}
+Y=\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\varepsilon,
+\end{equation}\]</span>
+so that <code>drug overdose</code> is predicted if <span class="math inline">\(\hat{Y}&gt;0.5\)</span> and <code>stroke</code> otherwise.</li>
+<li>Issue with the above modelling strategy: a predicted value <span class="math inline">\(\hat{Y}\)</span> can lie outside the set of values used for coding</li>
+</ul>
+</section><section id="the-logistic-model" class="slide level2">
+<h1>The logistic model</h1>
+<p>Consider the relationship between if a customer will default on his credit card debt based on his <code>balance</code></p>
+<ul>
+<li>Set <span class="math inline">\(Y\)</span> (<code>Yes</code> as 1 or <code>No</code> as 0) as the <em>default</em> status of a customer</li>
+<li>Model the probability <span class="math display">\[
+p=\Pr\left(Y=1 \vert\text{balance}\right)  =p\left(  \text{balance}\right)
+\]</span> as a function of <code>balance</code></li>
+<li>We may predict <code>default=Yes</code> for an individual for whom <span class="math inline">\(p\left( \text{balance}\right) &gt;0.5\)</span>.</li>
+</ul>
+</section><section id="the-logistic-model-1" class="slide level2">
+<h1>The logistic model</h1>
+<p>Let <span class="math inline">\(X\)</span> denote <code>balance</code>. We</p>
+<ul>
+<li>should not consider the model <span class="math inline">\(p\left( X\right) =\beta_{0}+\beta_{1}X\)</span></li>
+<li>should model the logit of <span class="math inline">\(p\left(X\right)\)</span>, i.e.,
+<span class="math display">\[\begin{equation}
+\operatorname{logit}\left(  p\left(  X\right)  \right)  =\log\left(
+\frac{p\left(  X\right)  }{1-p\left(  X\right)  }\right) 
+\end{equation}\]</span>
+via <span class="math display">\[
+\operatorname{logit}\left(  p\left(  X\right)  \right)  =\beta_{0}+\beta_{1}X
+\]</span></li>
+</ul>
+<p><strong>Note:</strong> <span class="math inline">\(p\left( X\right) /\left( 1-p\left( X\right) \right)\)</span> is called <em>odds</em>; no random error term in the above model since we are modeling a probability; <span class="math inline">\(p\left(X\right) =E\left( Y=1|X\right)\)</span></p>
+</section><section id="the-logsitic-model" class="slide level2">
+<h1>The logsitic model</h1>
+<ul>
+<li>Equivalence: <span class="math inline">\(\operatorname{logit}\left( p\left( X\right) \right) =\beta_{0}+\beta_{1}X\)</span> is equivalent to
+<span class="math display">\[\begin{equation}
+p\left(  X\right)  =\frac{\exp\left(  \beta_{0}+\beta_{1}X\right)  }
+{1+\exp(\beta_{0}+\beta_{1}X)}
+\end{equation}\]</span></li>
+<li>The <em>logit</em> function <span class="math display">\[
+f\left(  t\right)  =\frac{e^{t}}{1+e^{t}}
+\]</span> is a sigmoid function that has an asymptote at <span class="math inline">\(1\)</span> as <span class="math inline">\(t\rightarrow\infty\)</span> and at <span class="math inline">\(0\)</span> as <span class="math inline">\(t\rightarrow-\infty\)</span>.</li>
+</ul>
+</section><section id="the-logistic-model-2" class="slide level2">
+<h1>The logistic model</h1>
+<p><img src="fig4_2.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="logistic-regression-estimation-and-inference" class="titleslide slide level1"><h1>Logistic regression: estimation and inference</h1></section><section id="estimated-coefficients" class="slide level2">
+<h1>Estimated coefficients</h1>
+<ul>
+<li>For the linear model <span class="math display">\[
+Z=\beta_{0}+\beta_{1}X+\varepsilon, E\left(  \varepsilon\right)
+=0
+\]</span> the coefficient <span class="math inline">\(\beta_{1}\)</span> is the relative unit change in <span class="math inline">\(E\left( Z\right)\)</span></li>
+<li>For model <span class="math display">\[
+\operatorname{logit}\left(  p\left(  X\right)  \right)=\log\left(  \frac{p\left(  X\right)  }{1-p\left(  X\right)  }\right)
+=\beta_{0}+\beta_{1}X
+\]</span> the coefficient <span class="math inline">\(\beta_{1}\)</span> is the relative unit change in the log-odds, i.e., <span class="math display">\[
+\log\left(  \frac{p\left(  x_{1}\right)  }{1-p\left(  x_{1}\right)  }\right)
+-\log\left(  \frac{p\left(  x_{2}\right)  }{1-p\left(  x_{2}\right)  }\right)
+=\beta_{1}\text{  when }x_{1}-x_{2}=1
+\]</span></li>
+</ul>
+</section><section id="estimating-coefficients" class="slide level2">
+<h1>Estimating coefficients</h1>
+<p>Consider the logistic regression model</p>
+<span class="math display">\[\begin{equation}
+\log\left(  \frac{p\left(  x_{i}\right)  }{1-p\left(  x_{i}\right)  }\right)=\beta_{0}+\beta_{1}x_{i}
+\end{equation}\]</span>
+<ul>
+<li>the <span class="math inline">\(i\)</span>th response <span class="math inline">\(y_{i}\)</span> given <span class="math inline">\(x_{i}\)</span> is a Bernoulli random variable with probability of success <span class="math inline">\(p\left( x_{i}\right) =\Pr\left( y_{i}=1|x_{i}\right)\)</span> and
+<span class="math display">\[\begin{equation}
+p\left(  x_{i}\right)  =\frac{\exp\left(  \beta_{0}+\beta_{1}x_{i}\right)
+}{1+\exp\left(  \beta_{0}+\beta_{1}x_{i}\right)  }
+\end{equation}\]</span></li>
+<li>the <em>probability mass function (PMF)</em> of <span class="math inline">\(y_{i}\)</span> given <span class="math inline">\(x_{i}\)</span> is <span class="math display">\[
+f\left(  y_{i}\right)  =p_{i}^{y_{i}}\left(  1-p_{i}\right)^{1-y_{i}}
+\]</span></li>
+</ul>
+</section><section id="estimating-coefficients-1" class="slide level2">
+<h1>Estimating coefficients</h1>
+<p>The <em>maximum likelihood estimation (MLE)</em> method:</p>
+<ul>
+<li>When <span class="math inline">\(\left\{ y_{i}\right\} _{i=1}^{n}\)</span> independent given <span class="math inline">\(\left\{ x_{i}\right\}_{i=1}^{n}\)</span>, the joint PMF of <span class="math inline">\(\left\{ y_{i}\right\}_{i=1}^{n}\)</span>, i.e., the likelihood function of <span class="math inline">\(\left(\beta_{0},\beta_{1}\right)\)</span>, is
+<span class="math display">\[\begin{align*}
+L\left(  \beta_{0},\beta_{1}\right)   &amp;  =\prod\nolimits_{i=1}^{n}f\left(
+y_{i}\right)  =\prod\nolimits_{i=1}^{n}p_{i}^{y_{i}}\left(  1-p_{i}\right)
+^{1-y_{i}}
+\end{align*}\]</span></li>
+<li>If we maximize <span class="math inline">\(L\left(\beta_{0},\beta_{1}\right)\)</span> with respect to <span class="math inline">\(\left(\beta_{0},\beta_{1}\right)\)</span>, then we can equivalently maximize
+<span class="math display">\[\begin{equation}
+\log L\left(  \beta_{0},\beta_{1}\right)=\sum_{i=1}^{n}\left[  y_{i}\log
+p_{i}+\left(  1-y_{i}\right)  \log\left(  1-p_{i}\right)  \right]
+\end{equation}\]</span></li>
+</ul>
+<p><strong>Note:</strong> not minimize <span class="math inline">\(RSS=\sum_{i=1}^{n}\left[ y_{i}-\left( \beta_{0}+\beta_{1}x_{i}\right)\right]^{2}\)</span></p>
+</section><section id="estimating-coefficients-2" class="slide level2">
+<h1>Estimating coefficients</h1>
+<ul>
+<li><p>Optimization of <span class="math inline">\(L\left(\beta_{0},\beta_{1}\right)\)</span> is usually implemented by gradient descent using the gradient of <span class="math inline">\(\log L\left(\beta_{0},\beta_{1}\right)\)</span> or <span class="math inline">\(L\left(\beta_{0},\beta_{1}\right)\)</span></p></li>
+<li><p>The algorithm is referred to as the “iteratively reweighted least squares (IWLS)”</p></li>
+</ul>
+</section><section id="inference-on-coefficients" class="slide level2">
+<h1>Inference on coefficients</h1>
+<p>Inference on the estimate <span class="math inline">\(\left(\hat{\beta}_{0},\hat{\beta}_{1}\right)\)</span> is often based on asymptotic theory. Under appropriate conditions, we have the following:</p>
+<ul>
+<li>Let <span class="math inline">\(s_{1}\)</span> be the standard deviation of <span class="math inline">\(\hat{\beta}_{1}\)</span>. Then
+<span class="math display">\[\begin{equation}
+\frac{\hat{\beta}_{1}}{s_{1}}\rightarrow\text{Gaussian}\left(  0,1\right)  \text{
+}\ \text{as }n\rightarrow\infty\text{ if  }\beta_{1}=0
+\end{equation}\]</span></li>
+<li>Let <span class="math inline">\(s_{0}\)</span> be the standard deviation of <span class="math inline">\(\hat{\beta}_{0}\)</span>. Then
+<span class="math display">\[\begin{equation}
+\frac{\hat{\beta}_{0}}{s_{0}}\rightarrow\text{Gaussian}\left(  0,1\right)  \text{
+}\ \text{as }n\rightarrow\infty\text{ if  }\beta_{0}=0
+\end{equation}\]</span></li>
+</ul>
+</section><section id="estimation-and-inference" class="slide level2">
+<h1>Estimation and inference</h1>
+<p><img src="t4_1.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="estimation-and-inference-1" class="slide level2">
+<h1>Estimation and inference</h1>
+<p><img src="t4_2.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="logistic-regression-predicition" class="titleslide slide level1"><h1>Logistic regression: predicition</h1></section><section id="making-predictions" class="slide level2">
+<h1>Making predictions</h1>
+<ul>
+<li><p>Recall <span class="math display">\[
+p\left(  x_{i}\right)  =\frac{\exp\left(  \beta_{0}+\beta_{1}x_{i}\right)
+}{1+\exp\left(  \beta_{0}+\beta_{1}x_{i}\right)  }
+\]</span></p></li>
+<li><p>Once the estimate <span class="math inline">\(\left( \hat{\beta}_{0},\hat{\beta}_{1}\right)\)</span> is obtained, the predicted value of <span class="math inline">\(p\left( x_{i}\right)\)</span> is given by <span class="math display">\[
+\hat{p}\left(  x_{i}\right)  =\frac{\exp\left(  \hat{\beta}_{0}+\hat{\beta
+}_{1}x_{i}\right)  }{1+\exp\left(  \hat{\beta}_{0}+\hat{\beta}_{1}%
+x_{i}\right)  }%
+\]</span></p></li>
+</ul>
+</section><section id="making-predictions-1" class="slide level2">
+<h1>Making predictions</h1>
+<ul>
+<li><p>When <code>balance</code> <span class="math inline">\(X=1000\)</span>, we have <span class="math display">\[
+\hat{p}\left(Y=1 \vert X=1000\right)  =\frac{\exp\left(  -10.65+0.0055\times1000\right)
+}{1+\exp\left(  -10.65+0.0055\times1000\right)  }=0.006
+\]</span></p></li>
+<li><p>When <span class="math inline">\(X\)</span> denotes if an individual is a <code>student</code> (<span class="math inline">\(X=1\)</span>) or not (<span class="math inline">\(X=0\)</span>), we have <span class="math display">\[
+\hat{p}\left(Y=1 \vert X\text{=Yes}\right)  =\frac{\exp\left(  -3.504+0.4049\times1\right)  }{1+\exp\left(  -3.504+0.4049\times1\right)  }=0.043
+\]</span> and <span class="math display">\[
+\hat{p}\left(Y=1\vert X\text{=No}\right)  =\frac{\exp\left(  -3.504+0.4049\times0\right)  }
+{1+\exp\left(  -3.504+0.4049\times0\right)  }=0.029
+\]</span></p></li>
+</ul>
+</section></section>
+<section><section id="the-multiple-linear-logistic-regression-model" class="titleslide slide level1"><h1>The multiple linear logistic regression model</h1></section><section id="the-model" class="slide level2">
+<h1>The model</h1>
+<p>When there are <span class="math inline">\(p\)</span> predictors <span class="math inline">\(X_j,j=1,\ldots,p\)</span>, whose <span class="math inline">\(i\)</span>th observation is <span class="math inline">\(x_{ij}\)</span>,</p>
+<ul>
+<li>the multiple linear logistic regression model takes the form <span class="math display">\[
+\log\left(  \frac{p\left(  \mathbf{x}_{i}\right)  }{1-p\left(  \mathbf{x}_{i}\right)  }\right)
+=\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}x_{ip}
+\]</span> for <span class="math inline">\(i=1,2,\cdots,n\)</span> with <span class="math inline">\(\mathbf{x}_{i}=(x_{i1},\ldots,x_{ip})\)</span></li>
+<li>the model is equivalent to <span class="math display">\[
+p\left(  \mathbf{x}_{i}\right)  =\frac{\exp\left(  \beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}x_{ip}\right)  }
+{1+\exp\left(  \beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}x_{ip}\right)  }
+\]</span></li>
+</ul>
+</section><section id="estimation-and-inference-2" class="slide level2">
+<h1>Estimation and inference</h1>
+<ul>
+<li><p>The maximum likelihood method is also used to estimate the coefficient vector <span class="math inline">\(\beta=\left( \beta_{0},\beta_{1},\ldots,\beta_{p}\right)\)</span></p></li>
+<li><p>Gaussian asymptotic theory for <span class="math inline">\(\hat{\beta}=\left( \hat{\beta}_{0},\hat{\beta}_{1},\ldots,\hat{\beta}_{p}\right)\)</span> is used to conduct inference on components of <span class="math inline">\(\beta\)</span></p></li>
+<li>For example,for each <span class="math inline">\(i\in\left\{ 0,1,\ldots,p\right\}\)</span>, let <span class="math inline">\(s_{i}\)</span> be the standard deviation of <span class="math inline">\(\hat{\beta}_{i}\)</span>, then (under appropriate conditions) as the sample size <span class="math inline">\(n\rightarrow\infty\)</span>,
+<span class="math display">\[\begin{equation}
+\frac{\hat{\beta}_{i}}{s_{i}}\rightarrow\text{Gaussian}\left(  0,1\right)  \text{ if  }\beta_{i}=0
+\end{equation}\]</span></li>
+</ul>
+</section><section id="making-predictions-2" class="slide level2">
+<h1>Making predictions</h1>
+<p>Similar to simple logistic regression</p>
+</section><section id="estimation-and-inference-3" class="slide level2">
+<h1>Estimation and inference</h1>
+<p><img src="t4_3.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="estimation-and-inference-4" class="slide level2">
+<h1>Estimation and inference</h1>
+<p><img src="fig4_3.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="penalized-logistic-regression-model" class="titleslide slide level1"><h1>Penalized logistic regression: model</h1></section><section id="motivation-1" class="slide level2">
+<h1>Motivation</h1>
+<p>Consider using genetics to predict a trait. Suppose that there are <span class="math inline">\(n\)</span> individuals, each with <span class="math inline">\(m\)</span> measured SNP genotypes.</p>
+<ul>
+<li>The genotype for SNP <span class="math inline">\(j\)</span> in individual <span class="math inline">\(i\)</span> is denoted by <span class="math inline">\(x_{ij}\in\left\{ 0,1,2\right\}\)</span>, <span class="math inline">\(i=1,2,...,n\)</span> and <span class="math inline">\(j=1,2,...,m\)</span>. These SNP genotypes are stored in an <span class="math inline">\(n\times m\)</span> matrix <span class="math inline">\(\mathbf{X}\)</span> whose <span class="math inline">\(\left( i,j\right)\)</span> entry is <span class="math inline">\(x_{ij}\)</span></li>
+<li>Denote the genotypes for individual <span class="math inline">\(i\)</span> by <span class="math inline">\(\mathbf{x}_i = \left(x_{i1},x_{i2},...,x_{im}\right)\)</span></li>
+<li>Assume a trait (either quantitative or binary) has been measured on each individual, which is denoted by <span class="math inline">\(y_{i},i=1,...,n\)</span></li>
+</ul>
+</section><section id="motivation-2" class="slide level2">
+<h1>Motivation</h1>
+<ul>
+<li><p>For <span class="math inline">\(y_i \in \{0,1\}\)</span>, consider the following logistic model <span class="math display">\[
+\log\left(  \frac{p_{i}}{1-p_{i}}\right)  =\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{m}x_{im}
+\]</span> for <span class="math inline">\(i=1,...,n\)</span>, where <span class="math display">\[
+p_{i}=\Pr\left(  y_{i}=1|x_{i1},...,x_{im}\right)
+\]</span></p></li>
+<li><p>Written in the population version, the above becomes <span class="math display">\[
+\log\left(  \frac{p\left(  X\right)  }{1-p\left(  X\right)  }\right)
+=\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{m}X_{m}
+\]</span> for <span class="math inline">\(j=1,...,n\)</span>, where <span class="math inline">\(X=\left( X_{1},...,X_{m}\right)\)</span> and <span class="math display">\[
+p\left(  X\right)  =\Pr\left(  Y=1|X_{1},...,X_{m}\right)
+\]</span></p></li>
+</ul>
+</section><section id="motivation-3" class="slide level2">
+<h1>Motivation</h1>
+<ul>
+<li>Often <span class="math inline">\(m\gg n\)</span> since <span class="math inline">\(m\)</span> is usually in the millions but <span class="math inline">\(n\)</span> in the thousands</li>
+<li>It is widely known that only a few SNPs, i.e., <span class="math inline">\(X_{i}\)</span>’s, that are associated with <span class="math inline">\(Y\)</span>, and that the SNPs are usually dependent</li>
+<li>Assume <span class="math inline">\(\left\{y_{i}\right\}_{i=1}^{n}\)</span> are independent given <span class="math inline">\(\mathbf{X}\)</span>, we have the likelihood function for <span class="math inline">\(\beta=\left( \beta_{0},\beta_{1},\ldots,\beta_{m}\right)\)</span> as <span class="math display">\[
+L\left(  \beta\right)  =\prod\nolimits_{i=1}^{n}p_{i}^{y_{i}}\left(
+1-p_{i}\right)  ^{1-y_{i}}
+\]</span> where <span class="math display">\[
+p_{i}=\frac{\exp\left(  \beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots
++\beta_{m}x_{im}\right)  }{1+\exp\left(  \beta_{0}+\beta_{1}x_{i1}+\beta
+_{2}x_{i2}+\cdots+\beta_{m}x_{im}\right)  }
+\]</span></li>
+</ul>
+</section><section id="penalized-logistic-regression" class="slide level2">
+<h1>Penalized logistic regression</h1>
+<p>We can perform:</p>
+<ul>
+<li>LASSO logistic regression when some <span class="math inline">\(\beta_{i}\)</span>’s are zero: <span class="math display">\[
+\hat{\beta}=\left(  \hat{\beta}_{0},\hat{\beta}_{1},\ldots,\hat{\beta}
+_{m}\right)  \in\operatorname*{argmin}_{\beta}\left[ -\log L\left(  \beta\right)
++\lambda\sum_{j=1}^{m}\left\vert \beta_{j}\right\vert \right]
+\]</span></li>
+<li>Ridge logistic regression: <span class="math display">\[
+\hat{\beta}=\left(  \hat{\beta}_{0},\hat{\beta}_{1},\ldots,\hat{\beta}
+_{m}\right)  \in\operatorname*{argmin}_{\beta}\left[ - \log L\left(  \beta\right)
++\lambda\sum_{j=1}^{m}\left\vert \beta_{j}\right\vert ^{2}\right]
+\]</span></li>
+</ul>
+<p><strong>Note:</strong> <span class="math inline">\(\operatorname*{argmin}_{\beta}\)</span> refers to optimal <span class="math inline">\(\beta^{\ast}\)</span> which minimizes the corresponding objective function</p>
+</section><section id="choosing-optimal-lambda" class="slide level2">
+<h1>Choosing optimal <span class="math inline">\(\lambda\)</span></h1>
+<p>LASSO logistic regression based on training set:  <img src="Stat435LectureNotes5_files/figure-revealjs/PLogit-1.png" width="528" style="display: block; margin: auto;" /></p>
+<pre><code>[1] 0.1584858</code></pre>
+</section><section id="estimated-coefficients-1" class="slide level2">
+<h1>Estimated coefficients</h1>
+<p>LASSO logistic regression and nonzero estimated coefficients based on optimal <span class="math inline">\(\lambda=0.04308576\)</span>:</p>
+<pre><code>[1] 0.2876821</code></pre>
+</section><section id="prediction" class="slide level2">
+<h1>Prediction</h1>
+<p>Predicted probabilities on test set that has 30 observations:</p>
+<pre><code> [1] 0.5714286 0.5714286 0.5714286 0.5714286 0.5714286
+ [6] 0.5714286 0.5714286 0.5714286 0.5714286 0.5714286
+[11] 0.5714286 0.5714286 0.5714286 0.5714286 0.5714286
+[16] 0.5714286 0.5714286 0.5714286 0.5714286 0.5714286
+[21] 0.5714286 0.5714286 0.5714286 0.5714286 0.5714286
+[26] 0.5714286 0.5714286 0.5714286 0.5714286 0.5714286</code></pre>
+<p>Predicted class labels at threshold 0.5 and classification table:</p>
+<pre><code>         
+PredClass  0  1
+        1 14 16</code></pre>
+</section><section id="inference" class="slide level2">
+<h1>Inference</h1>
+<ul>
+<li>The method of <em>bias correction</em> can be used to conduct inference on penalized, shrinkage estimates</li>
+<li>Canonical assumptions involve Gaussian random errors</li>
+<li>Asymptotic theory on testing coefficients is based on Gaussian limiting distributions</li>
+<li>P-values from testing can be obtained</li>
+</ul>
+<p><em>Note:</em> “High-Dimensional Inference: Confidence Intervals, p-Values and R-Software hdi” by Ruben Dezeure, Peter Buhlmann, Lukas Meier and Nicolai Meinshausen</p>
+</section><section id="inference-lasso-logistic-regression" class="slide level2">
+<h1>Inference: lasso logistic regression</h1>
+<ul>
+<li>Testing <span class="math inline">\(H_{j0}:\beta_j =0\)</span> versus <span class="math inline">\(H_{j1}:\beta_j \ne 0\)</span></li>
+<li>P-value for testing if the coefficient of a predictor is zero:</li>
+</ul>
+<pre><code> [1] 0.13413996 0.05207436 0.39755514 0.23921034 0.65316441
+ [6] 0.67885948 0.56912208 0.16846145 0.56589285 0.96587353
+[11] 0.78957391 0.05460193 0.18388693 0.44317876 0.12468140
+[16] 0.92400246 0.70416327 0.04088294 0.89933977 0.97099599
+[21] 0.49808498 0.46499122 0.25293188 0.28736267 0.64293125
+[26] 0.63676763 0.99339691 0.53668426 0.59440224 0.56993170
+[31] 0.62692600 0.94943853 0.61880901 0.29636506 0.39771952
+[36] 0.68962920 0.38298890 0.13892930 0.50686087 0.06816067
+[41] 0.08304863 0.82547452 0.44883142 0.20457717 0.97508134
+[46] 0.90046281 0.04752561 0.76775545 0.85050516 0.79927070</code></pre>
+</section><section id="inference-ridge-logistic-regression" class="slide level2">
+<h1>Inference: ridge logistic regression</h1>
+<ul>
+<li>Testing <span class="math inline">\(H_{j0}:\beta_j =0\)</span> versus <span class="math inline">\(H_{j1}:\beta_j \ne 0\)</span></li>
+<li>P-value for testing if the coefficient of a predictor is zero:</li>
+</ul>
+<pre><code> [1] 0.63598833 0.06612030 0.61192496 0.94142750 0.54331824
+ [6] 0.48610506 0.68454333 0.26190299 0.96993506 0.76290601
+[11] 0.95534631 0.23480084 0.70366376 0.52505187 0.05438521
+[16] 0.76055117 0.34191172 0.01553583 0.72333222 0.96649906
+[21] 0.76586988 0.45826480 0.31636520 0.15498768 0.19719119
+[26] 0.49091761 0.85448689 0.37245537 0.72834464 0.40307678
+[31] 0.66596097 0.52949698 0.48666810 0.70651168 0.45695047
+[36] 0.23772894 0.46093631 0.21519215 0.93828245 0.13029887
+[41] 0.91628901 0.56170626 0.30576696 0.20412352 0.85898080
+[46] 0.81970855 0.21620605 0.94463983 0.63989905 0.86938832</code></pre>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19041)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.12  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

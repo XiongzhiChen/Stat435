@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lab Notes 1</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lab Notes 1</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="basic-objects-and-their-operations" class="titleslide slide level1"><h1>Basic objects and their operations</h1></section><section id="important-objects" class="slide level2">
+<h1>Important objects</h1>
+<p>Some important objects in R</p>
+<ul>
+<li><code>vector</code></li>
+<li><code>matrix</code> and <code>data.frame</code></li>
+<li><code>character</code> and <code>factor</code></li>
+</ul>
+<p>In terms of data analysis, <code>data.frame</code> is perhaps the most important R object.</p>
+</section><section id="vector" class="slide level2">
+<h1><code>vector</code></h1>
+<p>Vectors can be created by concatenation (<code>c</code>), sequencing (<code>:</code> or <code>seq</code>), or replication (<code>rep</code>):</p>
+<pre class="r"><code>&gt; # create a vector via concatenation
+&gt; x = c(1,5,0.8,10)
+&gt; x
+[1]  1.0  5.0  0.8 10.0
+&gt; # create a vector via seq
+&gt; y=1:3
+&gt; y
+[1] 1 2 3
+&gt; z = seq(from=1,to=10,by=2)
+&gt; z
+[1] 1 3 5 7 9
+&gt; # create a vector via rep
+&gt; w = rep(1,times=5)
+&gt; w
+[1] 1 1 1 1 1
+&gt; u = rep(c(1,2),each=3)
+&gt; u
+[1] 1 1 1 2 2 2</code></pre>
+</section><section id="vector-1" class="slide level2">
+<h1><code>vector</code></h1>
+<p>Entries of a vector can be accessed by specifying their indices as a vector:</p>
+<pre class="r"><code>&gt; x = c(1,5,0.8,10)
+&gt; x
+[1]  1.0  5.0  0.8 10.0
+&gt; # obtain number of entries of a vector
+&gt; length(x)
+[1] 4
+&gt; # access entries of a vector
+&gt; x[1]
+[1] 1
+&gt; x[1:3]
+[1] 1.0 5.0 0.8
+&gt; # remove some entries
+&gt; y=x[-c(1,3)]
+&gt; y
+[1]  5 10</code></pre>
+</section><section id="matrix-and-data.frame" class="slide level2">
+<h1><code>matrix</code> and <code>data.frame</code></h1>
+<p>Both <code>data.frame</code> and <code>matrix</code> have a grid layout in rows and columns. However, the object types for all columns of a <code>matrix</code> have to be the same.</p>
+<ul>
+<li>A matrix can be created by the command <code>matrix</code>, or by combining vectors as rows (<code>rbind</code>) or as columns (<code>cbind</code>)</li>
+<li>A <code>matrix</code> can be coerced into a data frame via <code>as.data.frame</code></li>
+<li>A data frame can be created by the command <code>data.frame</code> or automatically when importing data</li>
+</ul>
+</section><section id="matrix-and-data.frame-1" class="slide level2">
+<h1><code>matrix</code> and <code>data.frame</code></h1>
+<pre class="r"><code>&gt; # create a matrix
+&gt; x = matrix(1:10,nrow=2,ncol=5)
+&gt; x
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10
+&gt; dim(x)
+[1] 2 5
+&gt; # convert x into a data.frame
+&gt; y = as.data.frame(x)
+&gt; y
+  V1 V2 V3 V4 V5
+1  1  3  5  7  9
+2  2  4  6  8 10
+&gt; dim(y)
+[1] 2 5
+&gt; # indexing for matrix or data.frame
+&gt; x[c(1,2),c(1,5)]
+     [,1] [,2]
+[1,]    1    9
+[2,]    2   10
+&gt; y[c(1,2),c(1,5)]
+  V1 V5
+1  1  9
+2  2 10
+&gt; # access variable in data frame via $
+&gt; y$V1
+[1] 1 2</code></pre>
+</section><section id="matrix-and-data.frame-2" class="slide level2">
+<h1><code>matrix</code> and <code>data.frame</code></h1>
+<pre class="r"><code>&gt; x = 1:3; y = 2:4
+&gt; # create a matrix
+&gt; z = cbind(x,y)
+&gt; z
+     x y
+[1,] 1 2
+[2,] 2 3
+[3,] 3 4
+&gt; # create a matrix
+&gt; w = rbind(x,y)
+&gt; w
+  [,1] [,2] [,3]
+x    1    2    3
+y    2    3    4
+&gt; # make w into data.frame
+&gt; v = as.data.frame(w)
+&gt; v
+  V1 V2 V3
+x  1  2  3
+y  2  3  4
+&gt; # add a variable to v
+&gt; v$New = c(10,20)
+&gt; v
+  V1 V2 V3 New
+x  1  2  3  10
+y  2  3  4  20</code></pre>
+</section><section id="operations-on-vectorsmatrices" class="slide level2">
+<h1>Operations on vectors/matrices</h1>
+<p>The operations <code>+</code>, <code>-</code>, <code>*</code> (multiplication), <code>/</code>, and <code>^</code> (power) operate <em>entrwise</em> on vectors and matrices.</p>
+<pre class="r"><code>&gt; x = 1:3
+&gt; x
+[1] 1 2 3
+&gt; y = 2:4
+&gt; y
+[1] 2 3 4
+&gt; x+y
+[1] 3 5 7
+&gt; x-y
+[1] -1 -1 -1
+&gt; x*y
+[1]  2  6 12
+&gt; x^2
+[1] 1 4 9
+&gt; sqrt(x)
+[1] 1.000000 1.414214 1.732051</code></pre>
+</section><section id="operations-on-vectorsmatrices-1" class="slide level2">
+<h1>Operations on vectors/matrices</h1>
+<pre class="r"><code>&gt; x = 1:3
+&gt; x
+[1] 1 2 3
+&gt; y = 2:4
+&gt; y
+[1] 2 3 4
+&gt; # transpose of y
+&gt; t(y)
+     [,1] [,2] [,3]
+[1,]    2    3    4
+&gt; # matrix multiplication
+&gt; x%*%y
+     [,1]
+[1,]   20
+&gt; x%*%t(y)
+     [,1] [,2] [,3]
+[1,]    2    3    4
+[2,]    4    6    8
+[3,]    6    9   12</code></pre>
+<ul>
+<li><code>x%*%y</code>: sum of products of pairs of entries with matching indices.</li>
+</ul>
+</section><section id="character-and-factor" class="slide level2">
+<h1><code>character</code> and <code>factor</code></h1>
+<p><code>character</code> is often used to name variables or annotate figures, and <code>factor</code> to describe values of a discrete random variable.</p>
+<ul>
+<li>A <code>character</code> can be created by enclosing a sequence of characters by quotes (<code>''</code> or <code>&quot; &quot;</code>), or by concatenation (<code>c</code>) of characters</li>
+<li>A <code>factor</code> can be created by the command <code>factor</code> or by coercing (<code>as.factor</code>)</li>
+</ul>
+</section><section id="character" class="slide level2">
+<h1><code>character</code></h1>
+<pre class="r"><code>&gt; a = &#39;This is&#39;
+&gt; a
+[1] &quot;This is&quot;
+&gt; b = &#39;Stat 435&#39;
+&gt; # both a and b are characters
+&gt; # concatenate strings via paste
+&gt; w=paste(a,b,sep=&quot; &quot;)
+&gt; w
+[1] &quot;This is Stat 435&quot;
+&gt; # concatenate strings via c
+&gt; z = c(a,b)
+&gt; #z is a vector whose entries are characters
+&gt; z[1]
+[1] &quot;This is&quot;
+&gt; z[2]
+[1] &quot;Stat 435&quot;</code></pre>
+</section><section id="factor" class="slide level2">
+<h1><code>factor</code></h1>
+<pre class="r"><code>&gt; x = c(rep(&#39;F&#39;,6),rep(&#39;M&#39;,6))
+&gt; x
+ [1] &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;M&quot; &quot;M&quot; &quot;M&quot; &quot;M&quot; &quot;M&quot; &quot;M&quot;
+&gt; # obtain object type
+&gt; class(x)
+[1] &quot;character&quot;
+&gt; # convert x into factor
+&gt; y = as.factor(x)
+&gt; y
+ [1] F F F F F F M M M M M M
+Levels: F M
+&gt; class(y)
+[1] &quot;factor&quot;
+&gt; levels(y)
+[1] &quot;F&quot; &quot;M&quot;</code></pre>
+</section><section id="factor-1" class="slide level2">
+<h1><code>factor</code></h1>
+<pre class="r"><code>&gt; x = c(rep(1,6),rep(2,6))
+&gt; x
+ [1] 1 1 1 1 1 1 2 2 2 2 2 2
+&gt; class(x)
+[1] &quot;numeric&quot;
+&gt; # convert x into factor
+&gt; y = as.factor(x)
+&gt; y
+ [1] 1 1 1 1 1 1 2 2 2 2 2 2
+Levels: 1 2
+&gt; class(y)
+[1] &quot;factor&quot;
+&gt; levels(y)
+[1] &quot;1&quot; &quot;2&quot;</code></pre>
+</section><section id="data.frame" class="slide level2">
+<h1><code>data.frame</code></h1>
+<p>Each column of a <code>data.frame</code> can have its own object type, whereas all columns of a <code>matrix</code> have to have the same object type.</p>
+<pre class="r"><code>&gt; x = data.frame(&quot;Variable1&quot;=c(1,3,5),
++                &quot;Variable2&quot;=as.factor(c(&#39;A&#39;,&#39;B&#39;,&#39;C&#39;)))
+&gt; x
+  Variable1 Variable2
+1         1         A
+2         3         B
+3         5         C
+&gt; # display data structure for x
+&gt; str(x)
+&#39;data.frame&#39;:   3 obs. of  2 variables:
+ $ Variable1: num  1 3 5
+ $ Variable2: Factor w/ 3 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;: 1 2 3</code></pre>
+</section></section>
+<section><section id="basic-operations-on-data" class="titleslide slide level1"><h1>Basic operations on data</h1></section><section id="import-and-export-data" class="slide level2">
+<h1>Import and export data</h1>
+<ul>
+<li>Rstudio’s “Import Data” functionality provides a GUI to import data from <em>CSV</em>, <em>Excel</em>, etc, and implements the functionality of <code>read.csv</code></li>
+<li>The command <code>read.table</code> (<code>write.data</code>) imports (saves) data from (into) <code>.txt</code> or <code>.data</code> files</li>
+<li><code>save</code> (<code>save.image</code>) saves an object (the workspace) into an object</li>
+</ul>
+</section><section id="a-data-set" class="slide level2">
+<h1>A data set</h1>
+<p>The data set <code>Auto.data</code> (or file <code>Auto.csv</code>) contains <code>mpg</code> (miles per gallon) for cars of different numbers of <code>cylinders</code>, engine <code>displacement</code>, <code>horsepower</code>, manufactures (<code>name</code>), etc.</p>
+<pre><code>  mpg cylinders displacement horsepower weight acceleration
+1  18         8          307        130   3504         12.0
+2  15         8          350        165   3693         11.5
+3  18         8          318        150   3436         11.0
+4  16         8          304        150   3433         12.0
+5  17         8          302        140   3449         10.5
+6  15         8          429        198   4341         10.0
+  year origin                      name
+1   70      1 chevrolet chevelle malibu
+2   70      1         buick skylark 320
+3   70      1        plymouth satellite
+4   70      1             amc rebel sst
+5   70      1               ford torino
+6   70      1          ford galaxie 500</code></pre>
+</section><section id="import-and-export-data-1" class="slide level2">
+<h1>Import and export data</h1>
+<p>Data are often stored in a directory or on a website. So, we need to tell importing commands where data are. By default, R imports (exports) data from (to) <em>current working directory</em>.</p>
+<pre class="r"><code>&gt; # show current working directory
+&gt; getwd()
+[1] &quot;C:/MathRepo/stat435&quot;
+&gt; AD1 = read.table(&quot;Auto.data&quot;,header = T,na.strings = &quot;?&quot;)
+&gt; class(AD1)
+[1] &quot;data.frame&quot;
+&gt; dim(AD1)
+[1] 397   9</code></pre>
+<ul>
+<li><code>header = T</code>: the first line of the file contains the variable names</li>
+<li><code>na.strings = &quot;?&quot;</code>: the string <code>?</code> indicates a missing element in the data matrix</li>
+</ul>
+</section><section id="import-and-export-data-2" class="slide level2">
+<h1>Import and export data</h1>
+<p>Import data from a csv file online:</p>
+<pre class="r"><code>&gt; AD2 = read.csv(&quot;http://faculty.marshall.usc.edu/gareth-james/ISL/Auto.csv&quot;,
++                  header = T,na.strings = &quot;?&quot;)
+&gt; class(AD2)
+[1] &quot;data.frame&quot;
+&gt; dim(AD2)
+[1] 397   9
+&gt; AD3 = AD2[1:2,1:5]
+&gt; AD3
+  mpg cylinders displacement horsepower weight
+1  18         8          307        130   3504
+2  15         8          350        165   3693
+&gt; # export AD3
+&gt; write.csv(AD3,file=&quot;myFile.csv&quot;)</code></pre>
+</section><section id="save-and-load-objects" class="slide level2">
+<h1>Save and load objects</h1>
+<p>By default, R saves (loads) data to (from) <em>current working directory</em>.</p>
+<pre class="r"><code>&gt; AD2 = read.csv(&quot;http://faculty.marshall.usc.edu/gareth-james/ISL/Auto.csv&quot;,
++                  header = T,na.strings = &quot;?&quot;)
+&gt; save(AD2,file=&quot;Partial.RData&quot;)
+&gt; save.image(&quot;Everything.RData&quot;)
+&gt; load(&quot;Everything.RData&quot;)</code></pre>
+<p><strong>Caution:</strong> Loading into the current workspace anything that contains variables with identical names to those in the currently workspace will overwrite these objects in the current workspace.</p>
+</section><section id="check-or-clean-data" class="slide level2">
+<h1>Check or clean data</h1>
+<pre class="r"><code>&gt; AD1 = read.table(&quot;Auto.data&quot;,header = T,na.strings = &quot;?&quot;)
+&gt; class(AD1)
+[1] &quot;data.frame&quot;
+&gt; dim(AD1)
+[1] 397   9
+&gt; # show variable names in data
+&gt; colnames(AD1)
+[1] &quot;mpg&quot;          &quot;cylinders&quot;    &quot;displacement&quot; &quot;horsepower&quot;  
+[5] &quot;weight&quot;       &quot;acceleration&quot; &quot;year&quot;         &quot;origin&quot;      
+[9] &quot;name&quot;        
+&gt; # remove na&#39;s from data
+&gt; AD1a = na.omit(AD1)
+&gt; dim(AD1a)
+[1] 392   9</code></pre>
+<p><em>Note:</em> by default, a row with a missing value will be removed <code>na.omit</code></p>
+</section><section id="remarks" class="slide level2">
+<h1>Remarks</h1>
+<ul>
+<li>There are other objects in R such as <code>list</code> and <code>tibble</code>, which are even more versatile than <code>data.frame</code></li>
+<li>There are other R commands to import data</li>
+<li>The R package <code>dplyr</code> is a powerful tool for data processing, and the course contains supplementary videos for interested students</li>
+</ul>
+</section></section>
+<section><section id="basic-graphics-commands" class="titleslide slide level1"><h1>Basic graphics commands</h1></section><section id="the-plot-function" class="slide level2">
+<h1>The <code>plot</code> function</h1>
+<p>The <code>plot</code> function is a basic graphics command that creates 2D plots. Its basic syntax is:</p>
+<pre><code>plot(x, y, ...)</code></pre>
+<ul>
+<li><code>x</code>: the x coordinates of points in the plot</li>
+<li><code>y</code>: the y coordinates of points in the plot</li>
+<li><code>...</code>: other arguments such as <code>type</code> (what type of plot should be drawn), <code>main</code> (an overall title for the plot), <code>xlab</code> (a title for the x axis) and <code>ylab</code>(a title for the y axis)</li>
+</ul>
+</section><section id="illustration" class="slide level2">
+<h1>Illustration</h1>
+<pre class="r"><code>&gt; plot(AD1a$displacement,AD1a$mpg,xlab=&quot;Engine displacement&quot;,
++      ylab=&quot;Miles per gallon&quot;)</code></pre>
+<p><img src="Stat435LabNotes1_files/figure-revealjs/plot1-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="illustration-1" class="slide level2">
+<h1>Illustration</h1>
+<pre class="r"><code>&gt; attach(AD1a)
+&gt; plot(cylinders,mpg,xlab=&quot;Number of cylinders&quot;,
++      ylab=&quot;Miles per gallon&quot;)</code></pre>
+<p><img src="Stat435LabNotes1_files/figure-revealjs/plot2-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="the-pairs-function" class="slide level2">
+<h1>The <code>pairs</code> function</h1>
+<p>The <code>pairs</code> function creates a <em>scatterplot matrix</em>, i.e., a scatterplot for every pair of variables for a given data set.</p>
+<p>It can also produce a scatterplot matrix for a subset of variables (by using the <code>~</code> operator).</p>
+</section><section id="illustration-2" class="slide level2">
+<h1>Illustration</h1>
+<pre class="r"><code>&gt; attach(AD1a)
+&gt; pairs(~mpg+displacement+horsepower,AD1a)</code></pre>
+<p><img src="Stat435LabNotes1_files/figure-revealjs/plot3-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="the-identify-function" class="slide level2">
+<h1>The <code>identify</code> function</h1>
+<p><code>identify</code> reads the position of the graphics pointer when the (first) mouse button is pressed. It then searches the coordinates given in <code>x</code> and <code>y</code> for the point closest to the pointer.</p>
+<p>If this point is close enough to the pointer, its index (as the index of the row that contains the corresponding coordinate measurements for this point) will be returned as part of the value of the call.</p>
+</section><section id="illustration-3" class="slide level2">
+<h1>Illustration</h1>
+<pre><code>attach(AD1a)
+plot(horsepower,mpg)
+identify(horsepower,mpg)
+# click on a point on the plot
+# Hit Esc key once you have selected the point.
+[1] 389 
+# 389 is the index (i.e., row) number of the point 
+# the Instructor selected</code></pre>
+</section><section id="the-hist-function" class="slide level2">
+<h1>The <code>hist</code> function</h1>
+<p>The <code>hist</code> function creates histogram for a variable (or for several variables).</p>
+</section><section id="illustration-4" class="slide level2">
+<h1>Illustration</h1>
+<pre class="r"><code>&gt; attach(AD1a)
+&gt; hist(horsepower,breaks=20)</code></pre>
+<p><img src="Stat435LabNotes1_files/figure-revealjs/unnamed-chunk-15-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="illustration-5" class="slide level2">
+<h1>Illustration</h1>
+<pre class="r"><code>&gt; attach(AD1a)
+&gt; hist(horsepower,breaks=50)</code></pre>
+<p><img src="Stat435LabNotes1_files/figure-revealjs/unnamed-chunk-16-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="remark" class="slide level2">
+<h1>Remark</h1>
+<p>The course Stat 437 covers approximately 3 weeks of materials for data visualization.</p>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 18363)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.29
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.5.0 revealjs_0.9    yaml_2.2.1     
+ [7] stringi_1.4.6   rmarkdown_1.11  stringr_1.4.0  
+[10] xfun_0.15       digest_0.6.25   rlang_0.4.7    
+[13] evaluate_0.14  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

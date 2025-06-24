@@ -1,0 +1,226 @@
+---
+title: "Stat 435 lecture notes 9: supplementary"
+
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{amssymb}
+   - \usepackage{amsmath}
+   - \usepackage{graphicx}
+   - \usepackage{natbib}
+   - \usepackage{float}
+   - \floatplacement{figure}{H}
+output:
+  pdf_document: default
+fontsize: 11pt
+---
+
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+# Diagnosis for Logistic regression
+
+```{r, cache=T, echo=T, warning=F, fig.height=6,fig.width=6.5}
+
+library(ISLR)
+Hitters= na.omit(Hitters)
+Hitters$Salary1 = as.numeric(Hitters$Salary > 500)
+
+fitRes = glm(Salary1~Years,data = Hitters, family = "binomial")
+par(mfrow = c(2,2))
+plot(fitRes)
+
+# check residuals; caution: these residuals are not as desired
+max(fitRes$residuals)
+min(fitRes$residuals)
+
+
+# plot residuals versus fitted values
+par(mfrow = c(1,1)) # row-column
+OrdinaryRes = Hitters$Salary1 - fitRes$fitted.values 
+plot(fitRes$fitted.values,OrdinaryRes,
+     main="Ordinary residuals vs estimated probabilites")
+# add a lowess fit
+lines(lowess(OrdinaryRes, fitRes$fitted.values,f=0.8), col=2)
+
+# plot logit of estimated probabilities against predictors
+plot(Hitters$Years,fitRes$fitted.values,
+     main="Predictor vs estimated probabilites")
+abline(lm(fitRes$fitted.values ~ Hitters$Years))
+
+```
+
+## Extract more statistics from `glm`
+
+First, let us check what `groom::augment` applied to a `glm` object does by reading https://rdrr.io/cran/broom/man/augment.glm.html.
+
+When newdata is not supplied, augment.lm returns one row for each observation, with seven columns added to the original data: 
+
+```{r, eval=F}
+
+.hat 
+Diagonal of the hat matrix
+ 
+.sigma 
+Estimate of residual standard deviation when corresponding observation is dropped from model
+ 
+.cooksd 
+Cooks distance, cooks.distance()
+ 
+.fitted 
+Fitted values of model
+ 
+.se.fit 
+Standard errors of fitted values
+ 
+.resid 
+Residuals
+ 
+.std.resid 
+Standardised residuals
+```
+
+Some unusual lm objects, such as rlm from MASS, may omit .cooksd and .std.resid. gam from mgcv omits .sigma. 
+
+When newdata is supplied, returns one row for each observation, with three columns added to the new data: 
+
+```{r,eval=F}
+.fitted 
+Fitted values of model
+ 
+.se.fit 
+Standard errors of fitted values
+ 
+.resid 
+Residuals of fitted values on the new data
+ 
+
+
+```
+  
+## Illustration on extracting statistics for diagnosis
+
+The following are adopted from: www.sthda.com/english/articles/36-classification-methods-essentials/148-logistic-regression-assumptions-and-diagnostics-in-r/
+
+```{r, cache=T, echo=T, warning=F,,fig.height=6,fig.width=6.5}
+library(dplyr)
+library(tidyverse)
+library(broom)
+theme_set(theme_classic())
+
+# Load the data
+data("PimaIndiansDiabetes2", package = "mlbench")
+PimaIndiansDiabetes2 <- na.omit(PimaIndiansDiabetes2)
+# Fit the logistic regression model
+model <- glm(diabetes ~., data = PimaIndiansDiabetes2,family = binomial)
+# Predict the probability (p) of diabete positivity
+probabilities <- predict(model, type = "response")
+predicted.classes <- ifelse(probabilities > 0.5, "pos", "neg")
+head(predicted.classes)
+
+# Select only numeric predictors
+mydata <- PimaIndiansDiabetes2 %>% dplyr::select_if(is.numeric) 
+predictors <- colnames(mydata)
+# Bind the logit and tidying the data for plot
+mydata <- mydata %>%
+  mutate(logit = log(probabilities/(1-probabilities))) %>%
+  gather(key = "predictors", value = "predictor.value", -logit)
+
+# example for "gather": https://www.rdocumentation.org/packages/tidyr/versions/0.8.3/topics/gather
+
+ggplot(mydata, aes(logit, predictor.value))+
+  geom_point(size = 0.5, alpha = 0.5) + geom_smooth(method = "loess") + 
+  theme_bw() +  facet_wrap(~predictors, scales = "free_y")
+
+
+# Extract model results
+model.data <- augment(model) %>% mutate(index = 1:n()) 
+
+# augment: add columns to the original data that was modeled
+# info on what is augmented: https://rdrr.io/cran/broom/man/augment.glm.html
+
+model.data %>% top_n(3, .cooksd)
+
+ggplot(model.data, aes(index, .std.resid)) + 
+  geom_point(aes(color = diabetes), alpha = .5) +
+  theme_bw()
+
+## plot cook's distance vs estimated probabilities
+plot(model.data$index,model.data$.cooksd, main="cook's distance vs observation number")
+
+
+```
+
+# Diagnostics for multinomial logistic regression
+
+```{r, cache=T, echo=T, warning=F}
+library(glmnet)
+par(mfrow = c(1,1)) 
+load("MultinomialExample.RData")
+
+# find the best lambda for lasso
+cvfit=cv.glmnet(x, y, family="multinomial", alpha=1, parallel = TRUE)
+plot(cvfit)
+# extract fitted model
+cvmd = cvfit$glmnet.fit
+
+# extract estimated ceofficients
+tmp_coeffs <- coef(cvfit, s = "lambda.min")
+tmp_coeffs[[1]]@x
+ 
+# obtain predictions
+#Type '"class"' applies only to
+#  '"binomial"' or '"multinomial"' models, and produces the
+#  class label corresponding to the maximum probability.
+  
+prdProb = predict(cvfit, newx = x, s = "lambda.min", type = "response")
+prdClass = predict(cvfit, newx = x, s = "lambda.min", type = "class")
+
+```
+
+```{r, cache=T, echo=T, warning=F}
+library(glmnet)
+library(ggplot2)
+head(iris)
+tempcv <- cv.glmnet(x=as.matrix(iris[,-5]), y=iris[,5], family="multinomial", 
+                    nfolds=20, alpha=1)
+coefsMin <- coef(tempcv, s="lambda.min")
+# show coefficients
+coefsMin
+
+```
+
+# Poisson regression
+
+
+```{r, cache=T, echo=T, warning=F,}
+require(ggplot2)
+
+p <- read.csv("poisson_sim.csv")
+  p$prog <- factor(p$prog, levels=1:3, labels=c("General", "Academic", 
+                                                     "Vocational"))
+summary(p)
+
+
+m1 <- glm(num_awards ~ prog + math, family="poisson", data=p)
+
+
+
+# Extract model results
+modd <- augment(m1) %>% mutate(index = 1:n()) 
+
+modd$phat <- predict(m1, type="response")
+
+
+par(mfrow = c(1,1)) # row-column
+## plot cook's distance vs estimated probabilities
+plot(modd$index,modd$.cooksd, main="cook's distance vs observation number")
+
+# plot residuals versus fitted values
+# add a lowess fit
+
+# plot logit of estimated probabilities against predictors
+
+```
+

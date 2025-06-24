@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 4</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 4</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="bootstrap-motivation" class="titleslide slide level1"><h1>Bootstrap: motivation</h1></section><section id="overview" class="slide level2">
+<h1>Overview</h1>
+<ul>
+<li><p>The <em>bootsrtap</em> is mainly used to <em>estimate and quantify the uncertainty associated with a given estimate or statistical learning methed</em></p></li>
+<li><p>For example, it can be used to estimate the standard error of an estimate (such as an estimated coefficient in a regression model)</p></li>
+<li><p>The bootstrap <em>may not work well when sample size is small or when sample comes from a relatively small region of the distribution of an unknown data generating process</em></p></li>
+</ul>
+</section><section id="illustration-i-problem" class="slide level2">
+<h1>Illustration I: problem</h1>
+<p>Problem formulation:</p>
+<ul>
+<li>suppose we wish to invest a fixed sum of money into two financial assets that yield (random) returns of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively</li>
+<li>we will invest a fraction <span class="math inline">\(\alpha\)</span> of our money in <span class="math inline">\(X\)</span>, and the rest <span class="math inline">\(1-\alpha\)</span> in <span class="math inline">\(Y\)</span></li>
+<li>we need to choose <span class="math inline">\(\alpha\)</span> that minimizes the risk, or variance, of our investment.</li>
+</ul>
+<p>Namely, we need to find <span class="math inline">\(\alpha\)</span> that minimizes <span class="math display">\[\textrm{Var}(\alpha X + (1-\alpha)Y)\]</span></p>
+</section><section id="illustration-i-solution" class="slide level2">
+<h1>Illustration I: solution</h1>
+<ul>
+<li><p>By calculus, we know that <span class="math display">\[
+\alpha=\frac{\sigma_{Y}^{2}-\sigma_{XY}}{\sigma_{X}^{2}+\sigma_{Y}^{2}-2\sigma_{XY}}
+\]</span> minimizes <span class="math display">\[\textrm{Var}(\alpha X + (1-\alpha)Y),\]</span> where <span class="math inline">\(\sigma_{X}^{2}=\textrm{Var}(X)\)</span>, <span class="math inline">\(\sigma_{Y}^{2}=\textrm{Var}(Y)\)</span> and <span class="math inline">\(\sigma_{XY}=\textrm{Cov}(X,Y)\)</span></p></li>
+<li><p>However, in reality, the quantities <span class="math inline">\(\sigma_{X}^{2}\)</span>, <span class="math inline">\(\sigma_{Y}^{2}\)</span> and <span class="math inline">\(\sigma_{XY}\)</span> are unknown, and need to be estimated</p></li>
+</ul>
+</section><section id="illustration-i-estimate" class="slide level2">
+<h1>Illustration I: estimate</h1>
+<ul>
+<li>With estimates <span class="math inline">\(\hat{\sigma}_{X}^{2}\)</span>, <span class="math inline">\(\hat{\sigma}_{Y}^{2}\)</span> and <span class="math inline">\(\hat{\sigma}_{XY}\)</span> for <span class="math inline">\(\sigma_{X}^{2}\)</span>, <span class="math inline">\(\sigma_{Y}^{2}\)</span> and <span class="math inline">\(\sigma_{XY}\)</span>, respectively, we have the <em>plug-in estimate</em> <span class="math display">\[\hat{\alpha}=\frac{\hat{\sigma}_{Y}^{2}-\hat{\sigma}_{XY}}{\hat{\sigma}_{X}^{2}+\hat{\sigma}_{Y}^{2}-2\hat{\sigma}_{XY}}\]</span> for the <em>optimal but unknown</em> solution <span class="math display">\[
+\alpha=\frac{\sigma_{Y}^{2}-\sigma_{XY}}{\sigma_{X}^{2}+\sigma_{Y}^{2}-2\sigma_{XY}}
+\]</span></li>
+<li>How accurate is <span class="math inline">\(\hat{\alpha}\)</span>? Can we estimate the standard error of <span class="math inline">\(\hat{\alpha}\)</span>?</li>
+</ul>
+</section><section id="illustration-i-estimate-1" class="slide level2">
+<h1>Illustration I: estimate</h1>
+<ul>
+<li><p>If <span class="math inline">\(\hat{\sigma}_{X}^{2}\)</span>, <span class="math inline">\(\hat{\sigma}_{Y}^{2}\)</span> and <span class="math inline">\(\hat{\sigma}_{XY}\)</span> are accurate, then so should be <span class="math inline">\(\hat{\alpha}\)</span></p></li>
+<li><p>How to assess the accuracy of <span class="math inline">\(\hat{\alpha}\)</span> (via the accuracy of <span class="math inline">\(\hat{\sigma}_{X}^{2}\)</span>, <span class="math inline">\(\hat{\sigma}_{Y}^{2}\)</span> and <span class="math inline">\(\hat{\sigma}_{XY}\)</span>) if we have only a sample of size <span class="math inline">\(n\)</span> at hand?</p></li>
+<li><p>Mini discussion on the question above: Case 1 “<span class="math inline">\(n\)</span> small”, Case 2 “<span class="math inline">\(n\)</span> moderate”, and case 3 “<span class="math inline">\(n\)</span> large”</p></li>
+</ul>
+</section><section id="illustration-i-simulated-samples" class="slide level2">
+<h1>Illustration I: simulated samples</h1>
+<p>If we know the population distribution, we can simulate samples: <img src="fig5_9.png" width="80%" style="display: block; margin: auto;" /></p>
+</section><section id="illustration-i-simulated-samples-1" class="slide level2">
+<h1>Illustration I: simulated samples</h1>
+<ul>
+<li><p>Suppose we simulate <span class="math inline">\(B=1000\)</span> <em>independent</em> samples for <span class="math inline">\((X,Y)\)</span> (if we knew the truth), we will have <span class="math inline">\(B\)</span> estimates <span class="math inline">\(\hat{\alpha}_{j},j=1,\ldots,B\)</span> of <span class="math inline">\(\alpha\)</span></p></li>
+<li><p>The sample mean <span class="math inline">\(\bar{\alpha}=\frac{1}{B}\sum_{j=1}^{B}\hat{\alpha}_{j}\)</span> (of <span class="math inline">\(\hat{\alpha}_{j}\)</span>’s) should be close to <span class="math inline">\(\alpha\)</span></p></li>
+<li><p>The sample standard deviation <span class="math display">\[s\left(  \hat{\alpha}\right)  =\sqrt{\frac{1}{B-1}\sum_{j=1}^{B}\left(
+\hat{\alpha}_{j}-\bar{\alpha}\right)  ^{2}}\]</span> (of of <span class="math inline">\(\hat{\alpha}_{j}\)</span>’s) should be close to <span class="math inline">\(\sigma_{\hat{\alpha}}=\sqrt{\textrm{Var}(\hat{\alpha)}}\)</span></p></li>
+</ul>
+</section><section id="illustration-i-truth-and-estimate" class="slide level2">
+<h1>Illustration I: truth and estimate</h1>
+<ul>
+<li><p>Truth: <span class="math inline">\(\sigma_{X}^{2}=1\)</span>, <span class="math inline">\(\sigma_{Y}^{2}=1.25\)</span>, <span class="math inline">\(\sigma_{XY}=0.5\)</span> and <span class="math inline">\(\alpha=0.6\)</span></p></li>
+<li><p>Estimates based on <span class="math inline">\(B=1000\)</span> simulated, independent samples: <span class="math inline">\(\bar{\alpha}=0.5996\)</span> and <span class="math inline">\(s\left( \hat{\alpha}\right)=0.083\)</span></p></li>
+<li><p>Interpretation: for a random sample from the population, we would expect <span class="math inline">\(\hat{\alpha}\)</span> to differ from <span class="math inline">\(\alpha\)</span> by approximately <span class="math inline">\(0.08\)</span> on average</p></li>
+</ul>
+<p><em>Note:</em> is the “1 standard deviation” rule sensible?</p>
+</section></section>
+<section><section id="bootstrap-definition-and-applications" class="titleslide slide level1"><h1>Bootstrap: definition and applications</h1></section><section id="simulation-and-double-dipping" class="slide level2">
+<h1>Simulation and double-dipping</h1>
+<ul>
+<li><em>Simulated from the truth</em>: when we know a data generating process, we can simulate samples to estimate a statistic on the process. However, if we know the truth, why do we need to estimate the statistic?</li>
+<li><em>Simulated from the estimate</em>: with a sample from a data generating process, we can estimate the process, use the estimated process to generate samples, and use the generated samples to estimate a statistic</li>
+<li><em>Resampling from the sample</em>: sample randomly from a sample from a data generating process, regard the sampled observations as a new data set, and use them to estimate a statistic</li>
+</ul>
+</section><section id="bootstrap-definition" class="slide level2">
+<h1>Bootstrap: definition</h1>
+<p>In order to assess the distributional properties of an estimate of a statistic, the bootstrap</p>
+<ul>
+<li>takes a subset of a given data set <em>as if it is a set of new observations independent of the given data set</em></li>
+<li>uses the subset to obtain an estimate of the statistic</li>
+<li>does so <em>repeatedly and independently using different subests of the given data set</em></li>
+<li>take the <em>empirical distribution of estimates obtained from these subsets as an estimate of the distribution of the estimate</em> of the statistic</li>
+</ul>
+</section><section id="bootstrap-procedure" class="slide level2">
+<h1>Bootstrap: procedure</h1>
+<ul>
+<li>Given a sample of size <span class="math inline">\(n\)</span>, let <span class="math inline">\(\hat{\alpha}\)</span> be an estimate of a statistic <span class="math inline">\(\alpha\)</span> obtained from the sample</li>
+<li><em>Sample randomly with replacement</em> from the sample to obtain <span class="math inline">\(n\)</span> observations, and do this independently <span class="math inline">\(B\)</span> times to obtain <span class="math inline">\(B\)</span> bootstrap samples <span class="math inline">\(S_{j},j=1,\ldots,B\)</span></li>
+<li>Let <span class="math inline">\(\hat{\alpha}_{j}\)</span> be the estimate of <span class="math inline">\(\alpha\)</span> obtained from <span class="math inline">\(S_{j}\)</span>. Then <em>the empirical distribution <span class="math inline">\(G\)</span> of <span class="math inline">\(\hat{\alpha}_{j},j=1,\ldots,B\)</span> is used as the (true) distribution of <span class="math inline">\(\hat{\alpha}\)</span>, and statistics about <span class="math inline">\(\hat{\alpha}\)</span> are obtained from <span class="math inline">\(G\)</span></em></li>
+</ul>
+</section><section id="bootstrap-graphical-illustration" class="slide level2">
+<h1>Bootstrap: graphical illustration</h1>
+<p><img src="fig5.11.png" width="90%" style="display: block; margin: auto;" /></p>
+</section><section id="bootstrap-statistics" class="slide level2">
+<h1>Bootstrap: statistics</h1>
+<ul>
+<li>The <em>(bootstrap) estimated mean</em> of <span class="math inline">\(\hat{\alpha}\)</span> is <span class="math inline">\(\bar{\alpha}=\frac{1}{B}\sum_{j=1}^{B}\hat{\alpha}_{j}\)</span></li>
+<li>The <em>(bootstrap) estimated variance</em> of <span class="math inline">\(\hat{\alpha}\)</span> is <span class="math display">\[
+\textrm{SE}^2\left(  \hat{\alpha}\right)  = {(B-1)}^{-1}\sum_{j=1}^{B}\left(
+\hat{\alpha}_{j}-\bar{\alpha}\right)^{2}
+\]</span></li>
+<li>For <span class="math inline">\(\alpha \in (0,1)\)</span>, the <em>(bootstrap) <span class="math inline">\((1-\alpha)\times 100\)</span> percent confidence interval</em> for <span class="math inline">\(\hat{\alpha}\)</span> is <span class="math inline">\((c_L,c_U)\)</span>, where <span class="math inline">\(c_L\)</span> is the <span class="math inline">\(\{0.5\alpha\times 100\}\)</span>th percentile of <span class="math inline">\(G\)</span>, and <span class="math inline">\(c_L\)</span> is the <span class="math inline">\(\{(100-0.5\alpha)\times 100\}\)</span>th percentile of <span class="math inline">\(G\)</span></li>
+</ul>
+</section><section id="illustration-of-bootstrap" class="slide level2">
+<h1>Illustration of bootstrap</h1>
+<p>Bootstrap applied to a sample; <span class="math inline">\(\textrm{SE}^2\left( \hat{\alpha}\right)=0.087\)</span>: illusion or excellence? <img src="fig5_10.png" width="90%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="boostrapping-linear-regression" class="titleslide slide level1"><h1>Boostrapping linear regression</h1></section><section id="linear-regression" class="slide level2">
+<h1>Linear regression</h1>
+<ul>
+<li><p>Model: <span class="math inline">\(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)</span> with <span class="math inline">\(E(\varepsilon)=0\)</span> and <span class="math inline">\(\textrm{Var}(\varepsilon)=\sigma^2\)</span></p></li>
+<li><p>Observations: <span class="math inline">\((y_i,x_{1i},x_{2i},\ldots,x_{pi}),i=1,\ldots,n\)</span>, where <span class="math inline">\(x_{ji}\)</span> is the <span class="math inline">\(i\)</span>th observation for <span class="math inline">\(X_j\)</span></p></li>
+<li><p>Estimate: <span class="math inline">\(\hat{y}=\hat{\beta}_0+\hat{\beta}_1 X_1 + \hat{\beta}_2 X_2 + \ldots + \hat{\beta}_p X_p\)</span></p></li>
+<li><p>Fit: <span class="math inline">\(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_{1i} + \hat{\beta}_2 x_{2i} + \ldots + \hat{\beta}_p x_{pi}+\varepsilon_i\)</span></p></li>
+<li><p>Residuals: <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span></p></li>
+</ul>
+</section><section id="bootstrapping-from-sample" class="slide level2">
+<h1>Bootstrapping from sample</h1>
+<p>Set <span class="math inline">\({\boldsymbol{\beta}}=({\beta}_0,{\beta}_1,\ldots,{\beta}_p)\)</span> and <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\hat{\beta}_0,\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span></p>
+<ul>
+<li>Sample from data generating process: <span class="math display">\[S=\{\mathbf{z}_i=(y_i,x_{1i},x_{2i},\ldots,x_{pi}),i=1,\ldots,n\}\]</span></li>
+<li>Sample with replacement <span class="math inline">\(n\)</span> observations from <span class="math inline">\(S\)</span> and repeat this independently to obtain <span class="math inline">\(B\)</span> subsets <span class="math inline">\(S_j,j=1,\ldots,B\)</span></li>
+<li>Obtain <span class="math inline">\(\hat{\boldsymbol{\beta}}_j\)</span> from <span class="math inline">\(S_j\)</span> for each <span class="math inline">\(j=1,\ldots,B\)</span></li>
+<li>Use the empirical distribution of <span class="math inline">\(\hat{\boldsymbol{\beta}}_j,j=1,\ldots,B\)</span> as the distribution of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></li>
+</ul>
+</section><section id="bootstrapping-residuals" class="slide level2">
+<h1>Bootstrapping residuals</h1>
+<ul>
+<li>Residuals: <span class="math inline">\(R=\{e_i=y_i-\hat{y}_i,i=1,\ldots,n\}\)</span></li>
+<li>Sample with replacement <span class="math inline">\(n\)</span> observations from <span class="math inline">\(R\)</span> to obtain <span class="math inline">\(B\)</span> sets of residuals <span class="math inline">\(R_j=\{e_i^{(j)},i=1,\ldots,n\}\)</span></li>
+<li>For each <span class="math inline">\(j\)</span>, set <span class="math inline">\(y_i^{(j)}=\hat{y}_i+e_i^{(j)}\)</span> and fit the model with observations <span class="math display">\[S_j=\{\mathbf{z}_i^{(j)}=(y_i^{(j)},x_{1i},x_{2i},\ldots,x_{pi}),i=1,\ldots,n\}\]</span> and obtain estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}_j\)</span></li>
+<li>Use the empirical distribution of <span class="math inline">\(\hat{\boldsymbol{\beta}}_j,j=1,\ldots,B\)</span> as the distribution of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></li>
+</ul>
+</section><section id="bootstrapping-samples-or-residuals" class="slide level2">
+<h1>Bootstrapping samples or residuals</h1>
+<ul>
+<li><p>Asymptotically (and under some conditions), bootstrapping samples and bootstrapping residuals are equivalent</p></li>
+<li><p>Bootstrapping samples is less sensitive to model misspecification</p></li>
+<li><p>Bootstrapping samples may be less sensitive to the assumptions concerning independence or exchangeability of the error terms</p></li>
+</ul>
+</section></section>
+<section><section id="boostrap-failures" class="titleslide slide level1"><h1>Boostrap: failures</h1></section><section id="boostrap-failures-1" class="slide level2">
+<h1>Boostrap failures</h1>
+<p>Bootstrap can fail</p>
+<ul>
+<li>when sample size is too small</li>
+<li>for estimating extremal statistics</li>
+<li>when observations are dependent</li>
+<li>for survey sampling</li>
+</ul>
+<p><em>Note:</em> the book “Bootstrap methods: a guide for practitioners and researchers” by Michael R. Chernick contains more information on this.</p>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19041)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.3      stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.12  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

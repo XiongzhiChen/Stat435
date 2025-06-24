@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 5b</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 5b</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="different-error-measures" class="titleslide slide level1"><h1>Different Error Measures</h1></section><section id="hypothesis-testing" class="slide level2">
+<h1>Hypothesis testing</h1>
+<ul>
+<li>Null hypothesis <span class="math inline">\(H_0\)</span>: natural status</li>
+<li><p>Alternative hypothesis <span class="math inline">\(H_1\)</span>: status under intervention; complement to <span class="math inline">\(H_0\)</span></p></li>
+<li><p>Test statistic <span class="math inline">\(T\)</span>, rejection region <span class="math inline">\(\mathcal{T}\)</span> and rejection rule <span class="math inline">\(\mathcal{R}\)</span>: reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(T \in \mathcal{T}\)</span></p></li>
+<li>Type I error <span class="math inline">\(\alpha\)</span>: probability of rejecting <span class="math inline">\(H_0\)</span> when it is true</li>
+<li>Type II error <span class="math inline">\(\gamma\)</span>: probability of not rejecting <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is false</li>
+<li><p>Power: <span class="math inline">\(1- \gamma\)</span></p></li>
+</ul>
+</section><section id="example-1-one-hypothesis" class="slide level2">
+<h1>Example 1: One Hypothesis</h1>
+<ul>
+<li><p>Linear model: <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X\)</span></p></li>
+<li><p><span class="math inline">\(H_0: \beta_1 =0\)</span> versus <span class="math inline">\(H_1:\beta_1 \ne 0\)</span></p></li>
+<li><p>Pick type I error level <span class="math inline">\(\alpha \in (0,1)\)</span></p></li>
+<li><p>Test statistic <span class="math inline">\(T\)</span>; reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\vert T \vert &gt; c_{\alpha}\)</span></p></li>
+<li><p>How to interpret <span class="math inline">\(\alpha\)</span>?</p></li>
+</ul>
+</section><section id="example-2-many-hypotheses" class="slide level2">
+<h1>Example 2: Many Hypotheses</h1>
+<ul>
+<li><p>Linear model: <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X + \cdots + \beta_{m} X_{m}\)</span></p></li>
+<li><p><span class="math inline">\(H_{i0}: \beta_i =0\)</span> versus <span class="math inline">\(H_{i1}:\beta_i \ne 0\)</span>, <span class="math inline">\(i=1,\ldots,m\)</span></p></li>
+<li><p>Test all <span class="math inline">\(H_{i0},i=1,\ldots,m\)</span> simultaneously</p></li>
+<li><p>If each <span class="math inline">\(H_{i0}, i=1,\ldots,m\)</span> is tested individually at type I error level <span class="math inline">\(\alpha\)</span>, what will happen to the number of rejected true null hypotheses?</p></li>
+</ul>
+</section><section id="family-wise-error-rate-fwer" class="slide level2">
+<h1>Family-wise error rate (FWER)</h1>
+<ul>
+<li><p><span class="math inline">\(H_{i0}: \beta_i =0\)</span> versus <span class="math inline">\(H_{i1}:\beta_i \ne 0\)</span>, <span class="math inline">\(i=1,\ldots,m\)</span></p></li>
+<li><p>Rejection of a true null hypothesis is called “false rejection’’</p></li>
+<li><p><span class="math inline">\(V\)</span>: number of false rejections, i.e., rejected true <span class="math inline">\(H_{i0}\)</span>’s</p></li>
+<li><p>Family-wise error rate (FWER): <span class="math display">\[\Pr(V \ge 1) = 1 - \Pr(V=0)\]</span></p></li>
+<li><p>Control FWER: <span class="math inline">\(\Pr(V \ge 1) \le \alpha\)</span></p></li>
+</ul>
+</section><section id="family-wise-error-rate-fwer-1" class="slide level2">
+<h1>Family-wise error rate (FWER)</h1>
+<ul>
+<li><p>Widely used, e.g., by FDA</p></li>
+<li><p>Good when there are only a few hypotheses to test simultaneously</p></li>
+<li><p>Too stringent when there are many hypotheses to test simultaneously, and hence may suffer loss in power</p></li>
+<li><p>What about controlling “k-FWER”, i.e., <span class="math display">\[\Pr(V \ge k) \le \alpha ?\]</span></p></li>
+</ul>
+</section></section>
+<section><section id="false-discovery-rate" class="titleslide slide level1"><h1>False Discovery Rate</h1></section><section id="false-discovery-rate-1" class="slide level2">
+<h1>False discovery rate</h1>
+<ul>
+<li><p>Allow false rejections, and hence much less stringent than FWER</p></li>
+<li><p>Modern standard on testing many hypotheses simultaneously</p></li>
+<li>Scalable to many, many hypotheses simultaneously
+<ul>
+<li>GWAS study with a few millions of hypotheses to test simultaneously</li>
+<li>Gene expression study with a few thousand hypotheses to test simultaneously</li>
+</ul></li>
+<li><p>A standard criterion in model/variable selection</p></li>
+</ul>
+</section><section id="classification-table" class="slide level2">
+<h1>Classification table</h1>
+<ul>
+<li><span class="math inline">\(H_{i0}: \beta_i =0\)</span> versus <span class="math inline">\(H_{i1}:\beta_i \ne 0\)</span>, <span class="math inline">\(i=1,\ldots,m\)</span></li>
+</ul>
+<p><img src="classificationTable.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="false-discovery-rate-fdr" class="slide level2">
+<h1>False discovery rate (FDR)</h1>
+<ul>
+<li><p><span class="math inline">\(\mathcal{R}\)</span>: decision rule</p></li>
+<li><p><span class="math inline">\(V\)</span>: number of false rejections</p></li>
+<li><p><span class="math inline">\(R\)</span>: number of rejections</p></li>
+<li><p>False discovery proportion: <span class="math inline">\(\mathrm{FDP}(\mathcal{R}) = V/\max\{R,1\}\)</span></p></li>
+<li><p>False discovery rate: <span class="math display">\[\mathrm{FDR}(\mathcal{R}) = E\left[\frac{V}{\max\{R,1\}}\right]\]</span></p></li>
+</ul>
+</section><section id="fdr-example" class="slide level2">
+<h1>FDR: Example</h1>
+<ul>
+<li><p><span class="math inline">\(m=5\)</span> hypothesis <span class="math inline">\(H_{i0}: \beta_i =0, i=1,2,3,4,5\)</span></p></li>
+<li><p><span class="math inline">\(H_{i0},i=1,2,3\)</span> are true nulls</p></li>
+<li><p>Decision rule <span class="math inline">\(\mathcal{R}\)</span> rejects <span class="math inline">\(H_{i1}, H_{i2},H_{i4}, H_{i5}\)</span></p></li>
+<li><p>What is the false discovery proportion?</p></li>
+</ul>
+</section><section id="control-false-discovery-rate" class="slide level2">
+<h1>Control false discovery rate</h1>
+<ul>
+<li><p>Computing exact false discovery rate can be quite difficult</p></li>
+<li>Control FDR at a nominal level:
+<ul>
+<li><p>Pick a nominal level <span class="math inline">\(\alpha \in (0,1)\)</span></p></li>
+<li><p>Find a decision rule <span class="math inline">\(\mathcal{R}\)</span>, such that <span class="math display">\[ \mathrm{FDR}(\mathcal{R}) \le \alpha \]</span></p></li>
+</ul></li>
+<li><p>Find such a decision rule can be hard in general</p></li>
+</ul>
+</section></section>
+<section><section id="benjamini-hochberg-procedure" class="titleslide slide level1"><h1>Benjamini-Hochberg procedure</h1></section><section id="benjamini-hochberg-procedure-1" class="slide level2">
+<h1>Benjamini-Hochberg procedure</h1>
+<ul>
+<li>Given: <span class="math inline">\(m\)</span> null hypotheses <span class="math inline">\(H_{i0}\)</span></li>
+<li>Given: <span class="math inline">\(m\)</span> p-values; <span class="math inline">\(p_i\)</span> for testing <span class="math inline">\(H_{i0}\)</span></li>
+<li>Benjamini-Hochberg (BH) procedure
+<ul>
+<li>Order p-values into <span class="math inline">\(p_{(1)} \le p_{(2)} \le \cdots \le p_{(m)}\)</span></li>
+<li>Set <span class="math inline">\(r = \max \left\{ k \in \{1,\ldots,m \}: p_{(i)} \le i \alpha m^{-1} \right\}\)</span></li>
+<li>Rejection rule:
+<ul>
+<li>If <span class="math inline">\(r\)</span> is defined, reject the <span class="math inline">\(r\)</span> <span class="math inline">\(H_{i0}\)</span>’s corresponding to <span class="math inline">\(p_{(1)},\ldots,p_{(r)}\)</span></li>
+<li>If <span class="math inline">\(r\)</span> is not defined, do not reject any <span class="math inline">\(H_{i0}\)</span></li>
+</ul></li>
+</ul></li>
+<li>Under some conditions, FDR of BH procedure is upper bounded by <span class="math inline">\(\alpha\)</span></li>
+</ul>
+</section><section id="bh-procedure-example" class="slide level2">
+<h1>BH procedure: example</h1>
+<ul>
+<li><p><span class="math inline">\(5\)</span> hypotheses <span class="math inline">\(H_{10}, H_{20},H_{30},H_{40},H_{50}\)</span></p></li>
+<li><p><span class="math inline">\(p_1 = 0.03\)</span>, <span class="math inline">\(p_2 = 0.1\)</span>, <span class="math inline">\(p_3 = 0.02\)</span>, <span class="math inline">\(p_4 = 0.05\)</span>, <span class="math inline">\(p_5 = 0.02\)</span></p></li>
+<li><p>Implement BH procedure at nominal FDR level <span class="math inline">\(\alpha =0.05\)</span></p></li>
+</ul>
+</section></section>
+<section><section id="post-selection-inference" class="titleslide slide level1"><h1>Post-selection inference</h1></section><section id="linear-model-and-lasso" class="slide level2">
+<h1>Linear model and LASSO</h1>
+<ul>
+<li><p>Model: <span class="math display">\[Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\]</span></p></li>
+<li><p>The LASSO estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}^L_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> is the <span class="math inline">\({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\)</span> that minimizes <span class="math display">\[
+L_1(\beta_0,\boldsymbol{\beta},\lambda)= \frac{1}{2}\sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p\vert \beta_i \vert
+\]</span></p></li>
+<li><p>The optimal value <span class="math inline">\(\lambda^{\ast}\)</span> of the tuning parameter <span class="math inline">\(\lambda\)</span> is often determined by <span class="math inline">\(k\)</span>-fold cross-validation</p></li>
+</ul>
+</section><section id="linear-ridge-regression" class="slide level2">
+<h1>Linear Ridge regression</h1>
+<ul>
+<li><p>Model: <span class="math display">\[Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\]</span></p></li>
+<li><p>The LASSO estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}^R_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> is the <span class="math inline">\({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\)</span> that minimizes <span class="math display">\[
+L_1(\beta_0,\boldsymbol{\beta},\lambda)= \frac{1}{2}\sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p  \beta_i^2
+\]</span></p></li>
+<li><p>The optimal value <span class="math inline">\(\lambda^{\ast}\)</span> of the tuning parameter <span class="math inline">\(\lambda\)</span> is often determined by <span class="math inline">\(k\)</span>-fold cross-validation</p></li>
+</ul>
+</section><section id="penalized-logistic-regression" class="slide level2">
+<h1>Penalized logistic regression</h1>
+<ul>
+<li>LASSO logistic regression when some <span class="math inline">\(\beta_{i}\)</span>’s are zero: <span class="math display">\[
+\hat{\beta}=\left(  \hat{\beta}_{0},\hat{\beta}_{1},\ldots,\hat{\beta}
+_{m}\right)  \in\operatorname*{argmin}_{\beta}\left[ -\log L\left(  \beta\right)
++\lambda\sum_{j=1}^{m}\left\vert \beta_{j}\right\vert \right]
+\]</span></li>
+<li>Ridge logistic regression: <span class="math display">\[
+\hat{\beta}=\left(  \hat{\beta}_{0},\hat{\beta}_{1},\ldots,\hat{\beta}
+_{m}\right)  \in\operatorname*{argmin}_{\beta}\left[ - \log L\left(  \beta\right)
++\lambda\sum_{j=1}^{m}\left\vert \beta_{j}\right\vert ^{2}\right]
+\]</span></li>
+<li>The optimal value <span class="math inline">\(\lambda^{\ast}\)</span> of the tuning parameter <span class="math inline">\(\lambda\)</span> is often determined by <span class="math inline">\(k\)</span>-fold cross-validation</li>
+</ul>
+<p><strong>Note:</strong> <span class="math inline">\(\operatorname*{argmin}_{\beta}\)</span> refers to optimal <span class="math inline">\(\beta^{\ast}\)</span> which minimizes the corresponding objective function</p>
+</section><section id="post-selection-inference-1" class="slide level2">
+<h1>Post-selection inference</h1>
+<ul>
+<li><p>Post-selection inference often aims at controlling false discovery rate (FDR)</p></li>
+<li><p>Benjamini-Hochberg procedure is used to control FDR</p></li>
+<li><p>Bias correction method or knock-off method can be used</p></li>
+</ul>
+<p><strong>Note:</strong> Please see practice files</p>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.12     stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.13  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

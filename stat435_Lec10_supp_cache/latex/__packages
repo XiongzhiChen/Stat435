@@ -1,0 +1,17 @@
+base
+knitr
+ISLR
+dplyr
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+stringr
+forcats
+broom
+bindrcpp
+Matrix
+foreach
+glmnet

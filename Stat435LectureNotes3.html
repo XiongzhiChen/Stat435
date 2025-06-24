@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 3</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 3</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="linear-regression-with-a-qualitative-predictor" class="titleslide slide level1"><h1>Linear regression with a qualitative predictor</h1></section><section id="motivation" class="slide level2">
+<h1>Motivation</h1>
+<ul>
+<li><p>How is <code>Balance</code> of a credit card related to a user’s <code>Gender</code>?</p></li>
+<li><p>How is <code>Balance</code> of a credit card related to a user’s <code>Ethnicity</code>?</p></li>
+</ul>
+</section><section id="motivation-1" class="slide level2">
+<h1>Motivation</h1>
+<p><img src="Stat435LectureNotes3_files/figure-revealjs/addata2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</section><section id="model-1-2-levels" class="slide level2">
+<h1>Model 1: 2 levels</h1>
+<ul>
+<li>Coding: <code>Gender</code> has 2 levels, <code>Male</code> and <code>Female</code></li>
+<li><em>dummy variable</em>: <span class="math inline">\(x_i =0\)</span> if <span class="math inline">\(i\)</span>th person is <code>Female</code> and <span class="math inline">\(x_i =1\)</span> if <span class="math inline">\(i\)</span>th person is <code>Male</code></li>
+<li>Model: <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span>, which induces 2 submodels:</li>
+<li><span class="math inline">\(y_i = \beta_0 + \beta_1 + \varepsilon_i\)</span> if <span class="math inline">\(i\)</span>th person is <code>Male</code></li>
+<li><span class="math inline">\(y_i = \beta_0 + \varepsilon_i\)</span> if <span class="math inline">\(i\)</span>th person is <code>Female</code></li>
+</ul>
+<p><em>Note:</em> dummy variable follows coding by R, for which the first level <code>Female</code> is the baseline</p>
+</section><section id="model-1-2-levels-1" class="slide level2">
+<h1>Model 1: 2 levels</h1>
+<p>Model: <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span></p>
+<ul>
+<li><span class="math inline">\(x_i =0\)</span> if <span class="math inline">\(i\)</span>th person is <code>Female</code>, and <span class="math inline">\(x_i =1\)</span> if <span class="math inline">\(i\)</span>th person is <code>Male</code></li>
+<li><span class="math inline">\(\beta_0\)</span>: average <code>Balance</code> for females</li>
+<li><span class="math inline">\(\beta_1\)</span>: average difference in balance between <em>males and females</em></li>
+</ul>
+<p><em>Remark:</em> coding of a dummy variable is arbitrary and should be easily interpretable</p>
+</section><section id="fitting-the-model-1" class="slide level2">
+<h1>Fitting the Model 1</h1>
+<pre><code>
+Call:
+lm(formula = Balance ~ Gender, data = creditData)
+
+Coefficients:
+(Intercept)   GenderMale  
+     529.54       -19.73  </code></pre>
+<ul>
+<li><code>Female</code>s have an average <code>balance</code> of $529.54; <code>Female</code> baseline</li>
+<li><code>Male</code>s have an average <code>balance</code> of $(529.54-19.73)= $509.80</li>
+</ul>
+<p><em>Note:</em> in R, by default the first level <code>Female</code> is the baseline</p>
+</section><section id="testing-the-model-1" class="slide level2">
+<h1>Testing the Model 1</h1>
+<pre><code>
+Call:
+lm(formula = Balance ~ Gender, data = creditData)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-529.54 -455.35  -60.17  334.71 1489.20 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   529.54      31.99  16.554   &lt;2e-16 ***
+GenderMale    -19.73      46.05  -0.429    0.669    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 460.2 on 398 degrees of freedom
+Multiple R-squared:  0.0004611, Adjusted R-squared:  -0.00205 
+F-statistic: 0.1836 on 1 and 398 DF,  p-value: 0.6685</code></pre>
+<ul>
+<li>If model assumptions are met, <code>Gender</code> is not significant on affecting average <code>balance</code> at type I error level 0.05 based on F-statistic (or the p-value of <code>GenderMale</code>)</li>
+</ul>
+</section><section id="model-2-3-levels" class="slide level2">
+<h1>Model 2: 3 levels</h1>
+<p><code>Ethnicity</code> has 3 levels <code>African American</code> (1st level and baseline in R), <code>Asian</code>, and <code>Caucasian</code>. <em>2 dummy variables</em> are needed:</p>
+<ul>
+<li><span class="math inline">\(x_{i1} =0\)</span> if <span class="math inline">\(i\)</span>th person is <em>not</em> <code>Asian</code>, and <span class="math inline">\(x_{i1} =1\)</span> if <span class="math inline">\(i\)</span>th person is <code>Asian</code></li>
+<li><span class="math inline">\(x_{i2} =0\)</span> if <span class="math inline">\(i\)</span>th person is <em>not</em> <code>Caucasian</code>, and <span class="math inline">\(x_{i2} =1\)</span> if <span class="math inline">\(i\)</span>th person is <code>Caucasian</code></li>
+<li>Model: <span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} +\beta_2 x_{i2} + \varepsilon_i\]</span></li>
+</ul>
+<!-- ```{r,cache=T,dependson='addata2'} -->
+<!-- levels(creditData$Ethnicity) -->
+<!-- ``` -->
+</section><section id="model-2-3-levels-1" class="slide level2">
+<h1>Model 2: 3 levels</h1>
+<p>Model: <span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} +\beta_2 x_{i2} + \varepsilon_i\]</span></p>
+<ul>
+<li>Codings on previous slide</li>
+<li><span class="math inline">\(\beta_0\)</span>: average <code>balance</code> for <code>African American</code></li>
+<li><span class="math inline">\(\beta_1\)</span>: average difference in <code>balance</code> between <code>Asian</code> and <code>African American</code></li>
+<li><span class="math inline">\(\beta_2\)</span>: average difference in <code>balance</code> between <code>Caucasian</code> and <code>African American</code></li>
+</ul>
+</section><section id="fitting-the-model-2" class="slide level2">
+<h1>Fitting the Model 2</h1>
+<pre><code>
+Call:
+lm(formula = Balance ~ Ethnicity, data = creditData)
+
+Coefficients:
+       (Intercept)      EthnicityAsian  EthnicityCaucasian  
+            531.00              -18.69              -12.50  </code></pre>
+<ul>
+<li><code>African American</code>s have an average <code>balance</code> of $531</li>
+<li><code>Asian</code>s have an average <code>balance</code> of $(531-18.69)= $512.31</li>
+<li><code>Caucasian</code>s have an average <code>balance</code> of $(531-12.50)= $518.5</li>
+</ul>
+</section><section id="testing-the-model-2" class="slide level2">
+<h1>Testing the Model 2</h1>
+<pre><code>
+Call:
+lm(formula = Balance ~ Ethnicity, data = creditData)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-531.00 -457.08  -63.25  339.25 1480.50 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          531.00      46.32  11.464   &lt;2e-16 ***
+EthnicityAsian       -18.69      65.02  -0.287    0.774    
+EthnicityCaucasian   -12.50      56.68  -0.221    0.826    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 460.9 on 397 degrees of freedom
+Multiple R-squared:  0.0002188, Adjusted R-squared:  -0.004818 
+F-statistic: 0.04344 on 2 and 397 DF,  p-value: 0.9575</code></pre>
+<p>If model assumptions are met, at type I error level 0.05, <code>Ethnicity</code> does not significantly affect average <code>balance</code> based on the F-statistic</p>
+</section><section id="testing-the-model-2-1" class="slide level2">
+<h1>Testing the Model 2</h1>
+<pre><code># A tibble: 3 x 5
+  term               estimate std.error statistic  p.value
+  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)           531.       46.3    11.5   1.77e-26
+2 EthnicityAsian        -18.7      65.0    -0.287 7.74e- 1
+3 EthnicityCaucasian    -12.5      56.7    -0.221 8.26e- 1</code></pre>
+<p>If model assumptions are met and <code>Ethnicity</code> does not significantly affect average <code>balance</code>, there is no need to check</p>
+<ul>
+<li>whether there is significant difference in average <code>balance</code> between <code>Asian</code>s and <code>African American</code>s or between <code>Caucasian</code>s and <code>African American</code>s</li>
+</ul>
+<!-- # ```{r,eval=F} -->
+<!-- # #take "Asian" as baseline -->
+<!-- # lm(Balance~relevel(Ethnicity,ref="Asian"),data=creditData) -->
+<!-- # ``` -->
+</section><section id="diagnostics" class="slide level2">
+<h1>Diagnostics</h1>
+<p>Diagnostics are the same as those for simple linear regression with a quantitative predictor.</p>
+<p><img src="Stat435LectureNotes3_files/figure-revealjs/unnamed-chunk-6-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="multiple-linear-regression" class="titleslide slide level1"><h1>Multiple linear regression</h1></section><section id="motivation-2" class="slide level2">
+<h1>Motivation</h1>
+<ul>
+<li><p>How is <code>sales</code> (in thousands of units) for a particular product related to advertising budgets (in thousands of dollars) for <code>TV</code>, <code>radio</code> <em>and</em> <code>newspaper</code>?</p></li>
+<li><p>Model: <code>sales</code> = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1 \times\)</span> <code>TV</code> + <span class="math inline">\(\beta_2\times\)</span> <code>radio</code> + <span class="math inline">\(\beta_3 \times\)</span> <code>newspaper</code> + <span class="math inline">\(\varepsilon\)</span></p></li>
+</ul>
+<p>We want to examine the relationship between <code>sales</code> and budgets for <code>TV</code>, <code>radio</code> and <code>newspaper</code> <em>jointly</em>, instead of <em>marginally</em>.</p>
+</section><section id="model" class="slide level2">
+<h1>Model</h1>
+<p>Response <span class="math inline">\(Y\)</span> and <span class="math inline">\(p\)</span> predictors <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>, bound by model</p>
+<p><span class="math display">\[Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \varepsilon\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\beta_j\)</span>: change in units in <span class="math inline">\(E(Y)\)</span> for a unit change in <span class="math inline">\(X_j\)</span> while holding all other predictors fixed</p></li>
+<li><p><span class="math inline">\(\varepsilon\)</span>: random error term with <span class="math inline">\(E(\varepsilon)=0\)</span> and <span class="math inline">\(Var(\varepsilon)=\sigma^2\)</span></p></li>
+<li><p>Estimate coefficient vector <span class="math inline">\(\boldsymbol{\beta}=(\beta_0,\beta_1,\ldots,\beta_p)\)</span> by the <em>least squares method</em>; estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\hat{\beta}_0,\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> as <em>LSE (least squares estimate)</em></p></li>
+</ul>
+</section><section id="fitting-model" class="slide level2">
+<h1>Fitting model</h1>
+<p>Joint model vs marginal model:</p>
+<pre><code># A tibble: 4 x 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  2.94      0.312       9.42  1.27e-17
+2 TV           0.0458    0.00139    32.8   1.51e-81
+3 radio        0.189     0.00861    21.9   1.51e-54
+4 newspaper   -0.00104   0.00587    -0.177 8.60e- 1</code></pre>
+<pre><code># A tibble: 2 x 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  12.4       0.621      19.9  4.71e-49
+2 newspaper     0.0547    0.0166      3.30 1.15e- 3</code></pre>
+<pre><code># A tibble: 2 x 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)   7.03     0.458        15.4 1.41e-35
+2 TV            0.0475   0.00269      17.7 1.47e-42</code></pre>
+</section><section id="testing-on-all-coefficients" class="slide level2">
+<h1>Testing on all coefficients</h1>
+<ul>
+<li>Is there a relationship between the response and any of the predictors? Namely, is <span class="math inline">\(H_0: \beta_1=\beta_2=\cdots=\beta_p=0\)</span> true?</li>
+<li>Test statistic: F-statistic <span class="math display">\[F=\frac{(TSS-RSS)/p}{RSS/(n-p-1)},\]</span> where <span class="math inline">\(TSS=\sum_{i=1}^n (y_i - \bar{y})^2\)</span> with <span class="math inline">\(\bar{y}=n^{-1}\sum_{i=1}^n y_i\)</span> and <span class="math inline">\(RSS=\sum_{i=1}^n (y_i - \hat{y}_i)^2\)</span></li>
+<li>If <span class="math inline">\(H_0\)</span> is true and the linear model assumptions are correct, F-statistic should be close to 1 on average; under suitable conditions, F-statistic approximately follows an F-distribution</li>
+</ul>
+</section><section id="testing-on-all-coefficients-1" class="slide level2">
+<h1>Testing on all coefficients</h1>
+<p>Testing <span class="math inline">\(H_0: \beta_1=\beta_2=\cdots=\beta_p=0\)</span>:</p>
+<pre><code>   value    numdf    dendf 
+570.2707   3.0000 196.0000 
+       value 
+1.575227e-96 </code></pre>
+<p>F-statistic: 570.3 with numerator degrees of freedom 3 and denominator degrees of freedom 196; p-value: &lt; 2.2e-16</p>
+<ul>
+<li>Conclusion: reject <span class="math inline">\(H_0\)</span>, meaning that <em>at least one of the predictors has a relationship with the response</em>.</li>
+</ul>
+</section><section id="testing-on-some-coefficients" class="slide level2">
+<h1>Testing on some coefficients</h1>
+<p>Is there no relationship between the response and some predictors? Namely, for some <span class="math inline">\(1 \le q \le p\)</span>, test <span class="math display">\[H_0: \beta_{p-q+1}=\beta_{p-q+2}= \ldots = \beta_{p}=0\]</span></p>
+<ul>
+<li>Fit <span class="math inline">\(M_0: Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_{p-q} X_{p-q} + \varepsilon\)</span>, and obtain its residual sum of squares <span class="math inline">\(RSS_0\)</span></li>
+<li>Fit <span class="math inline">\(M_1: Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_{p-q} X_{p-q} + \ldots + \beta_p X_p+\varepsilon\)</span>, and obtain its residual sum of squares <span class="math inline">\(RSS\)</span></li>
+<li>Use test statistic <span class="math display">\[F = \frac{(RSS_0 - RSS)/q}{RSS/(n-p-1)}\]</span></li>
+</ul>
+</section><section id="testing-on-some-coefficients-1" class="slide level2">
+<h1>Testing on some coefficients</h1>
+<p>When <span class="math inline">\(H_0\)</span> and model assumptions are true, test statistic <span class="math display">\[F = \frac{(RSS_0 - RSS)/q}{RSS/(n-p-1)}\]</span> approximately follows an F-distribution with numerator degrees of freedom <span class="math inline">\(q\)</span> and denominator degrees of freedom <span class="math inline">\(n-p-1\)</span></p>
+</section><section id="testing-on-model-fit" class="slide level2">
+<h1>Testing on model fit</h1>
+<ul>
+<li><span class="math inline">\(R^2\)</span> measures the proportion of variance that is explained by the postulated model</li>
+<li>With three predictors:</li>
+</ul>
+<pre class="r"><code>&gt; FitL3c = lm(sales~TV+radio+newspaper,data=adData)
+&gt; summary(FitL3c)$r.squared
+[1] 0.8972106</code></pre>
+<ul>
+<li>With one predictor:</li>
+</ul>
+<pre class="r"><code>&gt; FitL3d = lm(sales~newspaper,data=adData)
+&gt; summary(FitL3d)$r.squared
+[1] 0.05212045</code></pre>
+</section></section>
+<section><section id="interaction-terms" class="titleslide slide level1"><h1>Interaction terms</h1></section><section id="interaction-terms-i" class="slide level2">
+<h1>Interaction terms: I</h1>
+<p>Consider predicting the average <code>sales</code> (in thousands of dollars) via budgets in advertisement through <code>TV</code> and <code>Radio</code>.</p>
+<ul>
+<li><p>Model 1: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1 \times\)</span> <code>TV</code> + <span class="math inline">\(\beta_2 \times\)</span> <code>Radio</code></p></li>
+<li><p>Model 1: how is the change (in unit) in <span class="math inline">\(E\)</span>(<code>sales</code>) relates to a unit change in <code>TV</code> and/or <code>Radio</code>?</p></li>
+<li><p>Is model 1 sensible when changes (in unit) in <span class="math inline">\(E\)</span>(<code>sales</code>) are different for a unit change in <code>TV</code> when <code>Radio</code> takes different values?</p></li>
+</ul>
+</section><section id="interaction-terms-i-1" class="slide level2">
+<h1>Interaction terms: I</h1>
+<ul>
+<li>If change (in unit) in <span class="math inline">\(E\)</span>(<code>sales</code>) can be different for a unit change in <code>TV</code> at different values of <code>Radio</code> or for a unit change in <code>Radio</code> at different values of <code>TV</code>, then the model <span class="math display">\[
+E(\textsf{sales}) = \beta_0 + \beta_1 \times\textsf{TV} + \beta_2 \times\textsf{Radio}
+\]</span> is no longer suitable<br />
+</li>
+<li>One way to account for this is to introduce an <em>interaction</em> term and use model <span class="math display">\[
+E(\textsf{sales}) = \beta_0 + \beta_1 \times \textsf{TV} + \beta_2 \times\textsf{Radio} + \beta_3 \times\textsf{TV} \times\textsf{Radio}
+\]</span></li>
+<li>Does the following model do the job? <span class="math display">\[
+E(\textsf{sales}) = \beta_0 + \beta_1 \times \textsf{TV} + \beta_2 \times \textsf{Radio} + \beta_3 \times \textsf{TV}^2+ \beta_4 \times \textsf{Radio}^2
+\]</span></li>
+</ul>
+</section><section id="interaction-terms-i-2" class="slide level2">
+<h1>Interaction terms: I</h1>
+<p>The model <span class="math display">\[
+E(\textsf{sales}) = \beta_0 + \beta_1 \times \textsf{TV} + \beta_2 \times\textsf{Radio} + \beta_3 \times\textsf{TV} \times\textsf{Radio}
+\]</span> can be written as <span class="math display">\[
+E(\textsf{sales}) = \beta_0 + \beta_1 \times \textsf{TV} + (\beta_2+  \beta_3 \times\textsf{TV})\times\textsf{Radio}
+\]</span> or as <span class="math display">\[
+E(\textsf{sales}) = \beta_0 + (\beta_1 +\beta_3 \times\textsf{Radio})\times \textsf{TV} + \beta_2 \times\textsf{Radio}
+\]</span></p>
+</section><section id="interaction-terms-i-3" class="slide level2">
+<h1>Interaction terms: I</h1>
+<p>Fit the model with interaction:</p>
+<pre><code>
+Call:
+lm(formula = sales ~ TV * radio, data = adData)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.3366 -0.4028  0.1831  0.5948  1.5246 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 6.750e+00  2.479e-01  27.233   &lt;2e-16 ***
+TV          1.910e-02  1.504e-03  12.699   &lt;2e-16 ***
+radio       2.886e-02  8.905e-03   3.241   0.0014 ** 
+TV:radio    1.086e-03  5.242e-05  20.727   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.9435 on 196 degrees of freedom
+Multiple R-squared:  0.9678,    Adjusted R-squared:  0.9673 
+F-statistic:  1963 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+</section><section id="interaction-terms-ii" class="slide level2">
+<h1>Interaction terms: II</h1>
+<p>Consider predicting the average <code>Balance</code> (of a credit card) using information on if a user is a <code>Student</code> (“Yes” or “No”) and his/her <code>Income</code></p>
+<ul>
+<li>Model 0: <span class="math inline">\(E\)</span>(<code>Balance</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1 \times\)</span> <code>Income</code></li>
+<li>Model 1: <span class="math inline">\(E\)</span>(<code>Balance</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1 \times\)</span> <code>Student</code> + <span class="math inline">\(\beta_2 \times\)</span> <code>Income</code></li>
+<li>Model 2: <span class="math inline">\(E\)</span>(<code>Balance</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1 \times\)</span> <code>Student</code> + <span class="math inline">\(\beta_2 \times\)</span> <code>Income</code> + <span class="math inline">\(\beta_3 \times\)</span> <code>Student</code> <span class="math inline">\(\times\)</span> <code>Income</code></li>
+</ul>
+<p>Coding in R: <code>Student</code>=“No” is coded as 0 and the baseline, and <code>Student</code>=“Yes” as 1</p>
+</section><section id="interaction-terms-ii-1" class="slide level2">
+<h1>Interaction terms: II</h1>
+<p><img src="Stat435LectureNotes3_files/figure-revealjs/unnamed-chunk-11-1.png" width="95%" style="display: block; margin: auto;" /></p>
+</section><section id="interaction-terms-ii-2" class="slide level2">
+<h1>Interaction terms: II</h1>
+<p>Fit the model with interaction:</p>
+<pre><code>
+Call:
+lm(formula = Balance ~ Student * Income, data = creditData)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-773.39 -325.70  -41.13  321.65  814.04 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       200.6232    33.6984   5.953 5.79e-09 ***
+StudentYes        476.6758   104.3512   4.568 6.59e-06 ***
+Income              6.2182     0.5921  10.502  &lt; 2e-16 ***
+StudentYes:Income  -1.9992     1.7313  -1.155    0.249    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 391.6 on 396 degrees of freedom
+Multiple R-squared:  0.2799,    Adjusted R-squared:  0.2744 
+F-statistic:  51.3 on 3 and 396 DF,  p-value: &lt; 2.2e-16</code></pre>
+<!-- ## Testing on model fit -->
+<!-- ```{r,echo=F,fig.width=10} -->
+<!-- knitr::include_graphics("./fig3_5.png") -->
+<!-- ``` -->
+</section></section>
+<section><section id="diagnostics-1" class="titleslide slide level1"><h1>Diagnostics</h1></section><section id="diagnostics-2" class="slide level2">
+<h1>Diagnostics</h1>
+<ul>
+<li>Diagnostics for multiple linear regression are very similar to those for simple linear regression with a quantitative predictor.</li>
+<li>Additional task: check on collinearity and <em>variance inflaction factor (VIF)</em></li>
+</ul>
+</section><section id="collinearity" class="slide level2">
+<h1>Collinearity</h1>
+<p>Collinearity</p>
+<ul>
+<li>refers to the situation in which two or more predictor variables are closely related to each other</li>
+<li><em>often inflates the variances of estimated coefficients and makes the model unstable</em></li>
+<li>can be measured by the <em>variance inflaction factor (VIF)</em></li>
+</ul>
+<p><em>A VIF value that exceeds 5 or 10 indicates a problematic amount of collinearity</em></p>
+<p><em>Note:</em> VIF(<span class="math inline">\(\hat{\beta}_j) = \frac{1}{1-R^2_{X_j|X_{-j}}}\)</span>; collinearity implies <span class="math inline">\(R^2_{X_j|X_{-j}} \approx 1\)</span></p>
+</section><section id="collinearity-1" class="slide level2">
+<h1>Collinearity</h1>
+<p>Collinearity among <code>Limit</code> and <code>Rating</code>:</p>
+<p><img src="Stat435LectureNotes3_files/figure-revealjs/L3D1-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</section><section id="colllinearity" class="slide level2">
+<h1>Colllinearity</h1>
+<p>Model <code>Balance~Age+Limit</code>:</p>
+<pre><code># A tibble: 3 x 5
+  term        estimate std.error statistic   p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept) -173.     43.8         -3.96 9.01e-  5
+2 Age           -2.29    0.672       -3.41 7.23e-  4
+3 Limit          0.173   0.00503     34.5  1.63e-121</code></pre>
+<p>Model <code>Balance~Rating+Limit</code>:</p>
+<pre><code># A tibble: 3 x 5
+  term         estimate std.error statistic  p.value
+  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept) -378.       45.3       -8.34  1.21e-15
+2 Rating         2.20      0.952      2.31  2.13e- 2
+3 Limit          0.0245    0.0638     0.384 7.01e- 1</code></pre>
+<p><em>Note:</em> compare standard errors of <span class="math inline">\(\hat{\beta}_{\textsf{Limit}}\)</span> in both models</p>
+</section><section id="colllinearity-1" class="slide level2">
+<h1>Colllinearity</h1>
+<pre class="r"><code>&gt; FitL3f = lm(Balance~Age+Rating+Limit,data=creditData)
+&gt; library(car)
+&gt; vif(FitL3f)
+       Age     Rating      Limit 
+  1.011385 160.668301 160.592880 </code></pre>
+<ul>
+<li>VIFs indicate considerable collinearity in the data</li>
+</ul>
+<p>In case of collinearity, either drop one of the problematic variables or combine some closely related variables</p>
+</section></section>
+<section><section id="non-linear-models" class="titleslide slide level1"><h1>Non-linear models</h1></section><section id="non-linear-relationship" class="slide level2">
+<h1>Non-linear relationship</h1>
+<p>If there is evidence on a non-linear relationship between response and predictors, we can</p>
+<ul>
+<li>add high-order terms into the model (or employ more advanced non-linear methods); e.g., <span class="math display">\[E(Y)=\beta_0+\beta_1 X + \beta_2 X^2\]</span></li>
+<li>transform predictors (and/or response); e.g., e.g., <span class="math inline">\(E(Y)=\beta_0+\beta_1 \times f(X)\)</span>, where <span class="math inline">\(f\)</span> can be <span class="math inline">\(\log(X)\)</span> or <span class="math inline">\(\sqrt{X}\)</span></li>
+</ul>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19041)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] car_3.0-2     carData_3.0-2 broom_0.5.1   gridExtra_2.3
+[5] ggplot2_3.1.0 knitr_1.21   
+
+loaded via a namespace (and not attached):
+ [1] revealjs_0.9      tidyselect_0.2.5  xfun_0.4         
+ [4] purrr_0.2.5       haven_2.0.0       lattice_0.20-35  
+ [7] colorspace_1.3-2  generics_0.0.2    htmltools_0.3.6  
+[10] yaml_2.2.0        utf8_1.1.4        rlang_0.4.4      
+[13] pillar_1.3.1      foreign_0.8-70    glue_1.3.0       
+[16] withr_2.1.2       readxl_1.2.0      plyr_1.8.4       
+[19] stringr_1.3.1     cellranger_1.1.0  munsell_0.5.0    
+[22] gtable_0.2.0      zip_1.0.0         evaluate_0.12    
+[25] labeling_0.3      rio_0.5.16        forcats_0.3.0    
+[28] curl_3.2          fansi_0.4.0       Rcpp_1.0.3       
+[31] scales_1.0.0      backports_1.1.3   abind_1.4-5      
+[34] hms_0.4.2         digest_0.6.18     openxlsx_4.1.0   
+[37] stringi_1.2.4     dplyr_0.8.4       grid_3.5.0       
+[40] cli_1.0.1         tools_3.5.0       magrittr_1.5     
+[43] lazyeval_0.2.1    tibble_2.1.3      crayon_1.3.4     
+[46] tidyr_0.8.2       pkgconfig_2.0.2   data.table_1.11.8
+[49] assertthat_0.2.0  rmarkdown_1.11    rstudioapi_0.8   
+[52] R6_2.3.0          nlme_3.1-137      compiler_3.5.0   </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

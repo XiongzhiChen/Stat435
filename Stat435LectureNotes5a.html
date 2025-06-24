@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 5a</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 5a</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="logistic-regression-diagnostics" class="titleslide slide level1"><h1>Logistic regression: diagnostics</h1></section><section id="recap-on-model-and-assumptions" class="slide level2">
+<h1>Recap on model and assumptions</h1>
+<ul>
+<li><span class="math inline">\(Y\)</span> is a Bernoulli random variable and <span class="math inline">\(E\left( Y=1|X\right) =p\left( X\right)\)</span></li>
+<li>Population model:
+<span class="math display">\[\begin{equation}
+\operatorname{logit}\left(  p\left(  X\right)  \right)  =\log\left(
+\frac{p\left(  X\right)  }{1-p\left(  X\right)  }\right)  =\beta_{0}+\beta_{1}X
+\end{equation}\]</span>
+or equivalently
+<span class="math display">\[\begin{equation}
+p\left(  X\right)  =\frac{\exp\left(  \beta_{0}+\beta_{1}X\right)  }
+{1+\exp\left(  \beta_{0}+\beta_{1}X\right)  }=\frac{1}{1+\exp\left(
+-\beta_{0}-\beta_{1}X\right)  }
+\end{equation}\]</span></li>
+<li>Sample version of the model: <span class="math display">\[
+\operatorname{logit}\left(  p\left(  x_{i}\right)  \right)  =\beta_{0}+\beta_{1}x_{i}
+\]</span> for the <span class="math inline">\(i\)</span>th observation <span class="math inline">\(\left( x_{i},y_{i}\right)\)</span> of <span class="math inline">\(\left(X,Y\right)\)</span>.</li>
+</ul>
+</section><section id="recap-on-assumptions" class="slide level2">
+<h1>Recap on assumptions</h1>
+<p>The assumptions of the model are:</p>
+<ul>
+<li><p>Each <span class="math inline">\(y_{i}\)</span> is Bernoulli random variable with expectation <span class="math inline">\(\mu_{i}=p\left( x_{i}\right)\)</span></p></li>
+<li><p><span class="math inline">\(\operatorname{logit}\left( p\left( X\right) \right)\)</span> is a linear function of <span class="math inline">\(X\)</span>, i.e., <span class="math inline">\(\operatorname{logit}\left( p\left( x_{i}\right)\right)\)</span> is a linear function of <span class="math inline">\(x_{i}\)</span> for all <span class="math inline">\(1\leq i\leq n\)</span></p></li>
+<li><p>The pairs <span class="math inline">\(\left\{ \left( x_{i},y_{i}\right) \right\} _{i=1}^{n}\)</span> are independent</p></li>
+</ul>
+</section><section id="fitted-values" class="slide level2">
+<h1>Fitted values</h1>
+<p>Once an estimate <span class="math inline">\(\left( \hat{\beta}_{0},\hat{\beta}_{1}\right)\)</span> of <span class="math inline">\(\left( \beta_{0},\beta_{1}\right)\)</span> is obtained, we have the estimated model <span class="math display">\[
+\operatorname{logit}\left(  \hat{p}\left(  x_{i}\right)  \right)  =\hat{\beta}_{0}+\hat{\beta}_{1}x_{i},
+\]</span> where the mean or probability of success <span class="math inline">\(\mu_i\)</span> for each <span class="math inline">\(y_i\)</span> is estimated by <span class="math display">\[
+\hat{\mu}_{i}=\hat{p}\left(  x_{i}\right)  =\frac{1}{1+\exp\left(  -\hat
+{\beta}_{0}-\hat{\beta}_{1}x_{i}\right)  }
+\]</span></p>
+</section><section id="ordinary-residuals" class="slide level2">
+<h1>Ordinary residuals</h1>
+<p>Formula: <span class="math display">\[
+e_{i}=\left\{
+\begin{array}
+{lll}
+1-\hat{\mu}_{i} &amp; if &amp; y_{i}=1\\
+-\hat{\mu}_{i} &amp; if &amp; y_{i}=0
+\end{array}
+\right.
+\]</span></p>
+<p><em>Note:</em> the distribution of <span class="math inline">\(\left\{ e_{i}\right\} _{i=1}^{n}\)</span> is unknown even if the fitted model is correct</p>
+</section><section id="pearson-residuals" class="slide level2">
+<h1>Pearson residuals</h1>
+<ul>
+<li>Formula: <span class="math display">\[
+r_{i}=\frac{y_{i}-\hat{\mu}_{i}}{\sqrt{\hat{\mu}_{i}\left(  1-\hat{\mu}_{i}\right)  }}.
+\]</span> Note that <span class="math inline">\(\sqrt{\hat{\mu}_{i}\left( 1-\hat{\mu}_{i}\right) }\)</span> can be thought of as an estimate of the standard deviation of <span class="math inline">\(y_{i}-\hat{\mu}_{i}\)</span></li>
+<li>Studentized Pearson residuals: <span class="math display">\[
+\tilde{r}_{i}=\frac{r_{i}}{\sqrt{1-h_{ii}}},
+\]</span> where <span class="math inline">\(h_{ii}\)</span> is the <span class="math inline">\(i\)</span>-th diagonal entry of <span class="math display">\[
+H=W^{1/2}X\left(  X^{\prime}WX\right)  ^{-1}X^{\prime}W^{1/2}
+\]</span> and <span class="math inline">\(W\)</span> is the <span class="math inline">\(n\times n\)</span> diagonal matrix with entries <span class="math inline">\(\hat{\mu}_{i}\left(1-\hat{\mu}_{i}\right)\)</span> and <span class="math inline">\(X\)</span> is the <span class="math inline">\(n\times p\)</span> design matrix</li>
+</ul>
+</section><section id="deviance-residuals" class="slide level2">
+<h1>Deviance residuals</h1>
+<ul>
+<li>The “probability mass function (PMF)” of <span class="math inline">\(y_{i}\)</span>, or the likelihood function of <span class="math inline">\(y_i\)</span>, is <span class="math display">\[
+f_i\left(  y_{i}\right)  =p_{i}^{y_{i}}\left(  1-p_{i}\right)  ^{1-y_{i}}
+\]</span></li>
+<li>Let the estimated log-likelihood function of <span class="math inline">\(y_i\)</span> be denoted by <span class="math display">\[\ln \hat{f}_i (y_i)= y_{i}\ln\hat{\mu}_{i}+\left(  1-y_{i}\right) \ln\left(  1-\hat{\mu}_{i}\right)\]</span></li>
+<li>The <em>model deviance</em> is
+<span class="math display">\[\begin{equation}
+D=-2\sum_{i=1}^{n} \ln \hat{f}_i (y_i) =\sum_{i=1}^{n}d_{i}^{2},
+\end{equation}\]</span>
+where the <span class="math inline">\(i\)</span>th <em>deviance residual</em> is <span class="math display">\[
+d_{i}=\operatorname{sgn}\left(  y_{i}-\hat{\mu}_{i}\right)  \sqrt{-2 \ln \hat{f}_i (y_i)  }
+\]</span></li>
+</ul>
+</section><section id="deviance-residuals-1" class="slide level2">
+<h1>Deviance residuals</h1>
+<ul>
+<li><p>The model deviance <span class="math inline">\(D\)</span> is equal to <span class="math display">\[
+-2\times\left[  \ln L\left(  \text{Reduced model}\right)  -\ln L\left(
+\text{Full model}\right)  \right]  ,
+\]</span> where the “Reduced model” is the model under consideration and the “Full model” is the full nonparametric model of <span class="math inline">\(E\left( y_{i}\right) =\mu_{i} = \Pr(Y=1)\)</span></p></li>
+<li><p>Under appropriate conditions, <span class="math inline">\(D\)</span> approximately has a chi-square distribution when the Reduced model is correct. <span class="math inline">\(D\)</span> itself can be used to check if the postulated linear model is appropriate.</p></li>
+</ul>
+</section><section id="checking-model-fit" class="slide level2">
+<h1>Checking model fit</h1>
+<p><img src="fig14_12_als.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="checking-model-fit-1" class="slide level2">
+<h1>Checking model fit</h1>
+<ul>
+<li>If the logistic model is correct, then <span class="math inline">\(E\left( y_{i}\right) =\mu_{i}\)</span> and asymptotically <span class="math display">\[
+E\left(  y_{i}-\hat{\mu}_{i}\right)  =0
+\]</span></li>
+<li>Thus, if the model is correct, a lowess smooth fit of the plot of the residuals against the estimated probabilities (or against the linear predictor <span class="math inline">\(\hat{\eta}_{i}=\hat{\beta}_{0}+\hat{\beta}_{1}x_{i}\)</span>) should result approximately in a horizontal line with zero intercept</li>
+<li>Any significant departure from this suggests that the model may be inadequate. In practice, either the ordinary residuals, the Pearson residuals, or the studentized residuals can be used for this purpose</li>
+</ul>
+</section><section id="checking-model-fit-2" class="slide level2">
+<h1>Checking model fit</h1>
+<p><img src="fig14_13_als.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="checking-influential-observations" class="slide level2">
+<h1>Checking influential observations</h1>
+<ul>
+<li>Recall <em>Pearson chi-square goodness of fit statistic</em>, in the setting of logistic regression, as <span class="math display">\[
+\xi^{2}=\sum_{i=1}^{n}\frac{\left(  y_{i}-\hat{\mu}_{i}\right)  ^{2}}{\hat
+{\mu}_{i}\left(  1-\hat{\mu}_{i}\right)  }=\sum_{i=1}^{n}r_{i}^{2}
+\]</span></li>
+<li>Denote by <span class="math inline">\(\xi_{\left( i\right) }^{2}\)</span> the value of the Pearson chi-square goodness of fit statistic obtained when observation <span class="math inline">\(i\)</span> is deleted</li>
+<li>Denote by <span class="math inline">\(D_{\left( i\right) }\)</span> the value of the model deviance obtained when observation <span class="math inline">\(i\)</span> is deleted</li>
+</ul>
+</section><section id="checking-influential-observations-1" class="slide level2">
+<h1>Checking influential observations</h1>
+<ul>
+<li>Define the “delta chi-square statistic” as <span class="math display">\[
+\Delta\xi_{\left(  i\right)  }^{2}=\xi^{2}-\xi_{\left(  i\right)  }^{2}
+\]</span> and “delta deviance statistic” as <span class="math display">\[
+\Delta D_{\left(  i\right)  }=D-D_{\left(  i\right)  }.
+\]</span> <em>These quantities measure the influence of the <span class="math inline">\(i\)</span>th observation on model fitting</em></li>
+<li>Usually, these statistics are plotted against the observation number <span class="math inline">\(i\)</span>, against <span class="math inline">\(\hat{\mu}_{i}\)</span>, or against <span class="math inline">\(\hat{\eta}_{i}=\hat{\beta}_{0} +\hat{\beta}_{1}x_{i}\)</span>. Extreme values appear as spikes when plotted against <span class="math inline">\(i\)</span>, or as outliers in the upper corners of the plot when plotted against <span class="math inline">\(\hat{\mu}_{i}\)</span> or <span class="math inline">\(\hat{\eta}_{i}\)</span></li>
+</ul>
+</section><section id="checking-influential-observations-2" class="slide level2">
+<h1>Checking influential observations</h1>
+<p><img src="fig14_15_als.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="checking-influential-observations-3" class="slide level2">
+<h1>Checking influential observations</h1>
+<p>Cook’s distance is defined as <span class="math display">\[
+\delta_{i}=\frac{r_{i}^{2}h_{ii}}{p\left(  1-h_{ii}\right)  ^{2}}
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\(h_{ii}\)</span> is the <span class="math inline">\(i\)</span>-th diagonal entry of <span class="math display">\[
+H=W^{1/2}X\left(  X^{\prime}WX\right)  ^{-1}X^{\prime}W^{1/2}
+\]</span></li>
+<li><span class="math inline">\(W\)</span> is the <span class="math inline">\(n\times n\)</span> diagonal matrix with entries <span class="math inline">\(\hat{\mu}_{i}\left( 1-\hat{\mu}_{i}\right)\)</span> and <span class="math inline">\(X\)</span> is the <span class="math inline">\(n\times p\)</span> design matrix.</li>
+</ul>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19041)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.12  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

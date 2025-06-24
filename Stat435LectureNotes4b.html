@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 4b</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 4b</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="ridge-regression-basics" class="titleslide slide level1"><h1>Ridge regression: basics</h1></section><section id="overview" class="slide level2">
+<h1>Overview</h1>
+<p>Ridge regression</p>
+<ul>
+<li>applies regardless of magnitues of sample size <span class="math inline">\(n\)</span> and number of predictors <span class="math inline">\(p\)</span></li>
+<li>shrinks estimated coefficients compared to <em>least squares estimate (LSE)</em></li>
+<li>is able to produce LSE</li>
+<li>presents a way to estimate coefficients when <span class="math inline">\(n &lt; p+1\)</span></li>
+</ul>
+<p><em>Ridge regression often produces a biased estimate with smaller variance than LSE, and it is a bias-variance trade-off technique.</em></p>
+</section><section id="settings" class="slide level2">
+<h1>Settings</h1>
+<ul>
+<li><p>Model: <span class="math inline">\(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)</span></p></li>
+<li><p>Observations: <span class="math inline">\((y_i,x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\)</span>, where <span class="math inline">\(y_i\)</span> is the <span class="math inline">\(i\)</span>th observation for <span class="math inline">\(Y\)</span> and <span class="math inline">\(x_{ij}\)</span> that for <span class="math inline">\(X_j\)</span></p></li>
+<li><p>Estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> of <span class="math inline">\({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\)</span>, and <span class="math inline">\(\hat{\beta}_0\)</span> of <span class="math inline">\({\beta}_0\)</span></p></li>
+<li><p>Fitted model: <span class="math inline">\(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \ldots + \hat{\beta}_p x_{ip}\)</span></p></li>
+<li><p>Residuals: <span class="math inline">\(e_i=y_i - \hat{y}_i\)</span></p></li>
+</ul>
+</section><section id="optimization" class="slide level2">
+<h1>Optimization</h1>
+<ul>
+<li>The ridge estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}^R_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> is the <span class="math inline">\({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\)</span> that minimizes <span class="math display">\[
+L_2(\beta_0,\boldsymbol{\beta},\lambda)= \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p \beta_i^2
+\]</span></li>
+<li><span class="math inline">\(\sqrt{\sum_{i=1}^p \beta_i^2}\)</span> is written as <span class="math inline">\(\Vert\boldsymbol{\beta}\Vert_2\)</span>, i.e., the <span class="math inline">\(l_2\)</span>-norm of <span class="math inline">\(\boldsymbol{\beta}\)</span><br />
+</li>
+<li><span class="math inline">\(\sum_{i=1}^n (y_i - \hat{y}_i)^2\)</span> is just the RSS</li>
+<li><span class="math inline">\(\lambda \sum_{i=1}^p \beta_i^2\)</span> is called a <em>regularizer</em> or <em>penalty</em></li>
+<li><span class="math inline">\(L_2(\beta_0,\boldsymbol{\beta},\lambda)\)</span> is referred to as an <em><span class="math inline">\(l_2\)</span>-regularized RSS</em></li>
+<li>no penalty on <span class="math inline">\(\beta_0\)</span></li>
+</ul>
+</section><section id="intercept-term" class="slide level2">
+<h1>Intercept term</h1>
+<ul>
+<li>Recall <span class="math inline">\(\mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\)</span>, where <span class="math inline">\(x_{ij}\)</span> is the <span class="math inline">\(i\)</span>th observation for <span class="math inline">\(X_j\)</span></li>
+<li>Let <span class="math inline">\(\mathbf{X}\)</span> be the <span class="math inline">\(n \times p\)</span> matrix whose <span class="math inline">\(i\)</span>th row is <span class="math inline">\(\mathbf{x}_i\)</span></li>
+<li><span class="math inline">\(\mathbf{X}\)</span> is called a <em>design matrix</em> (when factors as predictors are properly coded)</li>
+</ul>
+<p>If the variables <span class="math inline">\(X_i,i=1,\ldots,p\)</span> are centered, i.e., the columns of <span class="math inline">\(\mathbf{X}\)</span>, to have mean zero before ridge regression is performed, then the estimated intercept will be <span class="math display">\[\hat{\beta}_0=\bar{y}=\sum_{i=1}^n y_i/n\]</span></p>
+</section><section id="solution-path" class="slide level2">
+<h1>Solution path</h1>
+<p>Recall the objective function <span class="math display">\[
+L_2(\beta_0,\boldsymbol{\beta},\lambda)= \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p \beta_i^2
+\]</span> and its solution <span class="math inline">\(\hat{\boldsymbol{\beta}}^R_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span></p>
+<ul>
+<li>no penalty on estimated <span class="math inline">\(\beta_0\)</span></li>
+<li><span class="math inline">\(\lambda=0\)</span> gives the LSE, and <span class="math inline">\(\lambda=\infty\)</span> forces <span class="math inline">\(\hat{\boldsymbol{\beta}}^R_{\lambda}=0\)</span></li>
+<li>some <span class="math inline">\(0 &lt; \lambda &lt; \infty\)</span> strikes a balance between LSE and <span class="math inline">\(\hat{\boldsymbol{\beta}}^R_{\lambda}=0\)</span></li>
+</ul>
+<p><em>Note:</em> The ridge solution has explicit reprentation.</p>
+</section><section id="bias-variance-trade-off" class="slide level2">
+<h1>Bias-variance trade-off</h1>
+<p>Ridge regression works best in situations where the least squares estimates have high variance:</p>
+<ul>
+<li><span class="math inline">\(\lambda=0\)</span>: ridge estimate is the LSE and is unbiased</li>
+<li><span class="math inline">\(\lambda &gt;0\)</span>: bias increases and variance decreases usually</li>
+<li><span class="math inline">\(\lambda=\infty\)</span>: estimated coefficients are all zero</li>
+</ul>
+</section><section id="bias-variance-trade-off-1" class="slide level2">
+<h1>Bias-variance trade-off</h1>
+<p><span class="math inline">\(p=45\)</span> predictors and <span class="math inline">\(n=50\)</span> observations; all <span class="math inline">\(\beta_j \ne 0\)</span></p>
+<p><img src="fig6_5.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="select-tuning-parameter" class="slide level2">
+<h1>Select tuning parameter</h1>
+<p>The optimal value <span class="math inline">\(\lambda^{\ast}\)</span> of the tuning parameter <span class="math inline">\(\lambda\)</span> is ofen determined by <span class="math inline">\(k\)</span>-fold cross-validation:</p>
+<ul>
+<li>Pick a sequence of <span class="math inline">\(s\)</span> values for <span class="math inline">\(\lambda\)</span> as <span class="math inline">\(\lambda_1, \lambda_2, \ldots, \lambda_s\)</span></li>
+<li>For each <span class="math inline">\(\lambda_l\)</span>, apply <span class="math inline">\(k\)</span>-fold cross-validation to estimate the test error of the corresponding model</li>
+<li>Set <span class="math inline">\(\lambda^{\ast}\)</span> as the value among the <span class="math inline">\(s\)</span> values of <span class="math inline">\(\lambda\)</span> for which the estimated test error is the smallest</li>
+</ul>
+</section></section>
+<section><section id="ridge-regression-special-case" class="titleslide slide level1"><h1>Ridge regression: special case</h1></section><section id="special-model" class="slide level2">
+<h1>Special model</h1>
+<ul>
+<li>Assume the design matrix <span class="math inline">\(\mathbf{X}=\mathbf{I}_p\)</span>, i.e., the identity matrix</li>
+<li>Consider a linear regression model without an intercept, i.e., forcing <span class="math inline">\(\beta_0=0\)</span></li>
+</ul>
+<p>If <span class="math inline">\(n=p\)</span> and <span class="math inline">\(\mathbf{X}=\mathbf{I}_p\)</span>, then we have a very special model: <span class="math display">\[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p\]</span></p>
+<p><em>Note:</em> <span class="math inline">\(\mathbf{X}=\mathbf{I}_p\)</span> is referred to as an <em>orthogonal design</em></p>
+</section><section id="lse-and-ridge-estimate" class="slide level2">
+<h1>LSE and ridge estimate</h1>
+<p>For the special model <span class="math display">\[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p,\]</span></p>
+<ul>
+<li>the LSE (i.e., least squares estimate) is <span class="math display">\[\hat{\beta}_j=y_j\]</span></li>
+<li>the <span class="math inline">\(l_2\)</span>-regularized RSS becomes <span class="math display">\[
+L_2(\beta_{0},\boldsymbol{\beta},\lambda)= \sum_{j=1}^p (y_i - \beta_j)^2 + \lambda \sum_{i=1}^p \beta_i^2
+\]</span> and the ridge estimate is <span class="math display">\[\hat{\beta}_{j,\lambda}^R=y_j/(1+\lambda)\]</span></li>
+</ul>
+</section><section id="three-estimators" class="slide level2">
+<h1>Three estimators</h1>
+<p><img src="fig6_10.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="ridge-regression-application" class="titleslide slide level1"><h1>Ridge regression: application</h1></section><section id="scale-equivariance" class="slide level2">
+<h1>Scale equivariance</h1>
+<ul>
+<li>Recall the design matrix <span class="math inline">\(\mathbf{X}\)</span>, whose <span class="math inline">\((i,j)\)</span>th entry <span class="math inline">\(x_{ij}\)</span> is the <span class="math inline">\(i\)</span>th observation of predictor <span class="math inline">\(X_j\)</span></li>
+<li>Ridge regression estimates depend on the scale of predictors</li>
+<li>Before applying ridge regression, it is best to standardize predictors as follows <span class="math display">\[
+\tilde{x}_{ij}= \frac{x_{ij}}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_{ij}-\bar{x}_j)^2}}
+\]</span> where <span class="math inline">\(\bar{x}_j=n^{-1}\sum_{i=1}^n x_{ij}\)</span></li>
+<li>The resulting ridge gression estimates are called <em>standardized estimates</em></li>
+</ul>
+</section><section id="illustration" class="slide level2">
+<h1>Illustration</h1>
+<p>Modelling the <code>Credit</code> data set</p>
+<ul>
+<li>Response <code>Balance</code></li>
+<li>Predictors <code>Income</code>, <code>Limit</code>, <code>Rating</code> and <code>Student</code></li>
+</ul>
+</section><section id="illustration-1" class="slide level2">
+<h1>Illustration</h1>
+<p><img src="fig6_4.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="inference" class="slide level2">
+<h1>Inference</h1>
+<ul>
+<li>The method of <em>bias correction</em> can be used to conduct inference on ridge estimates</li>
+<li>Canonical assumptions involve Gaussian random errors</li>
+<li>Asymptotic theory on testing coefficients is based on Gaussian limiting distributions</li>
+<li>P-values from testing can be obtained</li>
+</ul>
+<p><em>Note:</em> “High-Dimensional Inference: Confidence Intervals, p-Values and R-Software hdi” by Ruben Dezeure, Peter Buhlmann, Lukas Meier and Nicolai Meinshausen</p>
+</section><section id="inference-1" class="slide level2">
+<h1>Inference</h1>
+<ul>
+<li>Tesing <span class="math inline">\(H_{j0}:\beta_j =0\)</span> versus <span class="math inline">\(H_{j1}:\beta_j \ne 0\)</span></li>
+<li>P-values for testing if the coefficient of each of <code>Income</code>, <code>Limit</code>, <code>Rating</code> and <code>Student</code>:</li>
+</ul>
+<pre><code>       Income         Limit        Rating    StudentYes 
+4.878273e-229  4.712512e-15  2.502320e-18 3.116377e-128 </code></pre>
+</section></section>
+<section><section id="lasso-basics" class="titleslide slide level1"><h1>LASSO: basics</h1></section><section id="settings-1" class="slide level2">
+<h1>Settings</h1>
+<ul>
+<li><p>Model: <span class="math inline">\(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)</span></p></li>
+<li><p>Observations: <span class="math inline">\((y_i,x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\)</span>, where <span class="math inline">\(y_i\)</span> is the <span class="math inline">\(i\)</span>th observation for <span class="math inline">\(Y\)</span> and <span class="math inline">\(x_{ij}\)</span> that for <span class="math inline">\(X_j\)</span></p></li>
+<li><p>Estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> of <span class="math inline">\({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\)</span>, and <span class="math inline">\(\hat{\beta}_0\)</span> of <span class="math inline">\({\beta}_0\)</span></p></li>
+<li><p>Fitted model: <span class="math inline">\(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \ldots + \hat{\beta}_p x_{ip}\)</span></p></li>
+<li><p>Residuals: <span class="math inline">\(e_i=y_i - \hat{y}_i\)</span></p></li>
+</ul>
+</section><section id="optimization-1" class="slide level2">
+<h1>Optimization</h1>
+<ul>
+<li>The LASSO estimate <span class="math inline">\(\hat{\boldsymbol{\beta}}^L_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> is the <span class="math inline">\({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\)</span> that minimizes <span class="math display">\[
+L_1(\beta_0,\boldsymbol{\beta},\lambda)= \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p\vert \beta_i \vert
+\]</span></li>
+<li><span class="math inline">\(\sum_{i=1}^p \vert\beta_i\vert\)</span> is written as <span class="math inline">\(\Vert\boldsymbol{\beta}\Vert_1\)</span>, i.e., the <span class="math inline">\(l_1\)</span>-norm of <span class="math inline">\(\boldsymbol{\beta}\)</span><br />
+</li>
+<li><span class="math inline">\(\sum_{i=1}^n (y_i - \hat{y}_i)^2\)</span> is just the RSS</li>
+<li><span class="math inline">\(\lambda \sum_{i=1}^p \vert\beta_i\vert\)</span> is called a <em>regularizer</em> or <em>penalty</em></li>
+<li><span class="math inline">\(L_1(\beta_0,\boldsymbol{\beta},\lambda)\)</span> is referred to as an <em><span class="math inline">\(l_1\)</span>-regularized RSS</em></li>
+<li>no penalty on <span class="math inline">\(\beta_0\)</span></li>
+</ul>
+</section><section id="solution-path-1" class="slide level2">
+<h1>Solution path</h1>
+<p>Recall the objective function <span class="math display">\[
+L_1(\beta_0,\boldsymbol{\beta},\lambda)= \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p \vert \beta_i \vert
+\]</span> and its solution <span class="math inline">\(\hat{\boldsymbol{\beta}}^L_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span></p>
+<ul>
+<li>no penalty on estimated <span class="math inline">\(\beta_0\)</span></li>
+<li><span class="math inline">\(\lambda=0\)</span> gives the LSE, and <span class="math inline">\(\lambda=\infty\)</span> forces <span class="math inline">\(\hat{\boldsymbol{\beta}}^L_{\lambda}=0\)</span></li>
+<li>some <span class="math inline">\(0 &lt; \lambda &lt; \infty\)</span> strikes a balance between LSE and <span class="math inline">\(\hat{\boldsymbol{\beta}}^L_{\lambda}=0\)</span></li>
+<li><em>some <span class="math inline">\(\hat{\beta}_j\)</span>’s,<span class="math inline">\(j=1,\ldots,p,\)</span> can be exactly zero</em></li>
+</ul>
+</section><section id="bias-variance-trade-off-2" class="slide level2">
+<h1>Bias-variance trade-off</h1>
+<p>LASSO works best in situations where some coefficeints are extactly zero:</p>
+<ul>
+<li><span class="math inline">\(\lambda=0\)</span>: LASSO estimate is the LSE and is unbiased</li>
+<li><span class="math inline">\(\lambda &gt;0\)</span>: bias increases and variance decreases usually, and some estimated coefficients are zero</li>
+<li><span class="math inline">\(\lambda=\infty\)</span>: estimated coefficients are all zero</li>
+</ul>
+</section><section id="select-tuning-parameter-1" class="slide level2">
+<h1>Select tuning parameter</h1>
+<p>The optimal value <span class="math inline">\(\lambda^{\ast}\)</span> of the tuning parameter <span class="math inline">\(\lambda\)</span> is ofen determined by <span class="math inline">\(k\)</span>-fold cross-validation:</p>
+<ul>
+<li>Pick a sequence of <span class="math inline">\(s\)</span> values for <span class="math inline">\(\lambda\)</span> as <span class="math inline">\(\lambda_1, \lambda_2, \ldots, \lambda_s\)</span></li>
+<li>For each <span class="math inline">\(\lambda_l\)</span>, apply <span class="math inline">\(k\)</span>-fold cross-validation to estimate the test error of the corresponding model</li>
+<li>Set <span class="math inline">\(\lambda^{\ast}\)</span> as the value among <span class="math inline">\(\lambda\)</span> as <span class="math inline">\(\lambda_1, \lambda_2, \ldots, \lambda_s\)</span> for which the estimated test error is the smallest</li>
+</ul>
+</section></section>
+<section><section id="lasso-estimate-special-case" class="titleslide slide level1"><h1>LASSO estimate: special case</h1></section><section id="special-model-1" class="slide level2">
+<h1>Special model</h1>
+<ul>
+<li>Recall <span class="math inline">\(\mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\)</span>, where <span class="math inline">\(x_{ij}\)</span> is the <span class="math inline">\(i\)</span>th observation for <span class="math inline">\(X_j\)</span></li>
+<li>Let <span class="math inline">\(\mathbf{X}\)</span> be the <span class="math inline">\(n \times p\)</span> matrix whose <span class="math inline">\(i\)</span>th row is <span class="math inline">\(\mathbf{x}_i\)</span></li>
+<li>Consider a linear regression model without an intercept, i.e., forcing <span class="math inline">\(\beta_0=0\)</span></li>
+</ul>
+<p>If <span class="math inline">\(n=p\)</span> and <span class="math inline">\(\mathbf{X}=\mathbf{I}_p\)</span>, then we have a very special model: <span class="math display">\[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p\]</span></p>
+</section><section id="lse-and-lasso-estimate" class="slide level2">
+<h1>LSE and LASSO estimate</h1>
+<p>For the special model <span class="math display">\[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p,\]</span></p>
+<ul>
+<li>the LSE (i.e., least squares estimate) is <span class="math display">\[\hat{\beta}_j=y_j\]</span></li>
+<li>the <span class="math inline">\(l_1\)</span>-regularized RSS becomes <span class="math display">\[
+L_1(\beta_{0},\boldsymbol{\beta},\lambda)= \sum_{j=1}^p (y_i - \beta_j)^2 + \lambda \sum_{i=1}^p \vert\beta_i\vert
+\]</span></li>
+</ul>
+</section><section id="lse-and-lasso-estimate-1" class="slide level2">
+<h1>LSE and LASSO estimate</h1>
+<p>The LASSO estimate, more complicated than LSE and ridge estimate, is:</p>
+<p><span class="math display">\[\hat{\beta}_{j,\lambda}^L = \left\{
+\begin{array}
+{lll}
+0 &amp; \text{if} &amp; \vert y_j \vert \le \lambda/2 \\
+y_j -\lambda/2 &amp; \text{if} &amp; y_j &gt; \lambda/2 \\
+y_j +\lambda/2 &amp; \text{if} &amp; y_j &lt; -\lambda/2
+\end{array}\right.
+\]</span> <em>Note:</em> compare the above with LSE <span class="math inline">\(\hat{\beta}_j=y_j\)</span> and ridge estimate <span class="math display">\[\hat{\beta}_{j,\lambda}^R=y_j/(1+\lambda)\]</span></p>
+</section><section id="three-estimators-1" class="slide level2">
+<h1>Three estimators</h1>
+<p><img src="fig6_10.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="lasso-application" class="titleslide slide level1"><h1>LASSO: application</h1></section><section id="illustration-2" class="slide level2">
+<h1>Illustration</h1>
+<p>Modelling the <code>Credit</code> data set</p>
+<ul>
+<li>Response <code>Balance</code></li>
+<li>Predictors <code>Income</code>, <code>Limit</code>, <code>Rating</code> and <code>Student</code></li>
+</ul>
+</section><section id="illustration-3" class="slide level2">
+<h1>Illustration</h1>
+<p><img src="fig6_6.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="illustration-4" class="slide level2">
+<h1>Illustration</h1>
+<p><span class="math inline">\(p=45\)</span> predictors and <span class="math inline">\(n=50\)</span> observations; 43 <span class="math inline">\(\beta_j\)</span>’s are 0</p>
+<p><img src="fig6_13.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="inference-2" class="slide level2">
+<h1>Inference</h1>
+<ul>
+<li>The method of <em>bias correction</em> can be used to conduct inference on LASSO estimates</li>
+<li>Canonical assumptions involve Gaussian random errors</li>
+<li>Asymptotic theory on testing coefficients is based on Gaussian limiting distributions</li>
+<li>P-values from testing can be obtained</li>
+</ul>
+<p><em>Note:</em> “High-Dimensional Inference: Confidence Intervals, p-Values and R-Software hdi” by Ruben Dezeure, Peter Buhlmann, Lukas Meier and Nicolai Meinshausen</p>
+</section><section id="inference-3" class="slide level2">
+<h1>Inference</h1>
+<ul>
+<li>Tesing <span class="math inline">\(H_{j0}:\beta_j =0\)</span> versus <span class="math inline">\(H_{j1}:\beta_j \ne 0\)</span></li>
+<li>P-values for testing if the coefficient of each of <code>Income</code>, <code>Limit</code>, <code>Rating</code> and <code>Student</code>:</li>
+</ul>
+<pre><code>       Income         Limit        Rating    StudentYes 
+2.735628e-255  5.462397e-83 2.106189e-108 5.110140e-130 </code></pre>
+</section></section>
+<section><section id="ridge-and-lasso-estimates" class="titleslide slide level1"><h1>Ridge and LASSO estimates</h1></section><section id="three-optimizations" class="slide level2">
+<h1>Three optimizations</h1>
+<p><img src="fig6_7.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="three-estimators-2" class="slide level2">
+<h1>Three estimators</h1>
+<p><img src="fig6_10.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="ridge-and-lasso-estimates-1" class="slide level2">
+<h1>Ridge and LASSO estimates</h1>
+<p><span class="math inline">\(p=45\)</span> predictors and <span class="math inline">\(n=50\)</span> observations; all <span class="math inline">\(\beta_j \ne 0\)</span></p>
+<p><img src="fig6_8.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="ridge-and-lasso-estimates-2" class="slide level2">
+<h1>Ridge and LASSO estimates</h1>
+<p><span class="math inline">\(p=45\)</span> predictors and <span class="math inline">\(n=50\)</span> observations; 43 <span class="math inline">\(\beta_j\)</span>’s are 0</p>
+<p><img src="fig6_9.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="ridge-and-lasso-regressions" class="slide level2">
+<h1>Ridge and LASSO regressions</h1>
+<ul>
+<li>Ridge regression performs better when the response is a function of many predictors, all with coefficients of roughly equal size</li>
+<li>LASSO performs better when a relatively small number of predictors have substantial coefficients and the remaining predictors have very small or zero coefficients</li>
+<li>Both ridge and LASSO regression yield a reduction in variance at the expense of a small increase in biases, when the LSE have excessively high variance</li>
+<li>LASSO performs variable selection while ridge regression does not</li>
+</ul>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19043)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.3      stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.12  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

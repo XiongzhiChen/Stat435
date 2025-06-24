@@ -1,0 +1,10 @@
+base
+knitr
+ISLR
+lars
+scalreg
+hdi
+dplyr
+Matrix
+foreach
+glmnet

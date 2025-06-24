@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 1b</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 1b</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="review-sample-statistics" class="titleslide slide level1"><h1>Review: sample statistics</h1></section><section id="overview" class="slide level2">
+<h1>Overview</h1>
+<p>In practice, we do not have full information on a data-generating process. Hence, we do fully know the random variable that is used to model the process. Instead, we only have observations from the process.</p>
+<p>To statistically learn the process, various sample statistics are obtained from these observations (in contrast to population statistics). However, these observations inherit uncertainty from the process and are random variables too. So, a statistic has its own probabilistic behavior.</p>
+</section><section id="sample-mean-and-variance" class="slide level2">
+<h1>Sample mean and variance</h1>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with expectation <span class="math inline">\(\mu=E(X)\)</span> and variance <span class="math inline">\(\sigma^2=Var(X)\)</span>, and suppose <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> are <span class="math inline">\(n\)</span> observations from <span class="math inline">\(X\)</span>.</p>
+<ul>
+<li><p>The sample mean of <span class="math inline">\(X\)</span> is defined as <span class="math inline">\(\hat{\mu}_n = n^{-1}\sum_{i=1}^n x_i\)</span></p></li>
+<li><p>The sample variance of <span class="math inline">\(X\)</span> is defined as <span class="math display">\[\hat{\sigma}_n^2 = (n-1)^{-1}\sum_{i=1}^n (x_i - \hat{\mu}_n)^2\]</span></p></li>
+</ul>
+<p><em>Note:</em> sample mean and sample variance estimate population mean and population variance, respectively.</p>
+</section><section id="sample-mean-and-variance-1" class="slide level2">
+<h1>Sample mean and variance</h1>
+<p>Suppose the <span class="math inline">\(n\)</span> <span class="math inline">\(x_i\)</span>’s are mutually independent,</p>
+<ul>
+<li><p>What is the expectation of the sample mean <span class="math inline">\(\hat{\mu}_n\)</span>?</p></li>
+<li><p>What is the variance of <span class="math inline">\(\hat{\mu}_n\)</span>? Is <span class="math inline">\(\hat{\mu}_n\)</span> less variable than <span class="math inline">\(X\)</span>?</p></li>
+<li><p>What is the expectation of the sample variance <span class="math inline">\(\hat{\sigma}_n^2\)</span>? Is <span class="math inline">\(\hat{\sigma}_n^2\)</span> less variable than <span class="math inline">\(X\)</span>?</p></li>
+</ul>
+<p><em>Note:</em> If <span class="math inline">\(x_i,i=1,\ldots,n\)</span> are independent and follow the same distribution, they are called “i.i.d.” and also called a random sample (of size <span class="math inline">\(n\)</span>) from <span class="math inline">\(X\)</span>.</p>
+</section><section id="sample-mean" class="slide level2">
+<h1>Sample mean</h1>
+<p>Variance of sample mean <span class="math inline">\(\hat{\mu}_n\)</span> under i.i.d. assumption:</p>
+</section><section id="sample-covariance" class="slide level2">
+<h1>Sample covariance</h1>
+<p>Let <span class="math inline">\(x_i,i=1,\ldots,n\)</span> be <span class="math inline">\(n\)</span> observations from <span class="math inline">\(X\)</span>, and <span class="math inline">\(y_i,i=1,\ldots,n\)</span> those from <span class="math inline">\(Y\)</span>.</p>
+<p>The <em>sampe covariance</em> between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[\widehat{Cov}(X,Y)= (n-1)^{-1} \sum_{i=1}^n (x_i-\hat{\mu}_{n,X})(y_i-\hat{\mu}_{n,Y}),\]</span> where <span class="math inline">\(\hat{\mu}_{n,X}\)</span> is the sample mean for <span class="math inline">\(X\)</span>, and <span class="math inline">\(\hat{\mu}_{n,Y}\)</span> the sample mean for <span class="math inline">\(Y\)</span></p>
+<p><em>Note:</em> when <span class="math inline">\(X=Y\)</span>, sample covariance becomes sample variance.</p>
+</section><section id="sample-correlation" class="slide level2">
+<h1>Sample correlation</h1>
+<p>The <em>sample corretion</em> between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[\widehat{Cor}(X,Y)= \frac{\widehat{Cov}(X,Y)}{\hat{\sigma}_{n,X}\hat{\sigma}_{n,Y}},\]</span> where <span class="math inline">\(\hat{\sigma}_{n,X}\)</span> is the sample standard deviation of <span class="math inline">\(X\)</span>, and <span class="math inline">\(\hat{\sigma}_{n,Y}\)</span> that for <span class="math inline">\(Y\)</span>.</p>
+<p><em>Note:</em> sample covariance and sample correlation estimate population covariance and population correlation, respectively.</p>
+</section><section id="correlation" class="slide level2">
+<h1>Correlation</h1>
+<p><img src="Anscombe's_quartet.png" width="80%" height="65%" style="display: block; margin: auto;" /></p>
+<p>Four sets of data with the same correlation of 0.816. (<em>Image credit: wikipedia</em>)</p>
+</section><section id="correlation-1" class="slide level2">
+<h1>Correlation</h1>
+<p><img src="Correlation_examples2.png" width="80%" height="60%" style="display: block; margin: auto;" /></p>
+<p>Samples with a given population correlation. (<em>Image credit: wikipedia</em>)</p>
+</section><section id="sample-correlation-1" class="slide level2">
+<h1>Sample correlation</h1>
+<p>Suppose <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent. Given a random sample of size <span class="math inline">\(n\)</span> from <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively, let <span class="math inline">\(r_n\)</span> be the sample correlation computed from the two random samples.</p>
+<ul>
+<li><p>Should <span class="math inline">\(r_n\)</span> be <span class="math inline">\(0\)</span>? Why or why not?</p></li>
+<li><p>Is it more likely for <span class="math inline">\(r_n\)</span> to be <span class="math inline">\(0\)</span> or not <span class="math inline">\(0\)</span>? Why or why not?</p></li>
+</ul>
+</section></section>
+<section><section id="review-hypothesis-testing" class="titleslide slide level1"><h1>Review: hypothesis testing</h1></section><section id="hypothesis-and-test-statistic" class="slide level2">
+<h1>Hypothesis and test statistic</h1>
+<p>Let <span class="math inline">\(X\)</span> be a random variable. Suppose we are interested in a statistic <span class="math inline">\(\theta\)</span> of <span class="math inline">\(X\)</span>, such as its mean, median, or variance. Then</p>
+<ul>
+<li>The natural state for <span class="math inline">\(\theta\)</span> is often set (or referred to) as the null hypothesis for <span class="math inline">\(\theta\)</span> and denoted by <span class="math inline">\(H_0\)</span>;</li>
+<li>The alternative hypothesis for <span class="math inline">\(\theta\)</span> is often the complement to <span class="math inline">\(H_0\)</span> and denoted by <span class="math inline">\(H_a\)</span> (or <span class="math inline">\(H_1\)</span>).</li>
+</ul>
+<p>Often a test statistic <span class="math inline">\(T\)</span> is constructed, so that <strong>its distribution is known if the null hypothesis is true</strong>, and then a decision rule is obtained to either reject or retain <span class="math inline">\(H_0\)</span> under some error criterion.</p>
+</section><section id="hypothesis-test" class="slide level2">
+<h1>Hypothesis test</h1>
+<p>For example, if we want to assess if a pesticide is able to kill grasshoppers, we can let <span class="math inline">\(\mu_1\)</span> be the mean number and <span class="math inline">\(\mu_2\)</span> the mean number of grasshoppers respectively prior and after pesticide usage, then</p>
+<ul>
+<li>the null hypothesis can be set as <span class="math inline">\(H_0: \mu_1- \mu_2= 0\)</span>, and</li>
+<li>the alternative hypothesis as <span class="math inline">\(H_a: \mu_1- \mu_2 \ne 0\)</span></li>
+</ul>
+<p>A test statistic for this can be set as <span class="math inline">\(d\)</span>, the difference between the sample mean numbers of grasshoppers prior and after pesticide usage. Once we know the distribution of <span class="math inline">\(d\)</span> under <span class="math inline">\(H_0\)</span>, a decision rule can be obtained to reject or retain <span class="math inline">\(H_0\)</span>.</p>
+</section><section id="type-i-ii-error-and-p-value" class="slide level2">
+<h1>Type I, II error and p-value</h1>
+<ul>
+<li>The Type I error of a test is the probability of rejecting the null hypothesis <span class="math inline">\(H_0\)</span> when it is true, while the Type II error of a test is the probability of retaining <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_a\)</span> is true.</li>
+<li>The p-value of a test is the smallest Type I error the test can have.</li>
+<li>The power of a test is the probability that it rejects <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_a\)</span> true.</li>
+</ul>
+<p><em>Often a test is conducted under a contraint on its Type I error and attempts to be the most powerful (among all tests with certain properties)</em>.</p>
+</section><section id="student-t-test" class="slide level2">
+<h1>Student t test</h1>
+<p>Let <span class="math inline">\(X\)</span> be a Gaussian random variable with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma&gt;0\)</span>. Suppose we want to test <span class="math inline">\(H_0: \mu=0\)</span> versus <span class="math inline">\(H_a: \mu \ne 0\)</span>, given a random sample <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> of size <span class="math inline">\(n\)</span>.</p>
+<p>Then we can compute the sample mean <span class="math inline">\(\hat{\mu}_n = n^{-1}\sum_{i=1}^n x_i\)</span> and sample variance <span class="math display">\[\hat{\sigma}_n^2 = (n-1)^{-1}\sum_{i=1}^n (x_i - \hat{\mu}_n)^2\]</span></p>
+</section><section id="student-t-test-1" class="slide level2">
+<h1>Student t test</h1>
+<ul>
+<li><p>The test statistic <span class="math inline">\(T = \frac{\hat{\mu}_n}{\hat{\sigma}_n/\sqrt{n}}\)</span> follows a Student t distribution, denoted by <span class="math inline">\(F_{0,n-1}\)</span>, with centrality parameter <span class="math inline">\(0\)</span> and degree of freedom <span class="math inline">\(n-1\)</span>.</p></li>
+<li><p>At Type I error level <span class="math inline">\(\alpha\)</span>, we reject <span class="math inline">\(H_0: \mu=0\)</span> if <span class="math inline">\(\vert T \vert &gt; t_{0,n-1}(1-\alpha/2)\)</span>, where <span class="math inline">\(t_{0,n-1}(1-\alpha/2)\)</span> is the upper <span class="math inline">\((1-\alpha/2) \times 100\)</span>-th percentile of the distribution <span class="math inline">\(F_{0,n-1}\)</span>.</p></li>
+<li><p>The two-sided p-value for the test is <span class="math inline">\(2 \times F_{0,n-1}(-\vert T \vert)\)</span>.</p></li>
+</ul>
+<p><em>Note:</em> this example is a two-sided test.</p>
+</section><section id="confidence-interval" class="slide level2">
+<h1>Confidence interval</h1>
+<p>For <span class="math inline">\(s \in [0,1]\)</span>, a <span class="math inline">\((1-s) \times 100\%\)</span> confidence interval (CI) is an interval that contains an unknown population parameter with probability <span class="math inline">\(1-s\)</span>.</p>
+<p>Often, the distribution of a test statistic under the null hypothesis gives sufficient information on constructing a CI.</p>
+</section></section>
+<section><section id="review-large-sample-properties" class="titleslide slide level1"><h1>Review: large sample properties</h1></section><section id="strong-law-of-large-numbers" class="slide level2">
+<h1>Strong law of large numbers</h1>
+<ul>
+<li><p><em>The strong law of large numbers (SLLN)</em> describes the behavior of a sequence of random variables that are indexed by sample size, such that as the sample size tends to infinity, it is almost certain that <em>the limiting random variable assumes a single value, i.e., its expectation</em>.</p></li>
+<li><p>The SLLN is the strongest large-sample characterization of the probabilistic behavior of a sequence of random variables. However, it cannot be used for hypothesis testing on an estimate since we only have finitely many observations.</p></li>
+</ul>
+</section><section id="strong-law-of-large-numbers-1" class="slide level2">
+<h1>Strong law of large numbers</h1>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with expectation <span class="math inline">\(\mu=E(X)\)</span> and variance <span class="math inline">\(\sigma^2=Var(X)\)</span>, and suppose <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> a random sample of sample size <span class="math inline">\(n\)</span> for <span class="math inline">\(X\)</span>.</p>
+<ul>
+<li>The sequence of sample means <span class="math display">\[\hat{\mu}_n = n^{-1}\sum_{i=1}^n x_i,\]</span> indexed by <span class="math inline">\(n\)</span>, always has expectation <span class="math inline">\(\mu\)</span>, and satisfies the SLLN, i.e., <span class="math display">\[\Pr\left(\lim_{n \to \infty} \hat{\mu}_n = \mu\right)=1.\]</span></li>
+</ul>
+</section><section id="strong-law-of-large-numbers-2" class="slide level2">
+<h1>Strong law of large numbers</h1>
+<p>The sequence of sample variances <span class="math display">\[\hat{\sigma}_n^2 = (n-1)^{-1}\sum_{i=1}^n (x_i - \hat{\mu}_n)^2,\]</span> indexed by <span class="math inline">\(n\)</span>, always has expectation <span class="math inline">\(\sigma^2\)</span>, and satisfied the SLLN, i.e., <span class="math display">\[\Pr\left(\lim_{n \to \infty} \hat{\sigma}_n^2 = \sigma^2\right)=1.\]</span></p>
+</section><section id="central-limit-theorem" class="slide level2">
+<h1>Central limit theorem</h1>
+<ul>
+<li><p><em>The central limit theorem (CLT)</em> describes the limiting behavior of <em>a sequence of standardized estimates that are obtained from a set of weakly interacting random variables</em>. The CLT and the Glivenko-Cantelli theorem form the corner stone of statistical learning.</p></li>
+<li><p>In particular, the CLT enables us to learn a data-generating process whenever we have a random sample of relatively large size. Unlike the SLLN, <em>the CLT can be used to conduct hypothesis testing and construct confidence intervals.</em></p></li>
+</ul>
+</section><section id="central-limit-theorem-1" class="slide level2">
+<h1>Central limit theorem</h1>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with expectation <span class="math inline">\(\mu=E(X)\)</span> and variance <span class="math inline">\(\sigma^2=Var(X)\)</span>, and suppose <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> a random sample of sample size <span class="math inline">\(n\)</span> for <span class="math inline">\(X\)</span>.</p>
+<ul>
+<li>The sample mean <span class="math inline">\(\hat{\mu}_n = n^{-1}\sum_{i=1}^n x_i\)</span> has expectation <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma/\sqrt{n}\)</span></li>
+<li>The <em>standardized</em> sequence of sample means <span class="math display">\[\tilde{\mu}_n = \frac{\hat{\mu}_n - \mu}{\sigma/\sqrt{n}},\]</span> indexed by <span class="math inline">\(n\)</span>, satisfies the CLT.</li>
+</ul>
+</section><section id="central-limit-theorem-2" class="slide level2">
+<h1>Central limit theorem</h1>
+<p>The <em>standardized</em> sequence of sample means <span class="math display">\[\tilde{\mu}_n = \frac{\hat{\mu}_n - \mu}{\sigma/\sqrt{n}}\]</span> satisfies the CLT.</p>
+<ul>
+<li><p>Namely, as <span class="math inline">\(n\)</span> becomes larger, the distribution of <span class="math inline">\(\tilde{\mu}_n\)</span> becomes closer to the distribution of <span class="math inline">\(Z\)</span>, the standard Gaussian random variable.</p></li>
+<li><p>In mathematical notations, the above is <span class="math display">\[\Pr(\lim_{n \to \infty} \tilde{\mu}_n \le x) = \Pr(Z \le x) \text{ for any } x.\]</span></p></li>
+</ul>
+</section><section id="remarks" class="slide level2">
+<h1>Remarks</h1>
+<ul>
+<li><p>An animation for CLT: <a href="https://yihui.org/animation/example/clt-ani/" class="uri">https://yihui.org/animation/example/clt-ani/</a></p></li>
+<li><p>The SLLN and CLT are frequently used (sometimes implicitly) in practices of statistical learning and statistical thinking</p></li>
+</ul>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 7 x64 (build 7601) Service Pack 1
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.12  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

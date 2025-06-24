@@ -1,0 +1,139 @@
+---
+title: "Stat 435 lecture notes 9: supplementary"
+
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{amssymb}
+   - \usepackage{amsmath}
+   - \usepackage{graphicx}
+   - \usepackage{natbib}
+   - \usepackage{float}
+   - \floatplacement{figure}{H}
+output:
+  pdf_document: default
+fontsize: 11pt
+---
+
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+# Penalized logistic regression
+
+```{r,echo=T,cache=T}
+load("sim_geno.rda")
+load("sim_trait.rda")
+# take a smaller par
+sim_geno_a = sim_geno[1:500,1:100]
+sim_trait_a = sim_trait[1:100]
+sim_trait_a1 = as.numeric(abs(sim_trait_a)>0.5)
+
+set.seed(123)
+
+library(glmnet)
+
+lga =cv.glmnet(t(sim_geno_a),sim_trait_a1,family="binomial",alpha = 1,type.measure="class")
+
+Ma = glmnet(t(sim_geno_a),sim_trait_a1, alpha = 1, family = "binomial",lambda = lga$lambda.min)
+# Display non-zero regression coefficients
+coef(Ma)[coef(Ma) !=0]
+
+## obtain p-values
+library(hdi)
+prj_est = lasso.proj(t(sim_geno_a), sim_trait_a1, family = "binomial")
+
+prj_est$pval[1:10]
+
+### Ridge regression
+
+lgb =cv.glmnet(t(sim_geno_a),sim_trait_a1,family="binomial",alpha = 0,type.measure="class")
+
+Mb = glmnet(t(sim_geno_a),sim_trait_a1, alpha = 0, family = "binomial",lambda = lga$lambda.min)
+
+
+## obtain p-values
+prj_estb = ridge.proj(t(sim_geno_a), sim_trait_a1, family = "binomial")
+
+prj_estb$pval[1:10]
+
+```
+
+
+# Multinomial logistic regression
+
+Please go to webpage: https://stats.idre.ucla.edu/r/dae/multinomial-logistic-regression/
+
+
+The data set contains variables on 200 students. The outcome variable is `prog`, program type. The predictor variables are social economic status, `ses`, a three-level categorical variable and writing score, `write`, a continuous variable. 
+
+```{r,echo=T,cache=T}
+require(foreign)
+require(nnet)
+require(ggplot2)
+require(reshape2)
+
+ml <- read.dta("hsbdemo.dta")
+
+with(ml, table(ses, prog))
+
+# set baseline level for "prog"
+ml$prog2 <- relevel(ml$prog, ref = "academic")
+test <- multinom(prog2 ~ ses + write, data = ml)
+
+# "ses = low" is the baseline and absorbed into the intercept
+summary(test)
+
+# calculate z-test value
+z <- summary(test)$coefficients/summary(test)$standard.errors
+z
+
+# calculate two-sided p-values using z-tests
+p <- (1 - pnorm(abs(z), 0, 1)) * 2
+p
+
+# use fitted model to predict probabilities
+head(pp <- fitted(test))
+
+```
+
+# Poisson regression
+
+The following contents are adopted from: https://stats.idre.ucla.edu/r/dae/poisson-regression/. 
+In this example, `num_awards` is the outcome variable and indicates the number of awards earned by students at a high school in a year, `math` is a continuous predictor variable and represents students' scores on their math final exam, and `prog` is a categorical predictor variable with three levels indicating the type of program in which the students were enrolled. It is coded as 1 = "General", 2 = "Academic" and 3 = "Vocational".
+
+```{r,echo=T,cache=T}
+
+require(ggplot2)
+require(sandwich)
+require(msm)
+
+
+p <- read.csv("poisson_sim.csv")
+p <- within(p, {
+  prog <- factor(prog, levels=1:3, labels=c("General", "Academic", 
+                                                     "Vocational"))
+  id <- factor(id)
+})
+summary(p)
+
+
+ggplot(p, aes(num_awards, fill = prog)) +
+  geom_histogram(binwidth=.5, position="dodge")
+
+summary(m1 <- glm(num_awards ~ prog + math, family="poisson", data=p))
+
+
+## calculate and store predicted values
+p$phat <- predict(m1, type="response")
+
+## order by program and then by math
+p <- p[with(p, order(prog, math)), ]
+
+## create the plot
+ggplot(p, aes(x = math, y = phat, colour = prog)) +
+  geom_point(aes(y = num_awards), alpha=.5, position=position_jitter(h=.2)) +
+  geom_line(size = 1) +
+  labs(x = "Math Score", y = "Expected number of awards")
+
+```

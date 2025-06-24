@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 2a</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 2a</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="inference-on-coefficients" class="titleslide slide level1"><h1>Inference on coefficients</h1></section><section id="inference-on-estimates" class="slide level2">
+<h1>Inference on estimates</h1>
+<p>Since the observations <span class="math inline">\((x_i,y_i),i=1,\ldots,n\)</span> for <span class="math inline">\((X,Y)\)</span> are random, so is the LSE <span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span>.</p>
+<ul>
+<li><p><span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span> is unbiased, i.e., <span class="math inline">\(E(\hat{\beta}_0)=\beta_0\)</span> and <span class="math inline">\(E(\hat{\beta}_1)=\beta_1\)</span>, when <span class="math inline">\(\varepsilon_i\)</span>’s are uncorrelated</p></li>
+<li><p>How accurate is <span class="math inline">\(\left(\hat{\beta}_0,\hat{\beta}_1\right)\)</span> with respect to <span class="math inline">\(({\beta}_0,{\beta}_1)\)</span>?</p></li>
+</ul>
+</section><section id="variability-of-estimates" class="slide level2">
+<h1>Variability of estimates</h1>
+<p>Recall <span class="math display">\[\hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}\]</span> and <span class="math inline">\(\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\)</span>.</p>
+<p>When <span class="math inline">\(\varepsilon_i\)</span>’s are uncorrelated,</p>
+<ul>
+<li><span class="math inline">\([SE(\hat{\beta_0})]^2 = \sigma^2 \left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i - {\bar{x}})^2}\right]\)</span></li>
+<li><span class="math inline">\([SE(\hat{\beta_1})]^2 = \frac{\sigma^2}{\sum_{i=1}^n(x_i - \bar{x})^2}\)</span></li>
+</ul>
+<p>How does the sample size <span class="math inline">\(n\)</span> and the sample variance of <span class="math inline">\(x_i\)</span>’s affect these variances?</p>
+</section><section id="variability-of-estimates-1" class="slide level2">
+<h1>Variability of estimates</h1>
+<ul>
+<li><p>Variances of <span class="math inline">\(\hat{\beta_0}\)</span> and <span class="math inline">\(\hat{\beta_1}\)</span> contain information on the accuracy of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span></p></li>
+<li><p>Without information on <span class="math inline">\(\sigma\)</span>, variances of <span class="math inline">\(\hat{\beta_0}\)</span> and <span class="math inline">\(\hat{\beta_1}\)</span> cannot be accurately assessed</p></li>
+<li><p>An estimate of <span class="math inline">\(\sigma\)</span> is</p></li>
+</ul>
+<p><span class="math display">\[RSE = \sqrt{RSS/(n-2)} = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n-2}}\]</span></p>
+</section><section id="ci-for-estimates" class="slide level2">
+<h1>CI for estimates</h1>
+<p>The approximate <span class="math inline">\(95\%\)</span> <em>confidence interval (CI)</em></p>
+<ul>
+<li>for <span class="math inline">\(\hat{\beta_0}\)</span> is <span class="math inline">\(\hat{\beta_0} \pm 2 \cdot SE(\hat{\beta_0})\)</span></li>
+<li>for <span class="math inline">\(\hat{\beta_1}\)</span> is <span class="math inline">\(\hat{\beta_1} \pm 2 \cdot SE(\hat{\beta_1})\)</span></li>
+</ul>
+<p><em>Note:</em> the above follows a general principle for constructing a CI when the distribution of “estimate minus parameter” is symmetric around <span class="math inline">\(0\)</span></p>
+</section><section id="testing-the-slope" class="slide level2">
+<h1>Testing the slope</h1>
+<ul>
+<li>Recall the model <span class="math display">\[Y = \beta_0 + \beta_1 X + \varepsilon\]</span> with <span class="math inline">\(E(\varepsilon)=0\)</span> and <span class="math inline">\(Var(\varepsilon)=\sigma^2\)</span></li>
+<li>If <span class="math inline">\(\beta_1=0\)</span>, then <span class="math inline">\(Y = \beta_0 + \varepsilon\)</span>, and <span class="math inline">\(Y\)</span> is independent of <span class="math inline">\(X\)</span> (when <span class="math inline">\(\varepsilon\)</span> is independent <span class="math inline">\(X\)</span>).</li>
+<li>Testing “<span class="math inline">\(H_0: \beta_1=0\)</span>” often is equivalent to checking if “<span class="math inline">\(H_0\)</span>: there is no relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>”.</li>
+</ul>
+<p><em>Caution:</em> The random error <span class="math inline">\(\varepsilon\)</span> may not be independent of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> due to latent dependence, which is common in genetics studies.</p>
+</section><section id="testing-the-slope-1" class="slide level2">
+<h1>Testing the slope</h1>
+<ul>
+<li>A test statistic for this purpose is the <em>t-statistic</em> <span class="math display">\[t = \frac{\hat{\beta}_1 - 0}{SE(\hat{\beta}_1)}\]</span></li>
+<li>If <span class="math inline">\(SE(\hat{\beta}_1)\)</span> is small, then relatively small <span class="math inline">\(\vert \hat{\beta}_1\vert\)</span> provides strong evidence that <span class="math inline">\(\beta_1 \ne 0\)</span></li>
+</ul>
+<p><em>Note:</em> When <span class="math inline">\(H_0: \beta_1=0\)</span> holds, <span class="math inline">\(t\)</span> approximately has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-2\)</span> degrees of freedom when <span class="math inline">\(\varepsilon_i\)</span>’s are not much dependent on each other; when <span class="math inline">\(n\)</span> is large, a <span class="math inline">\(t\)</span>-distribution will be close to a Gaussian distribution.</p>
+</section><section id="testing-the-slope-2" class="slide level2">
+<h1>Testing the slope</h1>
+<p>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code>:</p>
+<pre><code># A tibble: 2 x 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)   7.03     0.458        15.4 1.41e-35
+2 TV            0.0475   0.00269      17.7 1.47e-42</code></pre>
+<ul>
+<li>Is <span class="math inline">\(H_0: \beta_1=0\)</span> retained or rejected? In either case, at which Type I error level?</li>
+<li>How trustable are our conclusions?</li>
+</ul>
+</section><section id="testing-the-slope-3" class="slide level2">
+<h1>Testing the slope</h1>
+<p>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code>:</p>
+<pre><code># A tibble: 2 x 5
+  term        estimate std.error statistic   p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)   39.9     0.717        55.7 1.22e-187
+2 horsepower    -0.158   0.00645     -24.5 7.03e- 81</code></pre>
+<ul>
+<li>Is <span class="math inline">\(H_0: \beta_1=0\)</span> retained or rejected? In either case, at which Type I error level?</li>
+<li>How trustable are our conclusions?</li>
+</ul>
+</section></section>
+<section><section id="model-diagnostics" class="titleslide slide level1"><h1>Model diagnostics</h1></section><section id="things-to-check" class="slide level2">
+<h1>Things to check</h1>
+<ul>
+<li>Nonlinearity of relationship between response and predictor</li>
+<li>Correlation of error terms</li>
+<li>Non-constant variance of error terms</li>
+<li>Outliers</li>
+<li>High-leverage points</li>
+</ul>
+</section><section id="nonlinearity" class="slide level2">
+<h1>Nonlinearity</h1>
+<p>If the linear model <span class="math display">\[Y=\beta_0 + \beta_1 X + \varepsilon\]</span> is plausible, then</p>
+<ul>
+<li><span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span>, where <span class="math inline">\(\varepsilon_i\)</span> is a realization of <span class="math inline">\(\varepsilon\)</span> for each pair <span class="math inline">\((x_i,y_i)\)</span></li>
+<li>the residuals <span class="math inline">\(e_i\)</span>’s<em>, where <span class="math display">\[e_i = y_i - \hat{y}_i, \quad \hat{y}_i=\hat{\beta}_0 + \hat{\beta}_1 x_i,\]</span> </em>are random errors (as estimated realizations from <span class="math inline">\(\varepsilon\)</span>), and should have no specific relationship with <span class="math inline">\(x_i\)</span>’s</li>
+</ul>
+<p><em>So, the residuals <span class="math inline">\(e_i\)</span>’s should contain no specific pattern on the fitted values <span class="math inline">\(\hat{y}_i\)</span>’s or <span class="math inline">\(x_i\)</span>’s if the model is plausible.</em></p>
+</section><section id="nonlinearity-1" class="slide level2">
+<h1>Nonlinearity</h1>
+<p>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-1-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="nonlinearity-2" class="slide level2">
+<h1>Nonlinearity</h1>
+<p>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-2-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="check-on-error-terms" class="slide level2">
+<h1>Check on error terms</h1>
+<ul>
+<li>Inference on the LSE <span class="math inline">\((\hat{\beta_0}, \hat{\beta_1})\)</span> depends critically on <span class="math inline">\(SE(\hat{\beta_0})\)</span> and <span class="math inline">\(SE(\hat{\beta_1})\)</span>, which depend on the unknown <span class="math inline">\(\sigma = \sqrt{Var(\varepsilon)}\)</span>.<br />
+</li>
+<li>Information on <span class="math inline">\(\varepsilon\)</span>, hence on <span class="math inline">\(\sigma\)</span>, is contained in the residuals <span class="math inline">\(e_i\)</span> (as estimates of <span class="math inline">\(\varepsilon_i\)</span>)</li>
+</ul>
+<p>Relatively accurate inference requires <span class="math inline">\(e_i\)</span>’s to</p>
+<ul>
+<li>be <em>uncorrelated</em></li>
+<li>have <em>identical variance</em></li>
+</ul>
+<p><em>Otherwise, the formulae for <span class="math inline">\(SE(\hat{\beta_0})\)</span> and <span class="math inline">\(SE(\hat{\beta_1})\)</span> are (usually) invalid, leading to invalid inference.</em></p>
+</section><section id="heterogeneous-error-variances" class="slide level2">
+<h1>Heterogeneous error variances</h1>
+<p>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-3-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="heterogeneous-error-variances-1" class="slide level2">
+<h1>Heterogeneous error variances</h1>
+<p>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-4-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="outliers" class="slide level2">
+<h1>Outliers</h1>
+<ul>
+<li><em>An outlier</em> is an observation <span class="math inline">\((x_i,y_i)\)</span> for which <span class="math inline">\(y_i\)</span> is far from the value predicted by the model</li>
+<li>Observations whose studentized residuals are greater than <span class="math inline">\(3\)</span> in absolute value are possible outliers</li>
+<li>An outlier may significantly affect RSE (i.e., residual standard error) and <span class="math inline">\(R^2\)</span></li>
+<li>Removing an outlier may or may not significantly affect the subsequent estimated regression line, and this is related to <em>high-leverage points</em></li>
+</ul>
+</section><section id="outliers-1" class="slide level2">
+<h1>Outliers</h1>
+<p>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-5-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="outliers-2" class="slide level2">
+<h1>Outliers</h1>
+<p>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-6-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="outliers-3" class="slide level2">
+<h1>Outliers</h1>
+<p>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-7-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="outliers-4" class="slide level2">
+<h1>Outliers</h1>
+<p>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code>:</p>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-8-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="high-leverage-points" class="slide level2">
+<h1>High-leverage points</h1>
+<ul>
+<li><em>A high-leverage point</em> is an observation <span class="math inline">\((x_i,y_i)\)</span> for which <span class="math inline">\(x_i\)</span> is unusual among all observations for <span class="math inline">\(X\)</span></li>
+<li>Removing a high-leverage point often significantly affects the subsequent estimated regression line</li>
+<li>Let <span class="math inline">\(p\)</span> be the number of predictors in the model and <span class="math inline">\(n\)</span> the sample size, if the leverage statistic for an observation greatly exceeds <span class="math inline">\((p+1)/n\)</span>, then it can be considered a high-leverage point</li>
+</ul>
+</section><section id="high-leverage-points-1" class="slide level2">
+<h1>High-leverage points</h1>
+<p>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code> (<span class="math inline">\(p=1\)</span>,<span class="math inline">\(n=397\)</span>, <span class="math inline">\(\tilde{h}=(p+1)/n \approx 0.005\)</span>):  <img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-9-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="high-leverage-points-2" class="slide level2">
+<h1>High-leverage points</h1>
+<p>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code> (<span class="math inline">\(p=1\)</span>,<span class="math inline">\(n=200\)</span>,<span class="math inline">\(\tilde{h}=(p+1)/n=0.01\)</span>):  <img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-10-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="q-q-plot" class="slide level2">
+<h1>Q-Q Plot</h1>
+<p>A <em>Q-Q (quantile-quantile) plot</em> plots observed quantiles against the quantiles of a theoretical distribution, and hence provides information on whether observations under investigation have a distribution that matches this theoretical distribution</p>
+<ul>
+<li>A normal Q-Q plot does this with the standard Normal distribution as the theoretical distribution</li>
+<li>In a normal Q-Q plot, x-axis plots the theoretical quantiles from the standard Normal distribution with mean 0 and standard deviation 1</li>
+</ul>
+</section><section id="test-on-normality" class="slide level2">
+<h1>Test on Normality</h1>
+<ul>
+<li>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code></li>
+<li>Test Normality of random error</li>
+</ul>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-11-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="test-on-normality-1" class="slide level2">
+<h1>Test on Normality</h1>
+<ul>
+<li>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code></li>
+<li>Test Normality of random error</li>
+</ul>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-12-1.png" width="528" style="display: block; margin: auto;" /></p>
+</section><section id="kolmogorov-smirnov-test" class="slide level2">
+<h1>Kolmogorov-Smirnov Test</h1>
+<ul>
+<li>Model: <span class="math inline">\(E\)</span>(<code>sales</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>TV</code></li>
+<li><code>Fit1</code> is the object obtained from fitting the model</li>
+<li>Test Normality of random error</li>
+</ul>
+<pre><code>
+    One-sample Kolmogorov-Smirnov test
+
+data:  Fit1$residuals
+D = 0.041533, p-value = 0.8806
+alternative hypothesis: two-sided</code></pre>
+</section><section id="kolmogorov-smirnov-test-1" class="slide level2">
+<h1>Kolmogorov-Smirnov Test</h1>
+<ul>
+<li>Model <span class="math inline">\(E\)</span>(<code>mpg</code>) = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>horsepower</code></li>
+<li><code>Fit2</code> is the object obtained from fitting the model</li>
+<li>Test Normality of random error</li>
+</ul>
+<pre><code>
+    One-sample Kolmogorov-Smirnov test
+
+data:  Fit2$residuals
+D = 0.060525, p-value = 0.1131
+alternative hypothesis: two-sided</code></pre>
+</section><section id="correlation-of-error-terms" class="slide level2">
+<h1>Correlation of error terms</h1>
+<p><em>It is extremely important that the error terms are uncorrelated</em>. Correlated error terms often present in time series data and in data with latent variables. Such correlation affects</p>
+<ul>
+<li>testing if random errors are Normally distributed</li>
+<li>variances of estimated coefficients and variance of random error term<br />
+</li>
+<li>Testing independence is a <em>highly nontrival</em> issue in statistical learning</li>
+</ul>
+</section><section id="correlation-of-error-terms-1" class="slide level2">
+<h1>Correlation of error terms</h1>
+<ul>
+<li><p>The true model is <span class="math display">\[Y = 1 + 2X + \varepsilon\]</span> with <span class="math inline">\(n=1000\)</span> observations <span class="math display">\[y_{i} = 1+ 2 x_{i} + \varepsilon_{i}\]</span></p></li>
+<li><p>The random errors are <em>equally correlated</em>, such that <span class="math display">\[\varepsilon_{i} =
+\sqrt{1-0.3}X_{i} + \sqrt{0.3} X_{0}\]</span> and <span class="math inline">\(X_{0}, X_{1}, \ldots, X_{1000}\)</span> are i.i.d. standard Normal.</p></li>
+<li><p>Fit a simple linear model and obtain fitted values and residuals</p></li>
+</ul>
+</section><section id="correlation-of-error-terms-2" class="slide level2">
+<h1>Correlation of error terms</h1>
+<p><img src="Stat435LectureNotes2a_files/figure-revealjs/unnamed-chunk-15-1.png" width="720" style="display: block; margin: auto;" /></p>
+</section><section id="correlation-of-error-terms-3" class="slide level2">
+<h1>Correlation of error terms</h1>
+<p>For this example, when trying to check if the random errors are independent or uncorrelated by a visual check, we see the following:</p>
+<ul>
+<li>no pattern in the left plot where each residuals is plotted against its index</li>
+<li>the random errors are dependent, since if they were independent, the fitted values should be independent of the residuals</li>
+<li>the random errors do not seem to be correlated with the fitted values</li>
+</ul>
+</section></section>
+<section><section id="appendix" class="titleslide slide level1"><h1>Appendix</h1></section><section id="true-model" class="slide level2">
+<h1>True model</h1>
+<ul>
+<li><p>For two quantitative random variables <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>, a simple linear model is <span class="math display">\[E(Y) = \beta_0 + \beta_1 X,\]</span> where <span class="math inline">\(\beta_0\)</span> (<em>intercept</em>) and <span class="math inline">\(\beta_1\)</span> (<em>slope</em>) are <em>unknown, true model</em> parameters (or <em>coefficients</em>), and <span class="math inline">\(\beta_1\)</span> is called the <em>regression coefficient</em>.</p></li>
+<li><p>The above model is equivalent to <span class="math display">\[Y = \beta_0 + \beta_1 X + \varepsilon \quad \text{ with } \quad E(\varepsilon)=0,Var(\varepsilon)=\sigma^2\]</span> which is called the <em>population regression line</em>.</p></li>
+</ul>
+</section><section id="the-least-squares-estimate" class="slide level2">
+<h1>The least squares estimate</h1>
+<p>With observations <span class="math inline">\((x_i,y_i),i=1,\ldots,n\)</span> for <span class="math inline">\((X,Y)\)</span>, the LS method gives the <em>least squares estimate (LSE)</em>:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}\)</span> with <span class="math inline">\(\bar{y}=n^{-1}\sum_{i=1}^n y_i\)</span></p></li>
+<li><p><span class="math inline">\(\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\)</span> with <span class="math inline">\(\bar{x}=n^{-1}\sum_{i=1}^n x_i\)</span></p></li>
+</ul>
+<p>Namely, the fitted model is <span class="math display">\[\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x,\]</span> also called the <em>least squares line</em>.</p>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19041)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] ggplot2_3.1.0 broom_0.5.1   knitr_1.21   
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.3       plyr_1.8.4       pillar_1.3.1    
+ [4] compiler_3.5.0   tools_3.5.0      digest_0.6.18   
+ [7] evaluate_0.12    tibble_2.1.3     nlme_3.1-137    
+[10] gtable_0.2.0     lattice_0.20-35  pkgconfig_2.0.2 
+[13] rlang_0.4.4      cli_1.0.1        rstudioapi_0.8  
+[16] yaml_2.2.0       xfun_0.4         withr_2.1.2     
+[19] dplyr_0.8.4      stringr_1.3.1    generics_0.0.2  
+[22] revealjs_0.9     grid_3.5.0       tidyselect_0.2.5
+[25] glue_1.3.0       R6_2.3.0         fansi_0.4.0     
+[28] rmarkdown_1.11   purrr_0.2.5      tidyr_0.8.2     
+[31] magrittr_1.5     backports_1.1.3  scales_1.0.0    
+[34] htmltools_0.3.6  assertthat_0.2.0 colorspace_1.3-2
+[37] labeling_0.3     utf8_1.1.4       stringi_1.2.4   
+[40] lazyeval_0.2.1   munsell_0.5.0    crayon_1.3.4    </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

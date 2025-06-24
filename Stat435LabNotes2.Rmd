@@ -1,0 +1,136 @@
+---
+title: Stat 435 Lab Notes 2
+always_allow_html: yes
+author: 
+     - Xiongzhi Chen
+     - Washington State University
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{amssymb}
+   - \usepackage{amsmath}
+   - \usepackage{graphicx,float}
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    transition: slide
+    center: false
+    highlight: null
+    self_contained: false
+    lib_dir: libs
+    reveal_plugins: ["chalkboard", "zoom"]
+    reveal_options:
+      slideNumber: false
+      progress: true
+    includes:
+      before_body: doc_prefix.html
+---
+
+```{r my_opts, cache=FALSE, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.align="center", fig.height=5, fig.width=5.5, collapse=TRUE, comment="", prompt=TRUE,message=FALSE, warning=FALSE, tidy = FALSE)
+options(width=63)
+```
+#<img src="howto.jpg"></img>
+
+# Simple linear regression
+
+
+```{r,eval=F}
+# Chapter 3 Lab: Linear Regression
+
+library(MASS)
+library(ISLR)
+
+# Simple Linear Regression
+
+fix(Boston)
+names(Boston)
+lm.fit=lm(medv~lstat)
+lm.fit=lm(medv~lstat,data=Boston)
+attach(Boston)
+lm.fit=lm(medv~lstat)
+lm.fit
+summary(lm.fit)
+names(lm.fit)
+coef(lm.fit)
+confint(lm.fit)
+predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval="confidence")
+predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval="prediction")
+plot(lstat,medv)
+abline(lm.fit)
+abline(lm.fit,lwd=3)
+abline(lm.fit,lwd=3,col="red")
+plot(lstat,medv,col="red")
+plot(lstat,medv,pch=20)
+plot(lstat,medv,pch="+")
+plot(1:20,1:20,pch=1:20)
+par(mfrow=c(2,2))
+plot(lm.fit)
+plot(predict(lm.fit), residuals(lm.fit))
+plot(predict(lm.fit), rstudent(lm.fit))
+# leverage statistic
+plot(hatvalues(lm.fit))
+which.max(hatvalues(lm.fit))
+
+```
+
+
+# Multiple Linear Regression
+
+```{r,eval=F}
+lm.fit=lm(medv~lstat+age,data=Boston)
+summary(lm.fit)
+lm.fit=lm(medv~.,data=Boston)
+summary(lm.fit)
+library(car)
+vif(lm.fit)
+lm.fit1=lm(medv~.-age,data=Boston)
+summary(lm.fit1)
+lm.fit1=update(lm.fit, ~.-age)
+```
+
+# Interaction Terms
+
+```{r,eval=F}
+summary(lm(medv~lstat*age,data=Boston))
+```
+
+# Non-linear Transformations of the Predictors
+
+```{r,eval=F}
+lm.fit2=lm(medv~lstat+I(lstat^2))
+summary(lm.fit2)
+lm.fit=lm(medv~lstat)
+anova(lm.fit,lm.fit2)
+par(mfrow=c(2,2))
+plot(lm.fit2)
+lm.fit5=lm(medv~poly(lstat,5))
+summary(lm.fit5)
+summary(lm(medv~log(rm),data=Boston))
+```
+
+# Qualitative Predictors
+
+```{r,eval=F}
+fix(Carseats)
+names(Carseats)
+lm.fit=lm(Sales~.+Income:Advertising+Price:Age,data=Carseats)
+summary(lm.fit)
+attach(Carseats)
+contrasts(ShelveLoc)
+```
+
+## License and session Information
+
+[License](http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html)
+
+<section style="font-size: 0.75em;">
+```{r}
+sessionInfo()
+```
+</section>
+
+
+```{r converttonotes, include=FALSE, cache=FALSE}
+source("make_notes.R")
+```
