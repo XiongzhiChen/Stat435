@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 7</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 7</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section></section>
+<section><section id="nonlinear-regression-models" class="titleslide slide level1"><h1>Nonlinear regression models</h1></section><section id="overview" class="slide level2">
+<h1>Overview</h1>
+<ul>
+<li><p>Linear models are simple (e.g., easy to fit and interpret) but quite inflexible, since often linearity assumption is a poor approximation</p></li>
+<li><p>We need to look beyond linear models, and choose models that somehow are not too complicated but flexible enough to considerably improve upon linear models</p></li>
+<li><p>We will discuss four types of models: <em>polynomial regression, spline models</em>, and <em>generalized additive models</em></p></li>
+</ul>
+</section></section>
+<section><section id="polynomial-regression" class="titleslide slide level1"><h1>Polynomial regression</h1></section><section id="model" class="slide level2">
+<h1>Model</h1>
+<p>Scalar predictor <span class="math inline">\(X\)</span> and scalar response <span class="math inline">\(Y\)</span>:</p>
+<ul>
+<li>Population version: <span class="math display">\[Y=\beta_{0}+\beta_{1}X+\beta_{2}X^{2}+\cdots+\beta_{d}X^{d}+\varepsilon, \mathbb{E}(\varepsilon)=0\]</span></li>
+<li>Data version: <span class="math display">\[y_{i}=\beta_{0}+\beta_{1}x_{i}+\beta_{2}x_{i}^{2}+\cdots+\beta_{d}x_{i}%
+^{d}+\varepsilon_{i}, \mathbb{E}(\varepsilon_i)=0\]</span></li>
+<li><span class="math inline">\(\beta_{0},...,\beta_{d}\)</span> can be estimated by the least squares method, by pretending that <span class="math inline">\(x_{i}^{j}\)</span> for each <span class="math inline">\(j\in\left\{ 1,...,d\right\}\)</span> is a predictor when the associated design matrix does not behave badly</li>
+</ul>
+</section><section id="boundary-effect" class="slide level2">
+<h1>Boundary effect</h1>
+<ul>
+<li>Usually <span class="math inline">\(d=3\)</span> or <span class="math inline">\(4\)</span> is set since the polynomial <span class="math display">\[
+f\left(  x\right)  =\beta_{0}+\beta_{1}x+\beta_{2}x^{2}+\cdots+\beta_{d}x^{d}
+\]</span> may behave wildly</li>
+<li><p>Reason: dominant term <span class="math inline">\(\beta_{d}X^{d}\)</span> (when <span class="math inline">\(\beta_{d}\neq0\)</span>) varies wildly near boundary of observed <span class="math inline">\(X\)</span> variable</p></li>
+<li><p><strong>Caution</strong>: Boundary effect is a common problem for complicated models, and there are strategies to mitigate this</p></li>
+</ul>
+</section><section id="estimated-model" class="slide level2">
+<h1>Estimated model</h1>
+<ul>
+<li>Estimate of <span class="math inline">\(f\)</span>: <span class="math display">\[
+\hat{f}\left(  x\right)  =\hat{\beta}_{0}+\hat{\beta}_{1}x+\hat{\beta}%
+_{2}x^{2}+\cdots+\hat{\beta}_{d}x^{d}
+\]</span></li>
+<li><p>Covariance matrix of <span class="math inline">\(\hat{\beta}=\left( \hat{\beta}_{0} ,\hat{\beta}_{1},\hat{\beta}_{2},...,\hat{\beta}_{d}\right) ^{T}\)</span> as <span class="math inline">\(\mathbf{C}\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{C}\)</span> can be complicated</p></li>
+</ul>
+</section><section id="confidence-band" class="slide level2">
+<h1>Confidence band</h1>
+<ul>
+<li>Variance of <span class="math inline">\(\hat{f}\left(x\right)\)</span> for a fixed <span class="math inline">\(x\)</span> is
+<span class="math display">\[\begin{align*}
+Var\left[  \hat{f}\left(  x\right)  \right]   &amp;  =\underbrace{\left(
+1,x,x^{2},...,x^{d}\right)  }_{l_{d}^{T}\left(  x\right)  }\mathbf{C}%
+\underbrace{\left(  1,x,x^{2},...,x^{d}\right)  ^{T}}_{l_{d}\left(  x\right)
+}\\
+&amp;  =l_{d}^{T}\left(  x\right)  \mathbf{C}l_{d}\left(  x\right)
+\end{align*}\]</span></li>
+<li>Envelope for <span class="math inline">\(\hat{f}\left( x\right)\)</span> formed by: <span class="math display">\[
+\hat{f}\left(  x\right)  \pm 2\sqrt{Var\left[
+\hat{f}\left(  x\right)  \right]  }
+\]</span></li>
+</ul>
+</section><section id="illustration-model" class="slide level2">
+<h1>Illustration: model</h1>
+<ul>
+<li>Model family: <span class="math display">\[
+\Pr\left(  y_{i}&gt;250|x_{i}\right)  =\frac{\exp\left(  \theta_{i}\right)
+}{1+\exp\left(  \theta_{i}\right)  }
+\]</span> with <span class="math display">\[
+\theta_{i}=\beta_{0}+\beta_{1}x_{i}+\beta_{2}x_{i}^{2}+\cdots+\beta_{d}%
+x_{i}^{d}
+\]</span></li>
+<li><span class="math inline">\(d=1\)</span> gives simple logistic regression</li>
+</ul>
+</section><section id="illustration-fitted" class="slide level2">
+<h1>Illustration: fitted</h1>
+<p><img src="fig7_1.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="regression-splines" class="titleslide slide level1"><h1>Regression splines</h1></section><section id="basis-functions" class="slide level2">
+<h1>Basis functions</h1>
+<ul>
+<li><p><span class="math inline">\(\left(d+1\right)\)</span> monomials <span class="math inline">\(1,X,X^{2},...,X^{d}\)</span> generate polynomials <span class="math inline">\(\mathcal{P}_d\)</span> of degree <span class="math inline">\(d\)</span> with elements: <span class="math display">\[
+f_d(x)=\beta_{0}+\beta_{1}x+\beta_{2}x^{2}+\cdots+\beta_{d}x^{d}
+\]</span></p></li>
+<li><span class="math inline">\(d\)</span> <strong>functionally linearly independent</strong> functions <span class="math inline">\(f_{1},...,f_{d}\)</span> generate family <span class="math inline">\(\mathcal{F}\)</span> with elements
+<span class="math display">\[\begin{equation}
+\tilde{f}\left(  x\right)  =\beta_{0}+\beta_{1}f_{1}\left(  x\right)
++\beta_{2}f_{2}\left(  x\right)  +\cdots+\beta_{d}f_{d}\left(  x\right)
+\end{equation}\]</span></li>
+<li><p><span class="math inline">\(\left\{ f_{i}\right\} _{i=1}^{d}\)</span> are called basis functions for <span class="math inline">\(\mathcal{F}\)</span></p></li>
+<li><p>Note: these are concepts in linear algebra</p></li>
+</ul>
+</section><section id="piecewise-polynomials" class="slide level2">
+<h1>Piecewise polynomials</h1>
+<ul>
+<li><p>A <em>global</em> polynomial regression model has intrinsic disadvantages</p></li>
+<li><p><strong>Alternative strategy</strong>: fit different polynomial regressions on different parts of data, by requiring these polynomials to be consistent in some sense, so that the <em>resultant model displays some stability as it transits from one part of data to the other</em></p></li>
+<li><p>Consider the model <span class="math inline">\(M\)</span>: <span class="math display">\[
+Y=\left\{
+\begin{array}
+[c]{cc}%
+\beta_{01}+\beta_{11}X+\beta_{21}X^{2}+\beta_{31}X^{3}, &amp;  X&lt;c\\
+\beta_{02}+\beta_{12}X+\beta_{22}X^{2}+\beta_{32}X^{3}, &amp;  X\geq
+c
+\end{array}
+\right.
+\]</span></p></li>
+</ul>
+</section><section id="piecewise-polynomials-1" class="slide level2">
+<h1>Piecewise polynomials</h1>
+<ul>
+<li><p>Data version <span class="math display">\[
+y_{i}=\left\{
+\begin{array}
+[c]{cc}%
+\beta_{01}+\beta_{11}x_{i}+\beta_{21}x_{i}^{2}+\beta_{31}x_{i}^{3}, &amp;  x_{i}&lt;c\\
+\beta_{02}+\beta_{12}x_{i}+\beta_{22}x_{i}^{2}+\beta_{32}x_{i}^{3}, &amp;  x_{i}\geq c
+\end{array}
+\right.
+\]</span></p></li>
+<li><p><span class="math inline">\(M\)</span> has two sub-models, <span class="math inline">\(M_{1}\)</span> and <span class="math inline">\(M_{2}\)</span>, on two distinct parts, <span class="math inline">\(D_{1}=\left\{ \left( X,Y\right) :X&lt;c\right\}\)</span> and <span class="math inline">\(D_{2}=\left\{ \left( X,Y\right) :X\geq c\right\}\)</span>, of data space</p></li>
+<li><p><span class="math inline">\(c\)</span> for <span class="math inline">\(X\)</span> is where <span class="math inline">\(M\)</span> transits from <span class="math inline">\(M_{1}\)</span> to <span class="math inline">\(M_{2}\)</span> (or vice versa); <span class="math inline">\(c\)</span> is called a “knot”</p></li>
+</ul>
+</section></section>
+<section><section id="splines-i" class="titleslide slide level1"><h1>Splines: I</h1></section><section id="splines" class="slide level2">
+<h1>Splines</h1>
+<ul>
+<li>Splines are a type of regression polynomials:
+<ul>
+<li>They employ polynomials up to a fixed degree</li>
+<li>Where two polynomials meet, some constrains are satisfied</li>
+</ul></li>
+<li><em>Cubic splines</em> employ <span class="math inline">\(\deg(3)\)</span> polynomials</li>
+<li><em>Natural splines</em> also satisfy linear constraints at boundary</li>
+<li><strong>Smoothing splines</strong> directly satisfy smoothness constraints and need not to have polynomial components</li>
+</ul>
+</section><section id="cubic-splines" class="slide level2">
+<h1>Cubic splines</h1>
+<ul>
+<li><p>Two cases of transition of <span class="math inline">\(M\)</span> from <span class="math inline">\(M_{1}\)</span> to <span class="math inline">\(M_{2}\)</span>:</p>
+<ul>
+<li>Case 1: <span class="math inline">\(M_{1}\)</span> does not match <span class="math inline">\(M_{2}\)</span> at <span class="math inline">\(c\)</span>; e.g., <span class="math inline">\(M\)</span> jumps from <span class="math inline">\(M_{1}\)</span> to <span class="math inline">\(M_{2}\)</span> at <span class="math inline">\(c\)</span></li>
+<li>Case 2: <span class="math inline">\(M_{1}\)</span> matches <span class="math inline">\(M_{2}\)</span> at <span class="math inline">\(c\)</span> in some sense; e.g., <span class="math inline">\(M_{1}\)</span> matches <span class="math inline">\(M_{2}\)</span> at <span class="math inline">\(c\)</span>, in value, (and/or) in speed of change, (and/or) in curvature</li>
+</ul></li>
+<li><p>For practical purposes it is often desirable to have Case 2, and the <span class="math inline">\(3\)</span>-degree polynomials with matching values (i.e., <span class="math inline">\(M\)</span> itself is continuous), speeds (i.e., first-order derivatives) and curvatures (i.e., second-order derivatives) at each knot are called <strong>cubic splines</strong></p></li>
+</ul>
+</section><section id="illustration" class="slide level2">
+<h1>Illustration</h1>
+<p><img src="fig7_3.png" width="80%" style="display: block; margin: auto;" /></p>
+</section><section id="smoothing-splines" class="slide level2">
+<h1>Smoothing splines</h1>
+<ul>
+<li><p>Split the range of <span class="math inline">\(X\)</span> into <span class="math inline">\(K+1\)</span> parts and only employ polynomials of degree <span class="math inline">\(d\)</span>; so needing <span class="math inline">\(K\)</span> knots and <span class="math inline">\(K+1\)</span> such polynomials</p></li>
+<li><p>Restrict these polynomials such that there are <span class="math inline">\(s\)</span> constrains for each distinct pair of them at a knot, then we have <span class="math inline">\(p=T-C\)</span> parameters to estimate</p></li>
+<li><span class="math inline">\(T = (K+1) \times (d+1)\)</span>; <span class="math inline">\((K+1)\)</span> number of distinct regions of values of <span class="math inline">\(X\)</span>, and <span class="math inline">\(d+1\)</span> number of parameters in each polynomial</li>
+<li><p><span class="math inline">\(C = K \times s\)</span>; <span class="math inline">\(K\)</span> number of knots and <span class="math inline">\(s\)</span> number of constraints at each knot</p></li>
+</ul>
+</section><section id="smoothing-splines-1" class="slide level2">
+<h1>Smoothing splines</h1>
+<p>In the above formula, <span class="math inline">\(s\)</span>, the number of constraints at each knot can be understood as follows:</p>
+<ul>
+<li><p>If submodels <span class="math inline">\(M_{i}\)</span> and <span class="math inline">\(M_{i+1},i=1,...,K\)</span> match in their values and up to their <span class="math inline">\(\left( s-1\right)\)</span>-th order derivatives at each knot <span class="math inline">\(Q_{i}\)</span>, then at knot <span class="math inline">\(Q_{i}\)</span> there are <span class="math inline">\(s\)</span> constraints on their associated polynomials</p></li>
+<li><p>If we take <span class="math inline">\(0\)</span>-th order derivative as performing no differentiation but keeping original function untouched, then <span class="math inline">\(M_{i}\)</span> and <span class="math inline">\(M_{i+1},i=1,...,K\)</span> matching up to their <span class="math inline">\(r\)</span>-th order derivatives at each knot <span class="math inline">\(Q_{i}\)</span> induces <span class="math inline">\(r+1\)</span> constraints</p></li>
+</ul>
+</section><section id="smoothing-splines-representation" class="slide level2">
+<h1>Smoothing splines: representation</h1>
+<ul>
+<li><p>Consider <span class="math inline">\(d=3\)</span>. A cubic spline with <span class="math inline">\(K\)</span> knots can be modelled as <span class="math display">\[
+y_{i}=\beta_{0}+\beta_{1}b_{1}\left(  x_{i}\right)  +...+\beta_{K+3}b_{K+3}\left(  x_{i}\right)  +\varepsilon_{i}
+\]</span> for an appropriate choice of basis functions <span class="math inline">\(b_{1},b_{2},...,b_{K+3}\)</span></p></li>
+<li><p>One such basis is partially induced by the function <span class="math display">\[
+h\left(  x,\xi\right)  =\left(  x-\xi\right)  _{+}^{3}=\left\{
+\begin{array}
+[c]{cc}%
+\left(  x-\xi\right)  ^{3}, &amp; x&gt;\xi\\
+0, &amp; x\leq\xi
+\end{array}
+\right.
+\]</span></p></li>
+</ul>
+</section><section id="smoothing-splines-representation-1" class="slide level2">
+<h1>Smoothing splines: representation</h1>
+<ul>
+<li>In summary, to fit a cubic spline to a data set with <span class="math inline">\(K\)</span> knots, we can equivalently fit the model <span class="math display">\[
+Y=\beta_{0}+\beta_{1}X+\beta_{2}X^{2}+\beta_{3}X^{3}+\\
+ \beta_{4}%
+\underbrace{h\left(  X,\xi_{1}\right)  }_{\text{the 4th predictor}}%
++...+\beta_{K+3}h\left(  X,\xi_{K}\right)  +\varepsilon
+\]</span> or its data version <span class="math display">\[
+y_{i}=\beta_{0}+\beta_{1}x_{i}+\beta_{2}x_{i}^{2}+\beta_{3}x_{i}^{3}+\\
+\beta_{4}h\left(  x_{i},\xi_{1}\right)  +...+\beta_{K+3}h\left(  x_{i},\xi
+_{K}\right)  +\varepsilon_{i}
+\]</span> where <span class="math inline">\(\xi_{1},...,\xi_{K}\)</span> are the knots</li>
+<li>Fitting this model uses <span class="math inline">\(K+4\)</span> degrees of freedom. We can use the least squares method to fit the model</li>
+</ul>
+</section><section id="natural-splines" class="slide level2">
+<h1>Natural splines</h1>
+<ul>
+<li><p>As for any regression that employs a polynomial, fitted model may be unstable near or at the boundary (induced by observed values of predictors)</p></li>
+<li><p>A <strong>natural spline</strong> is a regression spline which is required to be <em>linear at the boundary (in the region where <span class="math inline">\(X\)</span> is smaller than the smallest knot, or larger than the largest knot)</em></p></li>
+</ul>
+</section><section id="naturalcubic-spline" class="slide level2">
+<h1>Natural/Cubic spline</h1>
+<p><img src="fig7_4.png" width="85%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Each cubic spline has 3 knots</li>
+</ul>
+</section></section>
+<section><section id="splines-ii" class="titleslide slide level1"><h1>Splines: II</h1></section><section id="more-knots" class="slide level2">
+<h1>More knots?!</h1>
+<ul>
+<li><p>Regression spline is most flexible in regions that contain a lot of knots, because in those regions the polynomial coefficients can change rapidly. Hence, one option is to place more knots in places where we feel the function might vary most rapidly, and to place fewer knots where it seems more stable</p></li>
+<li><p>While this option can work well, in practice it is common to place knots in a uniform fashion. One way to do this is to specify the desired degrees of freedom, and then have the software automatically place the corresponding number of knots at uniform quantiles of the data, as done, e.g., by <em><span class="math inline">\(10\)</span>-fold CV based on the residual sum of squares (RSS) values</em></p></li>
+</ul>
+</section><section id="placing-knots" class="slide level2">
+<h1>Placing knots</h1>
+<p><img src="fig7_5.png" width="85%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><span class="math inline">\(3\)</span> knots, placed at 25th, 50th, 75th percentiles of <code>age</code></li>
+</ul>
+</section><section id="choosing-knots" class="slide level2">
+<h1>Choosing knots</h1>
+<p><img src="fig7_6.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="comparison" class="slide level2">
+<h1>Comparison</h1>
+<p>“Regression splines often give superior results to polynomial regression”:</p>
+<ul>
+<li><p>To be more flexible, polynomial regressions resort to higher degree polynomials which results in added instability at boundary (of observations for <span class="math inline">\(X\)</span>).</p></li>
+<li><p>Splines only need to plan for better knots in order to achieve flexibility, and natural splines alleviate instability at boundary</p></li>
+<li><p>Spline captures much better (than polynomial regression) local behavior of <span class="math inline">\(f\)</span> in true model <span class="math inline">\(E(Y|X)=f(X)\)</span> where <span class="math inline">\(f\)</span> changes rapidly.</p></li>
+</ul>
+</section><section id="illustration-1" class="slide level2">
+<h1>Illustration</h1>
+<p><img src="fig7_7.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="smoothing-splines-2" class="titleslide slide level1"><h1>Smoothing splines</h1></section><section id="motivation" class="slide level2">
+<h1>Motivation</h1>
+<p>Smoothing splines are splines produced directly by restricting how <strong>smooth</strong> a candidate function can be:</p>
+<ul>
+<li><p>Given the data <span class="math inline">\(\left\{ \left( x_{i},y_{i}\right) :i=1,...n\right\}\)</span>, there is a function <span class="math inline">\(g\)</span> such that <span class="math inline">\(\sum_{i=1}^{n}\left( y_{i}-g\left( x_{i}\right) \right)^{2}=0\)</span></p></li>
+<li><p>In terms of the local properties of <span class="math inline">\(g\)</span> such as continuity and differentiability, we can restrict the integrated curvature of <span class="math inline">\(g\)</span>, which is <span class="math inline">\(\int\left[ g^{\prime\prime}\left( t\right) \right] ^{2}dt\)</span>. The integral essentially restricts how variable <span class="math inline">\(g^{\prime\prime}\)</span> is (and hence approximately how variable the curvature of <span class="math inline">\(g\)</span> is)</p></li>
+</ul>
+</section><section id="formulation" class="slide level2">
+<h1>Formulation</h1>
+<ul>
+<li>A function <span class="math inline">\(g\)</span> that minimizes
+<span class="math display">\[\begin{equation}
+\underbrace{\sum_{i=1}^{n}\left(  y_{i}-g\left(  x_{i}\right)  \right)  ^{2}
+}_{\text{squared loss}}+\underbrace{\lambda\int\left[  g^{\prime\prime}\left(
+t\right)  \right]  ^{2}dt}_{\text{penalty on smoothness}} \label{eq76}%
+\end{equation}\]</span>
+<p>(for each fixed <span class="math inline">\(\lambda\geq0\)</span>) is called a <em>smoothing spline</em></p></li>
+<li>When is <span class="math inline">\(g^{\prime\prime}\left( t\right)\)</span> a constant?</li>
+<li>For practical usage, <span class="math inline">\(\deg\left( g\right) \ge 3\)</span> if <span class="math inline">\(g\)</span> is a polynomial</li>
+<li><p>Penalty term referred to as <em>roughness penalty</em></p></li>
+</ul>
+</section><section id="key-observations" class="slide level2">
+<h1>Key observations</h1>
+<ul>
+<li><p>When <span class="math inline">\(\lambda=0\)</span>, the penalty term has no effect and <span class="math inline">\(g\)</span> can be discontinuous and will exactly interpolate the data</p></li>
+<li><p>When <span class="math inline">\(\lambda\neq0\)</span>, <span class="math inline">\(g\)</span> has to be twice differentiable in order to possess a second order derivative</p></li>
+<li><p>When <span class="math inline">\(\lambda=\infty\)</span>, the minimizer <span class="math inline">\(\hat{g}\)</span> must satisfy <span class="math inline">\(\hat{g}^{\prime\prime}\left( t\right) =0\)</span>. This means that <span class="math inline">\(\hat {g}\)</span> has to be a linear function, i.e., <span class="math inline">\(\hat{g}\left( x\right) =\beta _{0}+\beta_{0}x\)</span>, in which case we get linear regression</p></li>
+</ul>
+</section><section id="complexity-and-performance" class="slide level2">
+<h1>Complexity and performance</h1>
+<p>The minimizer <span class="math inline">\(\hat{g}_{\lambda}\)</span> for <span class="math inline">\(\lambda\in\left( 0,1\right)\)</span>, being a shunken version of a natural cubic spline, has the following properties:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{g}_{\lambda}\)</span> is a piecewise cubic polynomial with knots at the unique values of <span class="math inline">\(x_{1},...,x_{n}\)</span></p></li>
+<li><p><span class="math inline">\(\hat{g}_{\lambda}\)</span> has continuous first and second order derivatives at each knot</p></li>
+<li><p><span class="math inline">\(\hat{g}_{\lambda}\)</span> is linear in the region outside of the extreme knots</p></li>
+</ul>
+<p><em>Proof of the above is a bit complicated and uses machinery from functional analysis and differential equations</em></p>
+</section><section id="degrees-of-freedom" class="slide level2">
+<h1>Degrees of freedom</h1>
+<ul>
+<li><p>Tuning parameter <span class="math inline">\(\lambda\)</span> controls the <em>effective degrees of freedom</em>, <span class="math inline">\(df_{\lambda}\)</span>, of <span class="math inline">\(\hat{g}\)</span></p></li>
+<li><p><span class="math inline">\(df_{\lambda}\)</span> decreases from <span class="math inline">\(n\)</span> to <span class="math inline">\(2\)</span> as <span class="math inline">\(\lambda\)</span> increases from <span class="math inline">\(0\)</span> to <span class="math inline">\(\infty\)</span></p></li>
+<li><p><span class="math inline">\(df_{\lambda}\)</span> measures flexibility of <span class="math inline">\(\hat {g}_{\lambda}\)</span>, in the sense that larger <span class="math inline">\(df_{\lambda}\)</span> induces a more flexible <span class="math inline">\(\hat{g}_{\lambda}\)</span></p></li>
+</ul>
+</section><section id="degrees-of-freedom-1" class="slide level2">
+<h1>Degrees of freedom</h1>
+<ul>
+<li><p>Let <span class="math inline">\(\mathbf{S}_{\lambda}\in\mathbb{R}^{n\times n}\)</span> be formed by evaluating associated basis functions at the <span class="math inline">\(x_{i}\)</span>’s. Then <span class="math display">\[
+\mathbf{\hat{g}}_{\lambda}=\left(
+\begin{array}
+[c]{c}%
+\hat{g}_{\lambda}\left(  x_{1}\right)  \\
+\hat{g}_{\lambda}\left(  x_{2}\right)  \\
+\vdots\\
+\hat{g}_{\lambda}\left(  x_{n}\right)
+\end{array}
+\right)  =\mathbf{S}_{\lambda}\left(
+\begin{array}
+[c]{c}%
+y_{1}\\
+y_{2}\\
+\vdots\\
+y_{n}%
+\end{array}
+\right)
+\]</span></p></li>
+<li><p><strong>Effective degrees of freedom</strong> is defined as <span class="math display">\[
+df_{\lambda}=\sum_{i=1}^{n}\mathbf{S}_{\lambda}\left(  i,i\right)  ,
+\]</span> where <span class="math inline">\(\mathbf{S}_{\lambda}\left( i,j\right)\)</span> is the <span class="math inline">\(\left( i,j\right)\)</span> entry of <span class="math inline">\(\mathbf{S}_{\lambda}\)</span></p></li>
+</ul>
+</section><section id="choose-tuning-parameter" class="slide level2">
+<h1>Choose tuning parameter</h1>
+<ul>
+<li><p>Best <span class="math inline">\(\lambda\)</span> achieves the smallest cross-validation RSS among a grid values of <span class="math inline">\(\lambda\)</span></p></li>
+<li>Quick computation via <em>Leave-one-out-cross-validation (LOOCV)</em> in a single pass on the whole data: <span class="math display">\[
+RSS_{cv}\left(  \lambda\right)  =\sum_{i=1}^{n}\left(  y_{i}-\hat{g}_{\lambda
+}^{\left(  -i\right)  }\left(  x_{i}\right)  \right)  ^{2}\\=\sum_{i=1}
+^{n}\left[  \frac{y_{i}-\hat{g}_{\lambda}\left(  x_{i}\right)  }
+{1-\mathbf{S}_{\lambda}\left(  i,i\right)  }\right]  ^{2}
+\]</span>
+<ul>
+<li><span class="math inline">\(\hat{g}_{\lambda}^{\left( -i\right) }\)</span>: fitted on <span class="math inline">\(\left\{ \left( x_{j},y_{j}\right) :j\neq i\right\}\)</span></li>
+<li><span class="math inline">\(\hat{g}_{\lambda}\)</span>: fitted on <span class="math inline">\(\left\{ \left( x_{i},y_{i}\right) :i=1,...,n\right\}\)</span></li>
+</ul></li>
+</ul>
+</section><section id="illustration-2" class="slide level2">
+<h1>Illustration</h1>
+<p><img src="fig7_8.png" width="85%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section><section id="generalized-additive-models" class="titleslide slide level1"><h1>Generalized additive models</h1></section><section id="overview-1" class="slide level2">
+<h1>Overview</h1>
+<ul>
+<li><em>Generalized additive models (GAMs)</em> employs a non-linear function for each predictor while maintaining additivity of the transformed predictors</li>
+<li><p>GAMs can be applied to both quantitative and qualitative responses</p></li>
+<li><p>Consider <span class="math display">\[
+y_{i}=\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}%
+x_{ip}+\varepsilon_{i}
+\]</span></p></li>
+<li><p>Replace <span class="math inline">\(\beta_{j}x_{ij}\)</span> by <span class="math inline">\(f_{j}\left( x_{ij}\right)\)</span> to get a GAM as <span class="math display">\[
+y_{i}=\beta_{0}+f_{1}\left(  x_{i1}\right)  +f_{2}\left(  x_{i2}\right)
++\cdots+f_{p}\left(  x_{ip}\right)  +\varepsilon_{i}
+\]</span> for a set of known functions <span class="math inline">\(\left\{ f_{j}\right\} _{j=1}^{p}\)</span></p></li>
+</ul>
+</section><section id="illustration-i" class="slide level2">
+<h1>Illustration: I</h1>
+<ul>
+<li><span class="math inline">\(f_{1}\)</span> and <span class="math inline">\(f_{2}\)</span> natural splines; <span class="math inline">\(f_{3}\)</span> piecewise constant: <span class="math display">\[
+\text{wage }=\text{ }\beta_{0}+f_{1}\left(  \text{year}\right)  +f_{2}\left(
+\text{age}\right)  +f_{3}\left(  \text{education}\right)  +\varepsilon
+\]</span></li>
+</ul>
+<p><img src="fig7_11.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="illustration-ii" class="slide level2">
+<h1>Illustration: II</h1>
+<p><img src="fig7_12.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="gam-logistic-reg" class="slide level2">
+<h1>GAM logistic Reg</h1>
+<ul>
+<li><p>A binary response, linear version: <span class="math display">\[
+\log\left(  \frac{\Pr\left(  Y=1|X\right)  }{1-\Pr\left(  Y=1|X\right)
+}\right) \\ =\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}%
+x_{ip}+\varepsilon_{i}%
+\]</span></p></li>
+<li><p>GAM version: <span class="math display">\[
+\log\left(  \frac{\Pr\left(  Y=1|X\right)  }{1-\Pr\left(  Y=1|X\right)
+}\right)  \\=\beta_{0}+f_{1}\left(  x_{i1}\right)  +f_{2}\left(  x_{i2}\right)
++\cdots+f_{p}\left(  x_{ip}\right)  +\varepsilon_{i}%
+\]</span></p></li>
+</ul>
+</section><section id="illustration-iii" class="slide level2">
+<h1>Illustration: III</h1>
+<ul>
+<li>Predict <span class="math display">\[p\left(  X\right)  =\Pr\left(  \text{wage}
+&gt;250|\text{year,age,education}\right)\]</span></li>
+<li><p>Model: <span class="math display">\[
+\log\left(  \frac{p\left(  X\right)  }{1-p\left(  X\right)  }\right)
+\\ =\beta_{0}+\beta_{1}\times\text{year}+f_{2}\left(  \text{age}\right)
++f_{3}\left(  \text{education}\right)
+\]</span></p></li>
+<li><p>Note: there are no individuals with less than a high school education who earn over $250,000 per year</p></li>
+</ul>
+</section><section id="illustration-iii-1" class="slide level2">
+<h1>Illustration: III</h1>
+<p><img src="fig7_13.png" width="85%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>GAMs are implemented by R library <code>gam</code></li>
+</ul>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19044)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.12     stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.13  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

@@ -1,0 +1,685 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[left=1.1in, right=1.1in, top=1.1in, bottom=1.1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stat 435 Lecture Notes 2a},
+            pdfauthor={Xiongzhi Chen; Washington State University},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stat 435 Lecture Notes 2a}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Xiongzhi Chen \\ Washington State University}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx,float}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{}\label{section}
+
+\section{Inference on coefficients}\label{inference-on-coefficients}
+
+\subsection{Inference on estimates}\label{inference-on-estimates}
+
+Since the observations \((x_i,y_i),i=1,\ldots,n\) for \((X,Y)\) are
+random, so is the LSE \(\left(\hat{\beta}_0,\hat{\beta}_1\right)\).
+
+\begin{itemize}
+\item
+  \(\left(\hat{\beta}_0,\hat{\beta}_1\right)\) is unbiased, i.e.,
+  \(E(\hat{\beta}_0)=\beta_0\) and \(E(\hat{\beta}_1)=\beta_1\), when
+  \(\varepsilon_i\)'s are uncorrelated
+\item
+  How accurate is \(\left(\hat{\beta}_0,\hat{\beta}_1\right)\) with
+  respect to \(({\beta}_0,{\beta}_1)\)?
+\end{itemize}
+
+\subsection{Variability of estimates}\label{variability-of-estimates}
+
+Recall
+\[\hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}\]
+and \(\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\).
+
+When \(\varepsilon_i\)'s are uncorrelated,
+
+\begin{itemize}
+\tightlist
+\item
+  \([SE(\hat{\beta_0})]^2 = \sigma^2 \left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i - {\bar{x}})^2}\right]\)
+\item
+  \([SE(\hat{\beta_1})]^2 = \frac{\sigma^2}{\sum_{i=1}^n(x_i - \bar{x})^2}\)
+\end{itemize}
+
+How does the sample size \(n\) and the sample variance of \(x_i\)'s
+affect these variances?
+
+\subsection{Variability of estimates}\label{variability-of-estimates-1}
+
+\begin{itemize}
+\item
+  Variances of \(\hat{\beta_0}\) and \(\hat{\beta_1}\) contain
+  information on the accuracy of \(\hat{\beta}_0\) and \(\hat{\beta}_1\)
+\item
+  Without information on \(\sigma\), variances of \(\hat{\beta_0}\) and
+  \(\hat{\beta_1}\) cannot be accurately assessed
+\item
+  An estimate of \(\sigma\) is
+\end{itemize}
+
+\[RSE = \sqrt{RSS/(n-2)} = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n-2}}\]
+
+\subsection{CI from estimates}\label{ci-from-estimates}
+
+The approximate \(95\%\) \emph{confidence interval (CI)}
+
+\begin{itemize}
+\tightlist
+\item
+  for \(\beta_0\) is \(\hat{\beta_0} \pm 2 \cdot SE(\hat{\beta_0})\)
+\item
+  for \(\beta_1\) is \(\hat{\beta_1} \pm 2 \cdot SE(\hat{\beta_1})\)
+\end{itemize}
+
+\emph{Note:} the above follows a general principle for constructing a CI
+when the distribution of ``estimate minus parameter'' is symmetric
+around \(0\)
+
+\subsection{Testing the slope}\label{testing-the-slope}
+
+\begin{itemize}
+\tightlist
+\item
+  Recall the model \[Y = \beta_0 + \beta_1 X + \varepsilon\] with
+  \(E(\varepsilon)=0\) and \(Var(\varepsilon)=\sigma^2\)
+\item
+  If \(\beta_1=0\), then \(Y = \beta_0 + \varepsilon\), and \(Y\) is
+  independent of \(X\) (when \(\varepsilon\) is independent \(X\)).
+\item
+  Testing ``\(H_0: \beta_1=0\)'' often is equivalent to checking if
+  ``\(H_0\): there is no relationship between \(X\) and \(Y\)''.
+\end{itemize}
+
+\emph{Caution:} The random error \(\varepsilon\) may not be independent
+of \(X\) and \(Y\) due to latent dependence, which is common in genetics
+studies.
+
+\subsection{Testing the slope}\label{testing-the-slope-1}
+
+\begin{itemize}
+\tightlist
+\item
+  A test statistic for this purpose is the \emph{t-statistic}
+  \[t = \frac{\hat{\beta}_1 - 0}{SE(\hat{\beta}_1)}\]
+\item
+  If \(SE(\hat{\beta}_1)\) is small, then relatively small
+  \(\vert \hat{\beta}_1\vert\) provides strong evidence that
+  \(\beta_1 \ne 0\)
+\end{itemize}
+
+\emph{Note:} When \(H_0: \beta_1=0\) holds, \(t\) approximately has a
+\(t\)-distribution with \(n-2\) degrees of freedom when
+\(\varepsilon_i\)'s are not much dependent on each other; when \(n\) is
+large, a \(t\)-distribution will be close to a Gaussian distribution.
+
+\subsection{Testing the slope}\label{testing-the-slope-2}
+
+Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}:
+
+\begin{verbatim}
+# A tibble: 2 x 5
+  term        estimate std.error statistic  p.value
+  <chr>          <dbl>     <dbl>     <dbl>    <dbl>
+1 (Intercept)   7.03     0.458        15.4 1.41e-35
+2 TV            0.0475   0.00269      17.7 1.47e-42
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Is \(H_0: \beta_1=0\) retained or rejected? In either case, at which
+  Type I error level?
+\item
+  How trustable are our conclusions?
+\end{itemize}
+
+\subsection{Testing the slope}\label{testing-the-slope-3}
+
+Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+\texttt{horsepower}:
+
+\begin{verbatim}
+# A tibble: 2 x 5
+  term        estimate std.error statistic   p.value
+  <chr>          <dbl>     <dbl>     <dbl>     <dbl>
+1 (Intercept)   39.9     0.717        55.7 1.22e-187
+2 horsepower    -0.158   0.00645     -24.5 7.03e- 81
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Is \(H_0: \beta_1=0\) retained or rejected? In either case, at which
+  Type I error level?
+\item
+  How trustable are our conclusions?
+\end{itemize}
+
+\section{Model diagnostics}\label{model-diagnostics}
+
+\subsection{Things to check}\label{things-to-check}
+
+\begin{itemize}
+\tightlist
+\item
+  Nonlinearity of relationship between response and predictor
+\item
+  Correlation of error terms
+\item
+  Non-constant variance of error terms
+\item
+  Outliers
+\item
+  High-leverage points
+\end{itemize}
+
+\subsection{Nonlinearity}\label{nonlinearity}
+
+If the linear model \[Y=\beta_0 + \beta_1 X + \varepsilon\] is
+plausible, then
+
+\begin{itemize}
+\tightlist
+\item
+  \(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\), where
+  \(\varepsilon_i\) is a realization of \(\varepsilon\) for each pair
+  \((x_i,y_i)\)
+\item
+  the residuals \(e_i\)'s\emph{, where
+  \[e_i = y_i - \hat{y}_i, \quad \hat{y}_i=\hat{\beta}_0 + \hat{\beta}_1 x_i,\]
+  }are random errors (as estimated realizations from \(\varepsilon\)),
+  and should have no specific relationship with \(x_i\)'s
+\end{itemize}
+
+\emph{So, the residuals \(e_i\)'s should contain no specific pattern on
+the fitted values \(\hat{y}_i\)'s or \(x_i\)'s if the model is
+plausible.}
+
+\subsection{Nonlinearity}\label{nonlinearity-1}
+
+Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-1-1} \end{center}
+
+\subsection{Nonlinearity}\label{nonlinearity-2}
+
+Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+\texttt{horsepower}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+\subsection{Check on error terms}\label{check-on-error-terms}
+
+\begin{itemize}
+\tightlist
+\item
+  Inference on the LSE \((\hat{\beta_0}, \hat{\beta_1})\) depends
+  critically on \(SE(\hat{\beta_0})\) and \(SE(\hat{\beta_1})\), which
+  depend on the unknown \(\sigma = \sqrt{Var(\varepsilon)}\).\\
+\item
+  Information on \(\varepsilon\), hence on \(\sigma\), is contained in
+  the residuals \(e_i\) (as estimates of \(\varepsilon_i\))
+\end{itemize}
+
+Relatively accurate inference requires \(e_i\)'s to
+
+\begin{itemize}
+\tightlist
+\item
+  be \emph{uncorrelated}
+\item
+  have \emph{identical variance}
+\end{itemize}
+
+\emph{Otherwise, the formulae for \(SE(\hat{\beta_0})\) and
+\(SE(\hat{\beta_1})\) are (usually) invalid, leading to invalid
+inference.}
+
+\subsection{Heterogeneous error
+variances}\label{heterogeneous-error-variances}
+
+Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+\subsection{Heterogeneous error
+variances}\label{heterogeneous-error-variances-1}
+
+Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+\texttt{horsepower}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+\subsection{Outliers}\label{outliers}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{An outlier} is an observation \((x_i,y_i)\) for which \(y_i\) is
+  far from the value predicted by the model
+\item
+  Observations whose studentized residuals are greater than \(3\) in
+  absolute value are possible outliers
+\item
+  An outlier may significantly affect RSE (i.e., residual standard
+  error) and \(R^2\)
+\item
+  Removing an outlier may or may not significantly affect the subsequent
+  estimated regression line, and this is related to \emph{high-leverage
+  points}
+\end{itemize}
+
+\subsection{Outliers}\label{outliers-1}
+
+Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+\subsection{Outliers}\label{outliers-2}
+
+Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\subsection{Outliers}\label{outliers-3}
+
+Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+\texttt{horsepower}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+\subsection{Outliers}\label{outliers-4}
+
+Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+\texttt{horsepower}:
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+\subsection{High-leverage points}\label{high-leverage-points}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{A high-leverage point} is an observation \((x_i,y_i)\) for which
+  \(x_i\) is unusual among all observations for \(X\)
+\item
+  Removing a high-leverage point often significantly affects the
+  subsequent estimated regression line
+\item
+  Let \(p\) be the number of predictors in the model and \(n\) the
+  sample size, if the leverage statistic for an observation greatly
+  exceeds \((p+1)/n\), then it can be considered a high-leverage point
+\end{itemize}
+
+\subsection{High-leverage points}\label{high-leverage-points-1}
+
+Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}
+(\(p=1\),\(n=397\), \(\tilde{h}=(p+1)/n \approx 0.005\)):
+\vspace{-2.5cm}
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+\subsection{High-leverage points}\label{high-leverage-points-2}
+
+Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+\texttt{horsepower} (\(p=1\),\(n=200\),\(\tilde{h}=(p+1)/n=0.01\)):
+\vspace{-2.5cm}
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-10-1} \end{center}
+
+\subsection{Q-Q Plot}\label{q-q-plot}
+
+A \emph{Q-Q (quantile-quantile) plot} plots observed quantiles against
+the quantiles of a theoretical distribution, and hence provides
+information on whether observations under investigation have a
+distribution that matches this theoretical distribution
+
+\begin{itemize}
+\tightlist
+\item
+  A normal Q-Q plot does this with the standard Normal distribution as
+  the theoretical distribution
+\item
+  In a normal Q-Q plot, x-axis plots the theoretical quantiles from the
+  standard Normal distribution with mean 0 and standard deviation 1
+\end{itemize}
+
+\subsection{Test on Normality}\label{test-on-normality}
+
+\begin{itemize}
+\tightlist
+\item
+  Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}
+\item
+  Test Normality of random error
+\end{itemize}
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+\subsection{Test on Normality}\label{test-on-normality-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+  \texttt{horsepower}
+\item
+  Test Normality of random error
+\end{itemize}
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-12-1} \end{center}
+
+\subsection{Kolmogorov-Smirnov Test}\label{kolmogorov-smirnov-test}
+
+\begin{itemize}
+\tightlist
+\item
+  Model: \(E\)(\texttt{sales}) = \(\beta_0\) + \(\beta_1\) \texttt{TV}
+\item
+  \texttt{Fit1} is the object obtained from fitting the model
+\item
+  Test Normality of random error
+\end{itemize}
+
+\begin{verbatim}
+
+    One-sample Kolmogorov-Smirnov test
+
+data:  Fit1$residuals
+D = 0.041533, p-value = 0.8806
+alternative hypothesis: two-sided
+\end{verbatim}
+
+\subsection{Kolmogorov-Smirnov Test}\label{kolmogorov-smirnov-test-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Model \(E\)(\texttt{mpg}) = \(\beta_0\) + \(\beta_1\)
+  \texttt{horsepower}
+\item
+  \texttt{Fit2} is the object obtained from fitting the model
+\item
+  Test Normality of random error
+\end{itemize}
+
+\begin{verbatim}
+
+    One-sample Kolmogorov-Smirnov test
+
+data:  Fit2$residuals
+D = 0.060525, p-value = 0.1131
+alternative hypothesis: two-sided
+\end{verbatim}
+
+\subsection{Correlation of error
+terms}\label{correlation-of-error-terms}
+
+\emph{It is extremely important that the error terms are uncorrelated}.
+Correlated error terms often present in time series data and in data
+with latent variables. Such correlation affects
+
+\begin{itemize}
+\tightlist
+\item
+  testing if random errors are Normally distributed
+\item
+  variances of estimated coefficients and variance of random error
+  term\\
+\item
+  Testing independence is a \emph{highly nontrival} issue in statistical
+  learning
+\end{itemize}
+
+\subsection{Correlation of error
+terms}\label{correlation-of-error-terms-1}
+
+\begin{itemize}
+\item
+  The true model is \[Y = 1 + 2X + \varepsilon\] with \(n=1000\)
+  observations \[y_{i} = 1+ 2 x_{i} + \varepsilon_{i}\]
+\item
+  The random errors are \emph{equally correlated}, such that
+  \[\varepsilon_{i} =
+  \sqrt{1-0.3}X_{i} + \sqrt{0.3} X_{0}\] and
+  \(X_{0}, X_{1}, \ldots, X_{1000}\) are i.i.d. standard Normal.
+\item
+  Fit a simple linear model and obtain fitted values and residuals
+\end{itemize}
+
+\subsection{Correlation of error
+terms}\label{correlation-of-error-terms-2}
+
+\begin{center}\includegraphics{Stat435LectureNotes2a_notes_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\subsection{Correlation of error
+terms}\label{correlation-of-error-terms-3}
+
+For this example, when trying to check if the random errors are
+independent or uncorrelated by a visual check, we see the following:
+
+\begin{itemize}
+\tightlist
+\item
+  no pattern in the left plot where each residuals is plotted against
+  its index
+\item
+  the random errors are dependent, since if they were independent, the
+  fitted values should be independent of the residuals
+\item
+  the random errors do not seem to be correlated with the fitted values
+\end{itemize}
+
+\section{Appendix}\label{appendix}
+
+\subsection{True model}\label{true-model}
+
+\begin{itemize}
+\item
+  For two quantitative random variables \(Y\) and \(X\), a simple linear
+  model is \[E(Y) = \beta_0 + \beta_1 X,\] where \(\beta_0\)
+  (\emph{intercept}) and \(\beta_1\) (\emph{slope}) are \emph{unknown,
+  true model} parameters (or \emph{coefficients}), and \(\beta_1\) is
+  called the \emph{regression coefficient}.
+\item
+  The above model is equivalent to
+  \[Y = \beta_0 + \beta_1 X + \varepsilon \quad \text{ with } \quad E(\varepsilon)=0,Var(\varepsilon)=\sigma^2\]
+  which is called the \emph{population regression line}.
+\end{itemize}
+
+\subsection{The least squares
+estimate}\label{the-least-squares-estimate}
+
+With observations \((x_i,y_i),i=1,\ldots,n\) for \((X,Y)\), the LS
+method gives the \emph{least squares estimate (LSE)}:
+
+\begin{itemize}
+\item
+  \(\hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}\)
+  with \(\bar{y}=n^{-1}\sum_{i=1}^n y_i\)
+\item
+  \(\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\) with
+  \(\bar{x}=n^{-1}\sum_{i=1}^n x_i\)
+\end{itemize}
+
+Namely, the fitted model is
+\[\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x,\] also called the
+\emph{least squares line}.
+
+\subsection{License and session
+Information}\label{license-and-session-information}
+
+\href{http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html}{License}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{sessionInfo}\NormalTok{()}
+\NormalTok{R version }\FloatTok{3.5.0} \NormalTok{(}\DecValTok{2018-04-23}\NormalTok{)}
+\NormalTok{Platform:}\StringTok{ }\NormalTok{x86_64-w64-mingw32/}\KeywordTok{x64} \NormalTok{(}\DecValTok{64}\NormalTok{-bit)}
+\NormalTok{Running under:}\StringTok{ }\NormalTok{Windows }\DecValTok{10} \KeywordTok{x64} \NormalTok{(build }\DecValTok{19045}\NormalTok{)}
+
+\NormalTok{Matrix products:}\StringTok{ }\NormalTok{default}
+
+\NormalTok{locale:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] LC_COLLATE=English_United States}\FloatTok{.1252} 
+\NormalTok{[}\DecValTok{2}\NormalTok{] LC_CTYPE=English_United States}\FloatTok{.1252}   
+\NormalTok{[}\DecValTok{3}\NormalTok{] LC_MONETARY=English_United States}\FloatTok{.1252}
+\NormalTok{[}\DecValTok{4}\NormalTok{] LC_NUMERIC=C                          }
+\NormalTok{[}\DecValTok{5}\NormalTok{] LC_TIME=English_United States}\FloatTok{.1252}    
+
+\NormalTok{attached base packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] stats     graphics  grDevices utils     datasets  methods  }
+\NormalTok{[}\DecValTok{7}\NormalTok{] base     }
+
+\NormalTok{other attached packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] ggplot2_3}\FloatTok{.1.0} \NormalTok{broom_0}\FloatTok{.5.1}   \NormalTok{knitr_1}\FloatTok{.21}   
+
+\NormalTok{loaded via a }\KeywordTok{namespace} \NormalTok{(and not attached):}
+\StringTok{ }\NormalTok{[}\DecValTok{1}\NormalTok{] Rcpp_1}\FloatTok{.0.12}      \NormalTok{plyr_1}\FloatTok{.8.4}       \NormalTok{pillar_1}\FloatTok{.3.1}    
+ \NormalTok{[}\DecValTok{4}\NormalTok{] compiler_3}\FloatTok{.5.0}   \NormalTok{tools_3}\FloatTok{.5.0}      \NormalTok{digest_0}\FloatTok{.6.18}   
+ \NormalTok{[}\DecValTok{7}\NormalTok{] evaluate_0}\FloatTok{.13}    \NormalTok{tibble_2}\FloatTok{.1.3}     \NormalTok{nlme_3}\FloatTok{.1}\DecValTok{-137}    
+\NormalTok{[}\DecValTok{10}\NormalTok{] gtable_0}\FloatTok{.2.0}     \NormalTok{lattice_0}\FloatTok{.20}\DecValTok{-35}  \NormalTok{pkgconfig_2}\FloatTok{.0.2} 
+\NormalTok{[}\DecValTok{13}\NormalTok{] rlang_0}\FloatTok{.4.4}      \NormalTok{cli_1}\FloatTok{.0.1}        \NormalTok{rstudioapi_0}\FloatTok{.8}  
+\NormalTok{[}\DecValTok{16}\NormalTok{] yaml_2}\FloatTok{.2.0}       \NormalTok{xfun_0}\FloatTok{.4}         \NormalTok{withr_2}\FloatTok{.1.2}     
+\NormalTok{[}\DecValTok{19}\NormalTok{] dplyr_0}\FloatTok{.8.4}      \NormalTok{stringr_1}\FloatTok{.3.1}    \NormalTok{generics_0}\FloatTok{.0.2}  
+\NormalTok{[}\DecValTok{22}\NormalTok{] grid_3}\FloatTok{.5.0}       \NormalTok{tidyselect_0}\FloatTok{.2.5} \NormalTok{glue_1}\FloatTok{.3.0}      
+\NormalTok{[}\DecValTok{25}\NormalTok{] R6_2}\FloatTok{.3.0}         \NormalTok{fansi_0}\FloatTok{.4.0}      \NormalTok{rmarkdown_1}\FloatTok{.11}  
+\NormalTok{[}\DecValTok{28}\NormalTok{] purrr_0}\FloatTok{.2.5}      \NormalTok{tidyr_0}\FloatTok{.8.2}      \NormalTok{magrittr_1}\FloatTok{.5}    
+\NormalTok{[}\DecValTok{31}\NormalTok{] backports_1}\FloatTok{.1.3}  \NormalTok{scales_1}\FloatTok{.0.0}     \NormalTok{htmltools_0}\FloatTok{.3.6} 
+\NormalTok{[}\DecValTok{34}\NormalTok{] assertthat_0}\FloatTok{.2.0} \NormalTok{colorspace_1}\FloatTok{.3}\DecValTok{-2} \NormalTok{labeling_0}\FloatTok{.3}    
+\NormalTok{[}\DecValTok{37}\NormalTok{] utf8_1}\FloatTok{.1.4}       \NormalTok{stringi_1}\FloatTok{.2.4}    \NormalTok{lazyeval_0}\FloatTok{.2.1}  
+\NormalTok{[}\DecValTok{40}\NormalTok{] munsell_0}\FloatTok{.5.0}    \NormalTok{crayon_1}\FloatTok{.3.4}    
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

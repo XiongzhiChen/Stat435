@@ -1,0 +1,504 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[left=1.1in, right=1.1in, top=1.1in, bottom=1.1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stat 435 Lecture Notes 4},
+            pdfauthor={Xiongzhi Chen; Washington State University},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stat 435 Lecture Notes 4}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Xiongzhi Chen \\ Washington State University}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx,float}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{}\label{section}
+
+\section{Bootstrap: motivation}\label{bootstrap-motivation}
+
+\subsection{Overview}\label{overview}
+
+\begin{itemize}
+\item
+  The \emph{bootsrtap} is mainly used to \emph{estimate and quantify the
+  uncertainty associated with a given estimate or statistical learning
+  methed}
+\item
+  For example, it can be used to estimate the standard error of an
+  estimate (such as an estimated coefficient in a regression model)
+\item
+  The bootstrap \emph{may not work well when sample size is small or
+  when sample comes from a relatively small region of the distribution
+  of an unknown data generating process}
+\end{itemize}
+
+\subsection{Illustration I: problem}\label{illustration-i-problem}
+
+Problem formulation:
+
+\begin{itemize}
+\tightlist
+\item
+  suppose we wish to invest a fixed sum of money into two financial
+  assets that yield (random) returns of \(X\) and \(Y\), respectively
+\item
+  we will invest a fraction \(\alpha\) of our money in \(X\), and the
+  rest \(1-\alpha\) in \(Y\)
+\item
+  we need to choose \(\alpha\) that minimizes the risk, or variance, of
+  our investment.
+\end{itemize}
+
+Namely, we need to find \(\alpha\) that minimizes
+\[\textrm{Var}(\alpha X + (1-\alpha)Y)\]
+
+\subsection{Illustration I: solution}\label{illustration-i-solution}
+
+\begin{itemize}
+\item
+  By calculus, we know that \[
+  \alpha=\frac{\sigma_{Y}^{2}-\sigma_{XY}}{\sigma_{X}^{2}+\sigma_{Y}^{2}-2\sigma_{XY}}
+  \] minimizes \[\textrm{Var}(\alpha X + (1-\alpha)Y),\] where
+  \(\sigma_{X}^{2}=\textrm{Var}(X)\), \(\sigma_{Y}^{2}=\textrm{Var}(Y)\)
+  and \(\sigma_{XY}=\textrm{Cov}(X,Y)\)
+\item
+  However, in reality, the quantities \(\sigma_{X}^{2}\),
+  \(\sigma_{Y}^{2}\) and \(\sigma_{XY}\) are unknown, and need to be
+  estimated
+\end{itemize}
+
+\subsection{Illustration I: estimate}\label{illustration-i-estimate}
+
+\begin{itemize}
+\tightlist
+\item
+  With estimates \(\hat{\sigma}_{X}^{2}\), \(\hat{\sigma}_{Y}^{2}\) and
+  \(\hat{\sigma}_{XY}\) for \(\sigma_{X}^{2}\), \(\sigma_{Y}^{2}\) and
+  \(\sigma_{XY}\), respectively, we have the \emph{plug-in estimate}
+  \[\hat{\alpha}=\frac{\hat{\sigma}_{Y}^{2}-\hat{\sigma}_{XY}}{\hat{\sigma}_{X}^{2}+\hat{\sigma}_{Y}^{2}-2\hat{\sigma}_{XY}}\]
+  for the \emph{optimal but unknown} solution \[
+  \alpha=\frac{\sigma_{Y}^{2}-\sigma_{XY}}{\sigma_{X}^{2}+\sigma_{Y}^{2}-2\sigma_{XY}}
+  \]
+\item
+  How accurate is \(\hat{\alpha}\)? Can we estimate the standard error
+  of \(\hat{\alpha}\)?
+\end{itemize}
+
+\subsection{Illustration I: estimate}\label{illustration-i-estimate-1}
+
+\begin{itemize}
+\item
+  If \(\hat{\sigma}_{X}^{2}\), \(\hat{\sigma}_{Y}^{2}\) and
+  \(\hat{\sigma}_{XY}\) are accurate, then so should be \(\hat{\alpha}\)
+\item
+  How to assess the accuracy of \(\hat{\alpha}\) (via the accuracy of
+  \(\hat{\sigma}_{X}^{2}\), \(\hat{\sigma}_{Y}^{2}\) and
+  \(\hat{\sigma}_{XY}\)) if we have only a sample of size \(n\) at hand?
+\item
+  Mini discussion on the question above: Case 1 ``\(n\) small'', Case 2
+  ``\(n\) moderate'', and case 3 ``\(n\) large''
+\end{itemize}
+
+\subsection{Illustration I: simulated
+samples}\label{illustration-i-simulated-samples}
+
+If we know the population distribution, we can simulate samples:
+
+\begin{center}\includegraphics[width=0.8\linewidth]{fig5_9} \end{center}
+
+\subsection{Illustration I: simulated
+samples}\label{illustration-i-simulated-samples-1}
+
+\begin{itemize}
+\item
+  Suppose we simulate \(B=1000\) \emph{independent} samples for
+  \((X,Y)\) (if we knew the truth), we will have \(B\) estimates
+  \(\hat{\alpha}_{j},j=1,\ldots,B\) of \(\alpha\)
+\item
+  The sample mean
+  \(\bar{\alpha}=\frac{1}{B}\sum_{j=1}^{B}\hat{\alpha}_{j}\) (of
+  \(\hat{\alpha}_{j}\)'s) should be close to \(\alpha\)
+\item
+  The sample standard deviation
+  \[s\left(  \hat{\alpha}\right)  =\sqrt{\frac{1}{B-1}\sum_{j=1}^{B}\left(
+  \hat{\alpha}_{j}-\bar{\alpha}\right)  ^{2}}\] (of of
+  \(\hat{\alpha}_{j}\)'s) should be close to
+  \(\sigma_{\hat{\alpha}}=\sqrt{\textrm{Var}(\hat{\alpha)}}\)
+\end{itemize}
+
+\subsection{Illustration I: truth and
+estimate}\label{illustration-i-truth-and-estimate}
+
+\begin{itemize}
+\item
+  Truth: \(\sigma_{X}^{2}=1\), \(\sigma_{Y}^{2}=1.25\),
+  \(\sigma_{XY}=0.5\) and \(\alpha=0.6\)
+\item
+  Estimates based on \(B=1000\) simulated, independent samples:
+  \(\bar{\alpha}=0.5996\) and \(s\left( \hat{\alpha}\right)=0.083\)
+\item
+  Interpretation: for a random sample from the population, we would
+  expect \(\hat{\alpha}\) to differ from \(\alpha\) by approximately
+  \(0.08\) on average
+\end{itemize}
+
+\emph{Note:} is the ``1 standard deviation'' rule sensible?
+
+\section{Bootstrap: definition and
+applications}\label{bootstrap-definition-and-applications}
+
+\subsection{Simulation and
+double-dipping}\label{simulation-and-double-dipping}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Simulated from the truth}: when we know a data generating
+  process, we can simulate samples to estimate a statistic on the
+  process. However, if we know the truth, why do we need to estimate the
+  statistic?
+\item
+  \emph{Simulated from the estimate}: with a sample from a data
+  generating process, we can estimate the process, use the estimated
+  process to generate samples, and use the generated samples to estimate
+  a statistic
+\item
+  \emph{Resampling from the sample}: sample randomly from a sample from
+  a data generating process, regard the sampled observations as a new
+  data set, and use them to estimate a statistic
+\end{itemize}
+
+\subsection{Bootstrap: definition}\label{bootstrap-definition}
+
+In order to assess the distributional properties of an estimate of a
+statistic, the bootstrap
+
+\begin{itemize}
+\tightlist
+\item
+  takes a subset of a given data set \emph{as if it is a set of new
+  observations independent of the given data set}
+\item
+  uses the subset to obtain an estimate of the statistic
+\item
+  does so \emph{repeatedly and independently using different subests of
+  the given data set}
+\item
+  take the \emph{empirical distribution of estimates obtained from these
+  subsets as an estimate of the distribution of the estimate} of the
+  statistic
+\end{itemize}
+
+\subsection{Bootstrap: procedure}\label{bootstrap-procedure}
+
+\begin{itemize}
+\tightlist
+\item
+  Given a sample of size \(n\), let \(\hat{\alpha}\) be an estimate of a
+  statistic \(\alpha\) obtained from the sample
+\item
+  \emph{Sample randomly with replacement} from the sample to obtain
+  \(n\) observations, and do this independently \(B\) times to obtain
+  \(B\) bootstrap samples \(S_{j},j=1,\ldots,B\)
+\item
+  Let \(\hat{\alpha}_{j}\) be the estimate of \(\alpha\) obtained from
+  \(S_{j}\). Then \emph{the empirical distribution \(G\) of
+  \(\hat{\alpha}_{j},j=1,\ldots,B\) is used as the (true) distribution
+  of \(\hat{\alpha}\), and statistics about \(\hat{\alpha}\) are
+  obtained from \(G\)}
+\end{itemize}
+
+\subsection{Bootstrap: graphical
+illustration}\label{bootstrap-graphical-illustration}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{fig5.11} \end{center}
+
+\subsection{Bootstrap: statistics}\label{bootstrap-statistics}
+
+\begin{itemize}
+\tightlist
+\item
+  The \emph{(bootstrap) estimated mean} of \(\hat{\alpha}\) is
+  \(\bar{\alpha}=\frac{1}{B}\sum_{j=1}^{B}\hat{\alpha}_{j}\)
+\item
+  The \emph{(bootstrap) estimated variance} of \(\hat{\alpha}\) is \[
+  \textrm{SE}^2\left(  \hat{\alpha}\right)  = {(B-1)}^{-1}\sum_{j=1}^{B}\left(
+  \hat{\alpha}_{j}-\bar{\alpha}\right)^{2}
+  \]
+\item
+  For \(\alpha \in (0,1)\), the \emph{(bootstrap)
+  \((1-\alpha)\times 100\) percent confidence interval} for
+  \(\hat{\alpha}\) is \((c_L,c_U)\), where \(c_L\) is the
+  \(\{0.5\alpha\times 100\}\)th percentile of \(G\), and \(c_L\) is the
+  \(\{(100-0.5\alpha)\times 100\}\)th percentile of \(G\)
+\end{itemize}
+
+\subsection{Illustration of bootstrap}\label{illustration-of-bootstrap}
+
+Bootstrap applied to a sample;
+\(\textrm{SE}^2\left( \hat{\alpha}\right)=0.087\): illusion or
+excellence?
+
+\begin{center}\includegraphics[width=0.9\linewidth]{fig5_10} \end{center}
+
+\section{Boostrapping linear
+regression}\label{boostrapping-linear-regression}
+
+\subsection{Linear regression}\label{linear-regression}
+
+\begin{itemize}
+\item
+  Model:
+  \(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)
+  with \(E(\varepsilon)=0\) and \(\textrm{Var}(\varepsilon)=\sigma^2\)
+\item
+  Observations: \((y_i,x_{1i},x_{2i},\ldots,x_{pi}),i=1,\ldots,n\),
+  where \(x_{ji}\) is the \(i\)th observation for \(X_j\)
+\item
+  Estimate:
+  \(\hat{y}=\hat{\beta}_0+\hat{\beta}_1 X_1 + \hat{\beta}_2 X_2 + \ldots + \hat{\beta}_p X_p\)
+\item
+  Fit:
+  \(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_{1i} + \hat{\beta}_2 x_{2i} + \ldots + \hat{\beta}_p x_{pi}+\varepsilon_i\)
+\item
+  Residuals: \(e_i = y_i - \hat{y}_i\)
+\end{itemize}
+
+\subsection{Bootstrapping from sample}\label{bootstrapping-from-sample}
+
+Set \({\boldsymbol{\beta}}=({\beta}_0,{\beta}_1,\ldots,{\beta}_p)\) and
+\(\hat{\boldsymbol{\beta}}=(\hat{\beta}_0,\hat{\beta}_1,\ldots,\hat{\beta}_p)\)
+
+\begin{itemize}
+\tightlist
+\item
+  Sample from data generating process:
+  \[S=\{\mathbf{z}_i=(y_i,x_{1i},x_{2i},\ldots,x_{pi}),i=1,\ldots,n\}\]
+\item
+  Sample with replacement \(n\) observations from \(S\) and repeat this
+  independently to obtain \(B\) subsets \(S_j,j=1,\ldots,B\)
+\item
+  Obtain \(\hat{\boldsymbol{\beta}}_j\) from \(S_j\) for each
+  \(j=1,\ldots,B\)
+\item
+  Use the empirical distribution of
+  \(\hat{\boldsymbol{\beta}}_j,j=1,\ldots,B\) as the distribution of
+  \(\hat{\boldsymbol{\beta}}\)
+\end{itemize}
+
+\subsection{Bootstrapping residuals}\label{bootstrapping-residuals}
+
+\begin{itemize}
+\tightlist
+\item
+  Residuals: \(R=\{e_i=y_i-\hat{y}_i,i=1,\ldots,n\}\)
+\item
+  Sample with replacement \(n\) observations from \(R\) to obtain \(B\)
+  sets of residuals \(R_j=\{e_i^{(j)},i=1,\ldots,n\}\)
+\item
+  For each \(j\), set \(y_i^{(j)}=\hat{y}_i+e_i^{(j)}\) and fit the
+  model with observations
+  \[S_j=\{\mathbf{z}_i^{(j)}=(y_i^{(j)},x_{1i},x_{2i},\ldots,x_{pi}),i=1,\ldots,n\}\]
+  and obtain estimate \(\hat{\boldsymbol{\beta}}_j\)
+\item
+  Use the empirical distribution of
+  \(\hat{\boldsymbol{\beta}}_j,j=1,\ldots,B\) as the distribution of
+  \(\hat{\boldsymbol{\beta}}\)
+\end{itemize}
+
+\subsection{Bootstrapping samples or
+residuals}\label{bootstrapping-samples-or-residuals}
+
+\begin{itemize}
+\item
+  Asymptotically (and under some conditions), bootstrapping samples and
+  bootstrapping residuals are equivalent
+\item
+  Bootstrapping samples is less sensitive to model misspecification
+\item
+  Bootstrapping samples may be less sensitive to the assumptions
+  concerning independence or exchangeability of the error terms
+\end{itemize}
+
+\section{Boostrap: failures}\label{boostrap-failures}
+
+\subsection{Boostrap failures}\label{boostrap-failures-1}
+
+Bootstrap can fail
+
+\begin{itemize}
+\tightlist
+\item
+  when sample size is too small
+\item
+  for estimating extremal statistics
+\item
+  when observations are dependent
+\item
+  for survey sampling
+\end{itemize}
+
+\emph{Note:} the book ``Bootstrap methods: a guide for practitioners and
+researchers'' by Michael R. Chernick contains more information on this.
+
+\subsection{License and session
+Information}\label{license-and-session-information}
+
+\href{http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html}{License}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{sessionInfo}\NormalTok{()}
+\NormalTok{R version }\FloatTok{3.5.0} \NormalTok{(}\DecValTok{2018-04-23}\NormalTok{)}
+\NormalTok{Platform:}\StringTok{ }\NormalTok{x86_64-w64-mingw32/}\KeywordTok{x64} \NormalTok{(}\DecValTok{64}\NormalTok{-bit)}
+\NormalTok{Running under:}\StringTok{ }\NormalTok{Windows }\DecValTok{10} \KeywordTok{x64} \NormalTok{(build }\DecValTok{19041}\NormalTok{)}
+
+\NormalTok{Matrix products:}\StringTok{ }\NormalTok{default}
+
+\NormalTok{locale:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] LC_COLLATE=English_United States}\FloatTok{.1252} 
+\NormalTok{[}\DecValTok{2}\NormalTok{] LC_CTYPE=English_United States}\FloatTok{.1252}   
+\NormalTok{[}\DecValTok{3}\NormalTok{] LC_MONETARY=English_United States}\FloatTok{.1252}
+\NormalTok{[}\DecValTok{4}\NormalTok{] LC_NUMERIC=C                          }
+\NormalTok{[}\DecValTok{5}\NormalTok{] LC_TIME=English_United States}\FloatTok{.1252}    
+
+\NormalTok{attached base packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] stats     graphics  grDevices utils     datasets  methods  }
+\NormalTok{[}\DecValTok{7}\NormalTok{] base     }
+
+\NormalTok{other attached packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] knitr_1}\FloatTok{.21}
+
+\NormalTok{loaded via a }\KeywordTok{namespace} \NormalTok{(and not attached):}
+\StringTok{ }\NormalTok{[}\DecValTok{1}\NormalTok{] compiler_3}\FloatTok{.5.0}  \NormalTok{magrittr_1}\FloatTok{.5}    \NormalTok{tools_3}\FloatTok{.5.0}    
+ \NormalTok{[}\DecValTok{4}\NormalTok{] htmltools_0}\FloatTok{.3.6} \NormalTok{yaml_2}\FloatTok{.2.0}      \NormalTok{Rcpp_1}\FloatTok{.0.3}     
+ \NormalTok{[}\DecValTok{7}\NormalTok{] stringi_1}\FloatTok{.2.4}   \NormalTok{rmarkdown_1}\FloatTok{.11}  \NormalTok{stringr_1}\FloatTok{.3.1}  
+\NormalTok{[}\DecValTok{10}\NormalTok{] xfun_0}\FloatTok{.4}        \NormalTok{digest_0}\FloatTok{.6.18}   \NormalTok{evaluate_0}\FloatTok{.12}  
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

@@ -1,0 +1,789 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[left=1.1in, right=1.1in, top=1.1in, bottom=1.1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stat 435 Lecture Notes 4a},
+            pdfauthor={Xiongzhi Chen; Washington State University},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stat 435 Lecture Notes 4a}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Xiongzhi Chen \\ Washington State University}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx,float}
+\usepackage{hyperref}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{}\label{section}
+
+\section{Model assessment}\label{model-assessment}
+
+\subsection{Model and estimate}\label{model-and-estimate}
+
+\begin{itemize}
+\tightlist
+\item
+  Model:
+  \(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)
+\item
+  Observations:
+  \(\mathbf{z}_i=(y_i,x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\), where
+  \(y_i\) is the \(i\)th observation for \(Y\) and \(x_{ij}\) that for
+  \(X_j\)
+\item
+  Estimate
+  \(\hat{\boldsymbol{\beta}}=(\hat{\beta}_0,\hat{\beta}_1,\ldots,\hat{\beta}_p)\)
+  of \({\boldsymbol{\beta}}=({\beta}_0,{\beta}_1,\ldots,{\beta}_p)\)
+\item
+  Fitted model:
+  \(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \ldots + \hat{\beta}_p x_{ip}\)
+\item
+  Residuals: \(e_i=y_i - \hat{y}_i\)
+\end{itemize}
+
+\emph{Note:} there are many ways to obtain an estimate
+\(\hat{\boldsymbol{\beta}}\) of \({\boldsymbol{\beta}}\)
+
+\subsection{Training error}\label{training-error}
+
+\begin{itemize}
+\item
+  \emph{Training error} is a measure on the performance of a model when
+  it is fitted/trained from a set of observations that we call the
+  \emph{training set}. Namely, \emph{training error measures how well a
+  fitted/trained model fits/learns the training set}.
+\item
+  A commonly used training error is the \emph{residual sum of squares
+  (RSS)} (though other choices are available)
+\item
+  For example, if we take the set of \(n\) observations as the training
+  set and use RSS as the training error, then the \emph{least squares
+  estimate (LSE)} minimizes \(\textrm{RSS}=\sum_{i=1}^m e_i^2\)
+\end{itemize}
+
+\subsection{Test error}\label{test-error}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Test error} is a measure on the \emph{predictive performance} of
+  a (fitted/trained) model when it is used to predict the responses of
+  new observations on the predictors \(\tilde{X}=(X_1,\ldots,X_p)\) that
+  are not in the training set (that is used to fit/train the model).
+  Namely, \emph{test error measures how well a fitted/trained model
+  predicts responses for observations that are not part of a training
+  set}.
+\item
+  For example, given a new observation
+  \(\mathbf{x}_0=(x_{01},x_{02},\ldots,x_{0p})\) for \(\tilde{X}\), let
+  \(y_0\) be the predicted response given by the fitted/trained model.
+  Then we can use \(E(y_0 -\hat{y}_0)^2\) as the test error.
+\end{itemize}
+
+\emph{Note:} other measures of test error are available
+
+\subsection{Training error and test
+error}\label{training-error-and-test-error}
+
+\begin{itemize}
+\tightlist
+\item
+  Training error measures how well a fitted/trained model fits/learns
+  the \emph{seen} observations (of the training set), whereas test error
+  measures how well this model \emph{predicts unseen responses} based on
+  unseen observations on predictors
+\item
+  \emph{Test error is alway unknown and needs to be estimated}
+\item
+  A model that has good predictive performance is referred to as having
+  good ``generalization performance'' or ``generalizes well''
+\item
+  A model that fits the training set very well or perfectly is often
+  referred to as ``overfitting'' or ``overfits''
+\end{itemize}
+
+\subsection{Training error and test
+error}\label{training-error-and-test-error-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Classic wisdom: it is believed that an overfitting model that fits the
+  training set very well or perfectly (i.e., with very small training
+  error) cannot generalize well (i.e., cannot have small testing error)
+\item
+  Modern wisdom: when there are relatively few parameters in the model,
+  the classic wisdom is sensible. However, beyond a critical setting, an
+  overfitting model (with many parameters) can have very good
+  generalization performance.
+\end{itemize}
+
+\emph{Note:} Modern wisdom, dubbed as the ``\textbf{double descent
+curve}'', was discovered by Dr.~Belkin and his coauthors
+
+\subsection{Double descent curve}\label{double-descent-curve}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{doubledescent} \end{center}
+
+\emph{Image credit:} Belkin et al; doi.org/10.1073/pnas.1903070116
+
+\section{Cross-validation}\label{cross-validation}
+
+\subsection{Overview}\label{overview}
+
+\emph{Cross-validation is a resampling technique to estimate test
+error}, and is often implemented as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  Randomly divides a set of observations into a \emph{training set} and
+  \emph{validation set}
+\item
+  Use the training set to fit a model (that optimizes some
+  \emph{training error}), and apply the fitted model to predict the
+  responses for the observations in the validation set to obtain an
+  estimate of the \emph{test error} of the model
+\item
+  Do the above independently for different random splits, and estimate
+  test error from the estimates of test error
+\end{itemize}
+
+\subsection{Pictorial description}\label{pictorial-description}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{fig5_1} \end{center}
+
+\subsection{CV: estimate test error}\label{cv-estimate-test-error}
+
+With \(n\) observations \(\mathbf{z}_i = (y_i,\mathbf{x}_i)\),
+
+\begin{itemize}
+\item
+  Randomly split the \(n\) observations into a training set
+  \(\mathcal{T}_1\) with \(n_1\) observations, and a validation set
+  \(\mathcal{V}_1\) with \(n_2=n-n_1\) observations
+\item
+  Fit model \(M_l\) using \(\mathcal{T}\), apply fitted model
+  \(\hat{M}_l\) to predict responses in \(\mathcal{V}_1\), and compute
+  the \emph{mean squared error (MSE)}
+  \[\textrm{MSE}(\mathcal{V}_1)=n_2^{-1} \sum_{y_i \in \mathcal{V}_1} (y_i -\hat{y}_i)^2,\]
+  where \(\hat{y}_i\) is the fitted value for \(y_i\)
+\end{itemize}
+
+\emph{Note:} \(\mathcal{T}_1\) and \(\mathcal{V}_1\) are disjoint
+
+\subsection{CV: estimate test error}\label{cv-estimate-test-error-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Repeat the above ``splitting-training-validating'' steps independently
+  \(k\) times for model \(M_l\) to obtain \(k\) MSE's
+  \(\textrm{MSE}(\mathcal{V}_j),j=1,\ldots,k\), and estimate the test
+  \emph{mean squared error (MSE)} of model \(M_l\) by
+  \[\textrm{CV}(M_l)=k^{-1} \sum_{j=1}^k \textrm{MSE}(\mathcal{V}_j)\]
+\end{itemize}
+
+\emph{Note:} the above steps give an estimate of test error of model
+\(M_l\)
+
+\subsection{CV: model selection}\label{cv-model-selection}
+
+\begin{itemize}
+\tightlist
+\item
+  Obtain via cross-validation the estimated test error for each model
+  \(M_l,l=1,\ldots,L\)
+\item
+  Pick the model that has the smallest estimated test MSE, i.e., pick
+  the optimal model \(M^{\ast}\) such that
+  \[\textrm{CV}(M^*)=\min_{1\le l \le L}\textrm{CV}(M_l)\]
+\end{itemize}
+
+\emph{Note:} the above gives the best model among a set of models
+
+\subsection{Illustration}\label{illustration}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{fig5_2} \end{center}
+
+\subsection{\texorpdfstring{\(k\)-fold
+cross-validation}{k-fold cross-validation}}\label{k-fold-cross-validation}
+
+The \(k\)-fold CV for model \(M_l\) is implemented as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  Randomly splits the data set into \(k\) groups, or ``folds'', of
+  approximately equal sizes
+\item
+  Pick a fold, say, folder \(j\), as the validation set (i.e., the
+  ``held-out'' fold), fit the model on the remaining \(k-1\) folds, and
+  compute the mean squared error, \(\textrm{MSE}_{j}\), on the
+  observations in the held-out fold
+\item
+  Do the above for all \(j,j=1,\ldots,k\), and estimate the test MSE of
+  the model by \[
+  \textrm{CV}({M_l})=\frac{1}{k}\sum_{j=1}^{k}\textrm{MSE}_{j}
+  \]
+\end{itemize}
+
+\section{Variable and model
+selection}\label{variable-and-model-selection}
+
+\subsection{Motivation}\label{motivation}
+
+Settings:
+
+\begin{itemize}
+\item
+  Model:
+  \(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)
+\item
+  Observations: \((y_i,x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\),
+  where \(y_i\) is the \(i\)th observation for \(Y\) and \(x_{ij}\) that
+  for \(X_j\)
+\item
+  Estimate
+  \(\hat{\boldsymbol{\beta}}=(\hat{\beta}_0,\hat{\beta}_1,\ldots,\hat{\beta}_p)\)
+  of \({\boldsymbol{\beta}}=({\beta}_0,{\beta}_1,\ldots,{\beta}_p)\)
+\end{itemize}
+
+\emph{How to obtain an estimate \(\hat{\boldsymbol{\beta}}\) of
+\({\boldsymbol{\beta}}\) depends critically on}
+
+\begin{itemize}
+\tightlist
+\item
+  the relative magnitudes of \(p+1\) and \(n\)
+\item
+  what properties we want \(\hat{\boldsymbol{\beta}}\) to have
+\end{itemize}
+
+\subsection{\texorpdfstring{Classic scenario:
+\(p+1 \le n\)}{Classic scenario: p+1 \textbackslash{}le n}}\label{classic-scenario-p1-le-n}
+
+When the number of parameters is not larger than the sample size:
+
+\begin{itemize}
+\tightlist
+\item
+  The \emph{least squares estimate (LSE)} is \emph{uniquely} defined
+\item
+  The LSE is unbiased, i.e.,
+  \(E(\hat{\boldsymbol{\beta}})={\boldsymbol{\beta}}\), when
+  \(E(\varepsilon)=0\)
+\item
+  The LSE is optimal in some sense (e.g., Gauss-Markov theorem, meaning
+  that the LSE has the smallest variance among all linear unbiased
+  estimators, if the random errors are uncorrelated and have equal
+  variances and zero expectation)
+\end{itemize}
+
+\subsection{\texorpdfstring{Classic scenario:
+\(p+1 \le n\)}{Classic scenario: p+1 \textbackslash{}le n}}\label{classic-scenario-p1-le-n-1}
+
+When the number of parameters is not larger than the sample size but
+\emph{there are many potential predictors}, we often desire a
+\emph{small} model that is easy to interpret and perform well. Namely,
+we still need to consider:
+
+\begin{itemize}
+\tightlist
+\item
+  Which predictors are the \emph{most relevant} to the response
+\item
+  how to build a \emph{small} model using a few predictors that can well
+  predict the response
+\end{itemize}
+
+\emph{Variable or model selection is needed in the classic scenario when
+there are many potential predictors.}
+
+\subsection{\texorpdfstring{Modern scenario:
+\(p+1 > n\)}{Modern scenario: p+1 \textgreater{} n}}\label{modern-scenario-p1-n}
+
+When the number of parameters is bigger than the sample size,
+
+\begin{itemize}
+\tightlist
+\item
+  The LSE is \emph{not uniquely} defined, i.e., there are infinitely
+  many models that minimizes the residual sum of squares
+\item
+  An LSE is biased in general, i.e.,
+  \(E(\hat{\boldsymbol{\beta}}) \ne {\boldsymbol{\beta}}\), even when
+  \(E(\varepsilon)=0\)
+\item
+  An LSE has infinite variance (and Gauss-Markov theorem does not hold
+  for LSE)
+\end{itemize}
+
+\subsection{\texorpdfstring{Modern scenario:
+\(p+1 > n\)}{Modern scenario: p+1 \textgreater{} n}}\label{modern-scenario-p1-n-1}
+
+In this scenario, we have a few choices:
+
+\begin{itemize}
+\tightlist
+\item
+  perform variable/model selection: select a few most relevant
+  predictors to form a model and then apply LSE to estimate the model
+  parameters
+\item
+  employ different estimation methods: use a different method (such as
+  \emph{shrinkage}) than LSE to estimate coefficients of predictors in a
+  model (as a \emph{bias-variance trade-off})
+\item
+  use dimension reduction: projecting all predictors onto a smaller
+  subspace and use transformed predictors to build a model
+\end{itemize}
+
+\section{Best subset selection}\label{best-subset-selection}
+
+\subsection{Overview}\label{overview-1}
+
+\begin{itemize}
+\item
+  Consider a linear model with \(p\) predictors: \[
+  Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon
+  \]
+\item
+  \emph{Best subset selection} is a ``brute-force'' method that checks
+  \emph{each of the \(2^p\) possible linear submodels} and picks the
+  best one under some criterion
+\item
+  Best subset selection indeed gives the \emph{best subset of predictors
+  (in terms of linear model)} among all \(p\) predictors under a
+  criterion
+\end{itemize}
+
+\subsection{Criteria for subset
+selection}\label{criteria-for-subset-selection}
+
+Some criteria for subset/variable selection:
+
+\begin{itemize}
+\tightlist
+\item
+  Mallow's \(C_p\)
+\item
+  AIC (i.e., Akaike information criterion),
+\item
+  BIC (i.e., Bayesian information criterion)
+\item
+  Adjusted \(R^2\)
+\item
+  Cross-validated prediction error
+\end{itemize}
+
+\subsection{Implementation}\label{implementation}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{Alg6.1} \end{center}
+
+\subsection{Illustration}\label{illustration-1}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{fig6.1} \end{center}
+
+\section{Forward/backwards stepwise
+selection}\label{forwardbackwards-stepwise-selection}
+
+\subsection{Overview}\label{overview-2}
+
+Forward stepwise selection
+
+\begin{itemize}
+\tightlist
+\item
+  only fits
+  \[1+\sum_{k=0}^{p-1}\left(p-k\right)=1+2^{-1}p\left(p+1\right)\]
+  \emph{linear submodels} out of a total of \(2^p\) linear submodels
+\item
+  is not guaranteed to find the best model among all linear submodels
+\item
+  has much smaller computational intensity than best subset selection
+\end{itemize}
+
+\subsection{Implementation}\label{implementation-1}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{alg6_2} \end{center}
+
+\subsection{Illustration}\label{illustration-2}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{t6_1} \end{center}
+
+\subsection{Backwards stepwise
+selection}\label{backwards-stepwise-selection}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{alg6_3} \end{center}
+
+\section{Choosing the optimal model}\label{choosing-the-optimal-model}
+
+\subsection{General principle}\label{general-principle}
+
+For best subset, forward stepwise, and backwards stepwise selections,
+\emph{we need to select a best model from the best submodels}. However,
+neither \emph{training} set RSS nor \emph{training} set \(R^{2}\) can be
+used for this purpose since
+
+\begin{itemize}
+\tightlist
+\item
+  neither ensures good predictive performance in terms of test error of
+  the resultant model
+\item
+  either tends to pick a model that has the largest possible size in
+  terms of the number of parameters
+\end{itemize}
+
+So, a practical way to select a single best model is to \textbf{balance
+the RSS on the training error and the model size}
+
+\subsection{Four methods}\label{four-methods}
+
+Four methods to choose the optimal model:
+
+\begin{itemize}
+\tightlist
+\item
+  Mallow's \(C_p\)
+\item
+  Akaike information criterion
+\item
+  Bayesian information criterion
+\item
+  Cross-validation
+\end{itemize}
+
+\subsection{\texorpdfstring{Mallow's
+\(C_p\)}{Mallow's C\_p}}\label{mallows-c_p}
+
+Mallow's
+
+\begin{equation}
+C_{p}=\frac{1}{n}\left( \textrm{RSS}+2d\hat{\sigma}^{2}\right)
+\end{equation}
+
+\begin{itemize}
+\tightlist
+\item
+  \(d\) is the number of predictors in the model
+\item
+  Typically \(\hat{\sigma}^{2}\), an estimate of
+  \(\sigma^2=\textrm{Var}(\varepsilon)\), is estimated using the full
+  model containing all predictors
+\end{itemize}
+
+\emph{Remark:} If \(\hat{\sigma}^{2}\) is an unbiased estimate of
+\(\sigma^{2}\), then \(C_{p}\) is an unbiased estimate of test MSE
+
+\subsection{Akaike information
+criterion}\label{akaike-information-criterion}
+
+\begin{itemize}
+\tightlist
+\item
+  The \emph{Akaike information criterion (AIC)} is mainly used together
+  with the \emph{maximum likelihood method}
+\item
+  For a linear model with Gaussian errors, the \emph{maximum likelihood
+  estimate (MLE)} is the same as the \emph{least squares estimate
+  (LSE)}. In this case, AIC is, up to an additive constant, given by \[
+  \textrm{AIC}=\frac{1}{n\hat{\sigma}^{2}}\left(  \textrm{RSS}+2d\hat{\sigma}^{2}\right)
+  \]
+\end{itemize}
+
+\subsection{Bayesian information
+criterion}\label{bayesian-information-criterion}
+
+\begin{itemize}
+\tightlist
+\item
+  The \emph{Bayesian information criterion (BIC)} is derived from a
+  Bayesian perspective
+\item
+  For the least squares model with \(d\) parameters, the BIC is, up to
+  irrelevant constants, given by \[
+  \textrm{BIC}=\frac{1}{n\hat{\sigma}^{2}}\left( \textrm{RSS}+d\hat{\sigma}^{2}\log n\right)
+  \]
+\item
+  BIC generally places a heavier penalty on models with many variables.
+  For large \(n\), BIC is bigger than \(C_{p}\)
+\end{itemize}
+
+\subsection{\texorpdfstring{Adjusted
+\(R^{2}\)}{Adjusted R\^{}\{2\}}}\label{adjusted-r2}
+
+\begin{itemize}
+\tightlist
+\item
+  The adjusted \(R^{2}\) is given by \[
+  \text{Adjusted }R^{2}=1-\frac{\textrm{RSS}/\left(  n-d-1\right)  }{\textrm{TSS}/\left(n-1\right)  }
+  \]
+\item
+  \emph{Unlike \(C_{p}\), AIC and BIC, for which a small value indicates
+  a model with a low test error, a large value of adjusted \(R^{2}\)
+  indicates a model with a low test error}
+\end{itemize}
+
+The intuition behind the adjusted \(R^{2}\) is that ``once all of the
+correct variables have been included in the model, adding additional
+noise variables will lead to a very small decrease in RSS''
+
+\subsection{Recap}\label{recap}
+
+Let \(d\) be number of predictors in model, \(n\) sample size, and
+\(\hat{\sigma}^{2}\) an estimate of
+\(\sigma^2=\textrm{Var}(\varepsilon)\):
+
+\begin{itemize}
+\item
+  \(C_{p}=\frac{1}{n}\left( \textrm{RSS}+2d\hat{\sigma}^{2}\right)\)
+\item
+  \(\textrm{AIC}=\frac{1}{n\hat{\sigma}^{2}}\left( RSS+2d\hat{\sigma}^{2}\right)\)
+\item
+  \(\textrm{BIC}=\frac{1}{n\hat{\sigma}^{2}}\left( \textrm{RSS}+d\hat{\sigma}^{2}\log n\right)\)
+\item
+  \(\text{Adjusted }R^{2}=1-\frac{\textrm{RSS}/\left( n-d-1\right) }{\textrm{TSS}/\left(n-1\right) }\)
+\end{itemize}
+
+All formulae for \(C_{p}\), AIC and BIC are \emph{for a linear model fit
+using least squares}; \(C_p\), AIC and BIC all have good theoretical
+justifications
+
+\subsection{Illustration}\label{illustration-3}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{fig6_2} \end{center}
+
+\subsection{\texorpdfstring{\(k\)-fold
+cross-validation}{k-fold cross-validation}}\label{k-fold-cross-validation-1}
+
+Recall CV for model selection:
+
+\begin{itemize}
+\tightlist
+\item
+  Obtain via cross-validation the estimated test error for each model
+  \(M_l,l=1,\ldots,L\)
+\item
+  Pick the model that has the smallest estimated test MSE, i.e., pick
+  the optimal model \(M^{\ast}\) such that
+  \[\textrm{CV}(M^*)=\min_{1\le l \le L}\textrm{CV}(M_l)\]
+\end{itemize}
+
+\subsection{\texorpdfstring{\(k\)-fold
+cross-validation}{k-fold cross-validation}}\label{k-fold-cross-validation-2}
+
+The \(k\)-fold CV for model \(M_l\) is implemented as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  Randomly splits the data set into \(k\) groups, or ``folds'', of
+  approximately equal sizes
+\item
+  Pick a fold, say, folder \(j\), as the validation set (i.e., the
+  ``held-out'' fold), fit the model on the remaining \(k-1\) folds, and
+  compute the mean squared error, \(\textrm{MSE}_{j}\), on the
+  observations in the held-out fold
+\item
+  Do the above for all \(j,j=1,\ldots,k\), and estimate the test MSE of
+  the model by \[
+  \textrm{CV}({M_l})=\frac{1}{k}\sum_{j=1}^{k}\textrm{MSE}_{j}
+  \]
+\end{itemize}
+
+\subsection{\texorpdfstring{\(k\)-fold
+cross-validation}{k-fold cross-validation}}\label{k-fold-cross-validation-3}
+
+Guideline:
+
+\begin{itemize}
+\tightlist
+\item
+  Usually \(k=5\) or \(10\) is chosen, as these values have been shown
+  empirically to yield test error rate estimates that suffer neither
+  from excessively high bias nor from very high variance
+\end{itemize}
+
+\subsection{\texorpdfstring{\(k\)-fold
+cross-validation}{k-fold cross-validation}}\label{k-fold-cross-validation-4}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{fig6_3} \end{center}
+
+\subsection{One-standard-error rule}\label{one-standard-error-rule}
+
+Different random splitting schemes often lead to differential optimal
+models. So,
+
+\begin{itemize}
+\item
+  first, we can calculate the standard error of the estimated test MSE
+  for each model size, by repeatedly validating ``the best model'' of
+  this model size
+\item
+  then select the smallest model for which the estimated test error is
+  within one standard error of the lowest point on the front curve for
+  the estimated MSEs of ``the best models''
+\end{itemize}
+
+\subsection{License and session
+Information}\label{license-and-session-information}
+
+\href{http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html}{License}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{sessionInfo}\NormalTok{()}
+\NormalTok{R version }\FloatTok{3.5.0} \NormalTok{(}\DecValTok{2018-04-23}\NormalTok{)}
+\NormalTok{Platform:}\StringTok{ }\NormalTok{x86_64-w64-mingw32/}\KeywordTok{x64} \NormalTok{(}\DecValTok{64}\NormalTok{-bit)}
+\NormalTok{Running under:}\StringTok{ }\NormalTok{Windows }\DecValTok{10} \KeywordTok{x64} \NormalTok{(build }\DecValTok{19043}\NormalTok{)}
+
+\NormalTok{Matrix products:}\StringTok{ }\NormalTok{default}
+
+\NormalTok{locale:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] LC_COLLATE=English_United States}\FloatTok{.1252} 
+\NormalTok{[}\DecValTok{2}\NormalTok{] LC_CTYPE=English_United States}\FloatTok{.1252}   
+\NormalTok{[}\DecValTok{3}\NormalTok{] LC_MONETARY=English_United States}\FloatTok{.1252}
+\NormalTok{[}\DecValTok{4}\NormalTok{] LC_NUMERIC=C                          }
+\NormalTok{[}\DecValTok{5}\NormalTok{] LC_TIME=English_United States}\FloatTok{.1252}    
+
+\NormalTok{attached base packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] stats     graphics  grDevices utils     datasets  methods  }
+\NormalTok{[}\DecValTok{7}\NormalTok{] base     }
+
+\NormalTok{other attached packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] knitr_1}\FloatTok{.21}
+
+\NormalTok{loaded via a }\KeywordTok{namespace} \NormalTok{(and not attached):}
+\StringTok{ }\NormalTok{[}\DecValTok{1}\NormalTok{] compiler_3}\FloatTok{.5.0}  \NormalTok{magrittr_1}\FloatTok{.5}    \NormalTok{tools_3}\FloatTok{.5.0}    
+ \NormalTok{[}\DecValTok{4}\NormalTok{] htmltools_0}\FloatTok{.3.6} \NormalTok{yaml_2}\FloatTok{.2.0}      \NormalTok{Rcpp_1}\FloatTok{.0.3}     
+ \NormalTok{[}\DecValTok{7}\NormalTok{] stringi_1}\FloatTok{.2.4}   \NormalTok{rmarkdown_1}\FloatTok{.11}  \NormalTok{stringr_1}\FloatTok{.3.1}  
+\NormalTok{[}\DecValTok{10}\NormalTok{] xfun_0}\FloatTok{.4}        \NormalTok{digest_0}\FloatTok{.6.18}   \NormalTok{evaluate_0}\FloatTok{.12}  
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

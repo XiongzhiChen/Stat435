@@ -1,0 +1,811 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[left=1.1in, right=1.1in, top=1.1in, bottom=1.1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stat 435 Lab Notes 1},
+            pdfauthor={Xiongzhi Chen; Washington State University},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stat 435 Lab Notes 1}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Xiongzhi Chen \\ Washington State University}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx,float}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{}\label{section}
+
+\section{Basic objects and their
+operations}\label{basic-objects-and-their-operations}
+
+\subsection{Important objects}\label{important-objects}
+
+Some important objects in R
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{vector}
+\item
+  \texttt{matrix} and \texttt{data.frame}
+\item
+  \texttt{character} and \texttt{factor}
+\end{itemize}
+
+In terms of data analysis, \texttt{data.frame} is perhaps the most
+important R object.
+
+\subsection{\texorpdfstring{\texttt{vector}}{vector}}\label{vector}
+
+Vectors can be created by concatenation (\texttt{c}), sequencing
+(\texttt{:} or \texttt{seq}), or replication (\texttt{rep}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\CommentTok{# create a vector via concatenation}
+\ErrorTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{,}\FloatTok{0.8}\NormalTok{,}\DecValTok{10}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+\NormalTok{[}\DecValTok{1}\NormalTok{]  }\FloatTok{1.0}  \FloatTok{5.0}  \FloatTok{0.8} \FloatTok{10.0}
+\NormalTok{>}\StringTok{ }\CommentTok{# create a vector via seq}
+\ErrorTok{>}\StringTok{ }\NormalTok{y=}\DecValTok{1}\NormalTok{:}\DecValTok{3}
+\NormalTok{>}\StringTok{ }\NormalTok{y}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{2} \DecValTok{3}
+\NormalTok{>}\StringTok{ }\NormalTok{z =}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from=}\DecValTok{1}\NormalTok{,}\DataTypeTok{to=}\DecValTok{10}\NormalTok{,}\DataTypeTok{by=}\DecValTok{2}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{z}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{3} \DecValTok{5} \DecValTok{7} \DecValTok{9}
+\NormalTok{>}\StringTok{ }\CommentTok{# create a vector via rep}
+\ErrorTok{>}\StringTok{ }\NormalTok{w =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DataTypeTok{times=}\DecValTok{5}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{w}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1}
+\NormalTok{>}\StringTok{ }\NormalTok{u =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\DataTypeTok{each=}\DecValTok{3}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{u}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{2} \DecValTok{2} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{vector}}{vector}}\label{vector-1}
+
+Entries of a vector can be accessed by specifying their indices as a
+vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{,}\FloatTok{0.8}\NormalTok{,}\DecValTok{10}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+\NormalTok{[}\DecValTok{1}\NormalTok{]  }\FloatTok{1.0}  \FloatTok{5.0}  \FloatTok{0.8} \FloatTok{10.0}
+\NormalTok{>}\StringTok{ }\CommentTok{# obtain number of entries of a vector}
+\ErrorTok{>}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{4}
+\NormalTok{>}\StringTok{ }\CommentTok{# access entries of a vector}
+\ErrorTok{>}\StringTok{ }\NormalTok{x[}\DecValTok{1}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1}
+\NormalTok{>}\StringTok{ }\NormalTok{x[}\DecValTok{1}\NormalTok{:}\DecValTok{3}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{1.0} \FloatTok{5.0} \FloatTok{0.8}
+\NormalTok{>}\StringTok{ }\CommentTok{# remove some entries}
+\ErrorTok{>}\StringTok{ }\NormalTok{y=x[-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)]}
+\NormalTok{>}\StringTok{ }\NormalTok{y}
+\NormalTok{[}\DecValTok{1}\NormalTok{]  }\DecValTok{5} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{matrix} and
+\texttt{data.frame}}{matrix and data.frame}}\label{matrix-and-data.frame}
+
+Both \texttt{data.frame} and \texttt{matrix} have a grid layout in rows
+and columns. However, the object types for all columns of a
+\texttt{matrix} have to be the same.
+
+\begin{itemize}
+\tightlist
+\item
+  A matrix can be created by the command \texttt{matrix}, or by
+  combining vectors as rows (\texttt{rbind}) or as columns
+  (\texttt{cbind})
+\item
+  A \texttt{matrix} can be coerced into a data frame via
+  \texttt{as.data.frame}
+\item
+  A data frame can be created by the command \texttt{data.frame} or
+  automatically when importing data
+\end{itemize}
+
+\subsection{\texorpdfstring{\texttt{matrix} and
+\texttt{data.frame}}{matrix and data.frame}}\label{matrix-and-data.frame-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\CommentTok{# create a matrix}
+\ErrorTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{,}\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{,}\DataTypeTok{ncol=}\DecValTok{5}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+     \NormalTok{[,}\DecValTok{1}\NormalTok{] [,}\DecValTok{2}\NormalTok{] [,}\DecValTok{3}\NormalTok{] [,}\DecValTok{4}\NormalTok{] [,}\DecValTok{5}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{,]    }\DecValTok{1}    \DecValTok{3}    \DecValTok{5}    \DecValTok{7}    \DecValTok{9}
+\NormalTok{[}\DecValTok{2}\NormalTok{,]    }\DecValTok{2}    \DecValTok{4}    \DecValTok{6}    \DecValTok{8}   \DecValTok{10}
+\NormalTok{>}\StringTok{ }\KeywordTok{dim}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{2} \DecValTok{5}
+\NormalTok{>}\StringTok{ }\CommentTok{# convert x into a data.frame}
+\ErrorTok{>}\StringTok{ }\NormalTok{y =}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(x)}
+\NormalTok{>}\StringTok{ }\NormalTok{y}
+  \NormalTok{V1 V2 V3 V4 V5}
+\DecValTok{1}  \DecValTok{1}  \DecValTok{3}  \DecValTok{5}  \DecValTok{7}  \DecValTok{9}
+\DecValTok{2}  \DecValTok{2}  \DecValTok{4}  \DecValTok{6}  \DecValTok{8} \DecValTok{10}
+\NormalTok{>}\StringTok{ }\KeywordTok{dim}\NormalTok{(y)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{2} \DecValTok{5}
+\NormalTok{>}\StringTok{ }\CommentTok{# indexing for matrix or data.frame}
+\ErrorTok{>}\StringTok{ }\NormalTok{x[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)]}
+     \NormalTok{[,}\DecValTok{1}\NormalTok{] [,}\DecValTok{2}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{,]    }\DecValTok{1}    \DecValTok{9}
+\NormalTok{[}\DecValTok{2}\NormalTok{,]    }\DecValTok{2}   \DecValTok{10}
+\NormalTok{>}\StringTok{ }\NormalTok{y[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)]}
+  \NormalTok{V1 V5}
+\DecValTok{1}  \DecValTok{1}  \DecValTok{9}
+\DecValTok{2}  \DecValTok{2} \DecValTok{10}
+\NormalTok{>}\StringTok{ }\CommentTok{# access variable in data frame via $}
+\ErrorTok{>}\StringTok{ }\NormalTok{y$V1}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{matrix} and
+\texttt{data.frame}}{matrix and data.frame}}\label{matrix-and-data.frame-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\DecValTok{1}\NormalTok{:}\DecValTok{3}\NormalTok{; y =}\StringTok{ }\DecValTok{2}\NormalTok{:}\DecValTok{4}
+\NormalTok{>}\StringTok{ }\CommentTok{# create a matrix}
+\ErrorTok{>}\StringTok{ }\NormalTok{z =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(x,y)}
+\NormalTok{>}\StringTok{ }\NormalTok{z}
+     \NormalTok{x y}
+\NormalTok{[}\DecValTok{1}\NormalTok{,] }\DecValTok{1} \DecValTok{2}
+\NormalTok{[}\DecValTok{2}\NormalTok{,] }\DecValTok{2} \DecValTok{3}
+\NormalTok{[}\DecValTok{3}\NormalTok{,] }\DecValTok{3} \DecValTok{4}
+\NormalTok{>}\StringTok{ }\CommentTok{# create a matrix}
+\ErrorTok{>}\StringTok{ }\NormalTok{w =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(x,y)}
+\NormalTok{>}\StringTok{ }\NormalTok{w}
+  \NormalTok{[,}\DecValTok{1}\NormalTok{] [,}\DecValTok{2}\NormalTok{] [,}\DecValTok{3}\NormalTok{]}
+\NormalTok{x    }\DecValTok{1}    \DecValTok{2}    \DecValTok{3}
+\NormalTok{y    }\DecValTok{2}    \DecValTok{3}    \DecValTok{4}
+\NormalTok{>}\StringTok{ }\CommentTok{# make w into data.frame}
+\ErrorTok{>}\StringTok{ }\NormalTok{v =}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(w)}
+\NormalTok{>}\StringTok{ }\NormalTok{v}
+  \NormalTok{V1 V2 V3}
+\NormalTok{x  }\DecValTok{1}  \DecValTok{2}  \DecValTok{3}
+\NormalTok{y  }\DecValTok{2}  \DecValTok{3}  \DecValTok{4}
+\NormalTok{>}\StringTok{ }\CommentTok{# add a variable to v}
+\ErrorTok{>}\StringTok{ }\NormalTok{v$New =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{20}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{v}
+  \NormalTok{V1 V2 V3 New}
+\NormalTok{x  }\DecValTok{1}  \DecValTok{2}  \DecValTok{3}  \DecValTok{10}
+\NormalTok{y  }\DecValTok{2}  \DecValTok{3}  \DecValTok{4}  \DecValTok{20}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Operations on
+vectors/matrices}\label{operations-on-vectorsmatrices}
+
+The operations \texttt{+}, \texttt{-}, \texttt{*} (multiplication),
+\texttt{/}, and \texttt{\^{}} (power) operate \emph{entrwise} on vectors
+and matrices.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\DecValTok{1}\NormalTok{:}\DecValTok{3}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{2} \DecValTok{3}
+\NormalTok{>}\StringTok{ }\NormalTok{y =}\StringTok{ }\DecValTok{2}\NormalTok{:}\DecValTok{4}
+\NormalTok{>}\StringTok{ }\NormalTok{y}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{2} \DecValTok{3} \DecValTok{4}
+\NormalTok{>}\StringTok{ }\NormalTok{x+y}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{3} \DecValTok{5} \DecValTok{7}
+\NormalTok{>}\StringTok{ }\NormalTok{x-y}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\DecValTok{1} \NormalTok{-}\DecValTok{1} \NormalTok{-}\DecValTok{1}
+\NormalTok{>}\StringTok{ }\NormalTok{x*y}
+\NormalTok{[}\DecValTok{1}\NormalTok{]  }\DecValTok{2}  \DecValTok{6} \DecValTok{12}
+\NormalTok{>}\StringTok{ }\NormalTok{x^}\DecValTok{2}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{4} \DecValTok{9}
+\NormalTok{>}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{1.000000} \FloatTok{1.414214} \FloatTok{1.732051}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Operations on
+vectors/matrices}\label{operations-on-vectorsmatrices-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\DecValTok{1}\NormalTok{:}\DecValTok{3}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{2} \DecValTok{3}
+\NormalTok{>}\StringTok{ }\NormalTok{y =}\StringTok{ }\DecValTok{2}\NormalTok{:}\DecValTok{4}
+\NormalTok{>}\StringTok{ }\NormalTok{y}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{2} \DecValTok{3} \DecValTok{4}
+\NormalTok{>}\StringTok{ }\CommentTok{# transpose of y}
+\ErrorTok{>}\StringTok{ }\KeywordTok{t}\NormalTok{(y)}
+     \NormalTok{[,}\DecValTok{1}\NormalTok{] [,}\DecValTok{2}\NormalTok{] [,}\DecValTok{3}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{,]    }\DecValTok{2}    \DecValTok{3}    \DecValTok{4}
+\NormalTok{>}\StringTok{ }\CommentTok{# matrix multiplication}
+\ErrorTok{>}\StringTok{ }\NormalTok{x%*%y}
+     \NormalTok{[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{,]   }\DecValTok{20}
+\NormalTok{>}\StringTok{ }\NormalTok{x%*%}\KeywordTok{t}\NormalTok{(y)}
+     \NormalTok{[,}\DecValTok{1}\NormalTok{] [,}\DecValTok{2}\NormalTok{] [,}\DecValTok{3}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{,]    }\DecValTok{2}    \DecValTok{3}    \DecValTok{4}
+\NormalTok{[}\DecValTok{2}\NormalTok{,]    }\DecValTok{4}    \DecValTok{6}    \DecValTok{8}
+\NormalTok{[}\DecValTok{3}\NormalTok{,]    }\DecValTok{6}    \DecValTok{9}   \DecValTok{12}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{x\%*\%y}: sum of products of pairs of entries with matching
+  indices.
+\end{itemize}
+
+\subsection{\texorpdfstring{\texttt{character} and
+\texttt{factor}}{character and factor}}\label{character-and-factor}
+
+\texttt{character} is often used to name variables or annotate figures,
+and \texttt{factor} to describe values of a discrete random variable.
+
+\begin{itemize}
+\tightlist
+\item
+  A \texttt{character} can be created by enclosing a sequence of
+  characters by quotes (\texttt{\textquotesingle{}\textquotesingle{}} or
+  \texttt{"\ "}), or by concatenation (\texttt{c}) of characters
+\item
+  A \texttt{factor} can be created by the command \texttt{factor} or by
+  coercing (\texttt{as.factor})
+\end{itemize}
+
+\subsection{\texorpdfstring{\texttt{character}}{character}}\label{character}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{a =}\StringTok{ 'This is'}
+\NormalTok{>}\StringTok{ }\NormalTok{a}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"This is"}
+\NormalTok{>}\StringTok{ }\NormalTok{b =}\StringTok{ 'Stat 435'}
+\NormalTok{>}\StringTok{ }\CommentTok{# both a and b are characters}
+\ErrorTok{>}\StringTok{ }\CommentTok{# concatenate strings via paste}
+\ErrorTok{>}\StringTok{ }\NormalTok{w=}\KeywordTok{paste}\NormalTok{(a,b,}\DataTypeTok{sep=}\StringTok{" "}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{w}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"This is Stat 435"}
+\NormalTok{>}\StringTok{ }\CommentTok{# concatenate strings via c}
+\ErrorTok{>}\StringTok{ }\NormalTok{z =}\StringTok{ }\KeywordTok{c}\NormalTok{(a,b)}
+\NormalTok{>}\StringTok{ }\CommentTok{#z is a vector whose entries are characters}
+\ErrorTok{>}\StringTok{ }\NormalTok{z[}\DecValTok{1}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"This is"}
+\NormalTok{>}\StringTok{ }\NormalTok{z[}\DecValTok{2}\NormalTok{]}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"Stat 435"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{factor}}{factor}}\label{factor}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{'F'}\NormalTok{,}\DecValTok{6}\NormalTok{),}\KeywordTok{rep}\NormalTok{(}\StringTok{'M'}\NormalTok{,}\DecValTok{6}\NormalTok{))}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+ \NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"F"} \StringTok{"F"} \StringTok{"F"} \StringTok{"F"} \StringTok{"F"} \StringTok{"F"} \StringTok{"M"} \StringTok{"M"} \StringTok{"M"} \StringTok{"M"} \StringTok{"M"} \StringTok{"M"}
+\NormalTok{>}\StringTok{ }\CommentTok{# obtain object type}
+\ErrorTok{>}\StringTok{ }\KeywordTok{class}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"character"}
+\NormalTok{>}\StringTok{ }\CommentTok{# convert x into factor}
+\ErrorTok{>}\StringTok{ }\NormalTok{y =}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(x)}
+\NormalTok{>}\StringTok{ }\NormalTok{y}
+ \NormalTok{[}\DecValTok{1}\NormalTok{] F F F F F F M M M M M M}
+\NormalTok{Levels:}\StringTok{ }\NormalTok{F M}
+\NormalTok{>}\StringTok{ }\KeywordTok{class}\NormalTok{(y)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"factor"}
+\NormalTok{>}\StringTok{ }\KeywordTok{levels}\NormalTok{(y)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"F"} \StringTok{"M"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{factor}}{factor}}\label{factor-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{),}\KeywordTok{rep}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{))}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+ \NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{2} \DecValTok{2} \DecValTok{2} \DecValTok{2} \DecValTok{2} \DecValTok{2}
+\NormalTok{>}\StringTok{ }\KeywordTok{class}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"numeric"}
+\NormalTok{>}\StringTok{ }\CommentTok{# convert x into factor}
+\ErrorTok{>}\StringTok{ }\NormalTok{y =}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(x)}
+\NormalTok{>}\StringTok{ }\NormalTok{y}
+ \NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{1} \DecValTok{2} \DecValTok{2} \DecValTok{2} \DecValTok{2} \DecValTok{2} \DecValTok{2}
+\NormalTok{Levels:}\StringTok{ }\DecValTok{1} \DecValTok{2}
+\NormalTok{>}\StringTok{ }\KeywordTok{class}\NormalTok{(y)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"factor"}
+\NormalTok{>}\StringTok{ }\KeywordTok{levels}\NormalTok{(y)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"1"} \StringTok{"2"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{data.frame}}{data.frame}}\label{data.frame}
+
+Each column of a \texttt{data.frame} can have its own object type,
+whereas all columns of a \texttt{matrix} have to have the same object
+type.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"Variable1"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{),}
+\NormalTok{+}\StringTok{                "Variable2"}\NormalTok{=}\KeywordTok{as.factor}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'A'}\NormalTok{,}\StringTok{'B'}\NormalTok{,}\StringTok{'C'}\NormalTok{)))}
+\NormalTok{>}\StringTok{ }\NormalTok{x}
+  \NormalTok{Variable1 Variable2}
+\DecValTok{1}         \DecValTok{1}         \NormalTok{A}
+\DecValTok{2}         \DecValTok{3}         \NormalTok{B}
+\DecValTok{3}         \DecValTok{5}         \NormalTok{C}
+\NormalTok{>}\StringTok{ }\CommentTok{# display data structure for x}
+\ErrorTok{>}\StringTok{ }\KeywordTok{str}\NormalTok{(x)}
+\StringTok{'data.frame'}\NormalTok{:}\StringTok{   }\DecValTok{3} \NormalTok{obs. of  }\DecValTok{2} \NormalTok{variables:}
+\StringTok{ }\ErrorTok{$}\StringTok{ }\NormalTok{Variable1:}\StringTok{ }\NormalTok{num  }\DecValTok{1} \DecValTok{3} \DecValTok{5}
+ \NormalTok{$}\StringTok{ }\NormalTok{Variable2:}\StringTok{ }\NormalTok{Factor w/}\StringTok{ }\DecValTok{3} \NormalTok{levels }\StringTok{"A"}\NormalTok{,}\StringTok{"B"}\NormalTok{,}\StringTok{"C"}\NormalTok{:}\StringTok{ }\DecValTok{1} \DecValTok{2} \DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Basic operations on data}\label{basic-operations-on-data}
+
+\subsection{Import and export data}\label{import-and-export-data}
+
+\begin{itemize}
+\tightlist
+\item
+  Rstudio's ``Import Data'' functionality provides a GUI to import data
+  from \emph{CSV}, \emph{Excel}, etc, and implements the functionality
+  of \texttt{read.csv}
+\item
+  The command \texttt{read.table} (\texttt{write.data}) imports (saves)
+  data from (into) \texttt{.txt} or \texttt{.data} files
+\item
+  \texttt{save} (\texttt{save.image}) saves an object (the workspace)
+  into an object
+\end{itemize}
+
+\subsection{A data set}\label{a-data-set}
+
+The data set \texttt{Auto.data} (or file \texttt{Auto.csv}) contains
+\texttt{mpg} (miles per gallon) for cars of different numbers of
+\texttt{cylinders}, engine \texttt{displacement}, \texttt{horsepower},
+manufactures (\texttt{name}), etc.
+
+\begin{verbatim}
+  mpg cylinders displacement horsepower weight acceleration
+1  18         8          307        130   3504         12.0
+2  15         8          350        165   3693         11.5
+3  18         8          318        150   3436         11.0
+4  16         8          304        150   3433         12.0
+5  17         8          302        140   3449         10.5
+6  15         8          429        198   4341         10.0
+  year origin                      name
+1   70      1 chevrolet chevelle malibu
+2   70      1         buick skylark 320
+3   70      1        plymouth satellite
+4   70      1             amc rebel sst
+5   70      1               ford torino
+6   70      1          ford galaxie 500
+\end{verbatim}
+
+\subsection{Import and export data}\label{import-and-export-data-1}
+
+Data are often stored in a directory or on a website. So, we need to
+tell importing commands where data are. By default, R imports (exports)
+data from (to) \emph{current working directory}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\CommentTok{# show current working directory}
+\ErrorTok{>}\StringTok{ }\KeywordTok{getwd}\NormalTok{()}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"D:/MathRepo/stat435"}
+\NormalTok{>}\StringTok{ }\NormalTok{AD1 =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"Auto.data"}\NormalTok{,}\DataTypeTok{header =} \NormalTok{T,}\DataTypeTok{na.strings =} \StringTok{"?"}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{class}\NormalTok{(AD1)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"data.frame"}
+\NormalTok{>}\StringTok{ }\KeywordTok{dim}\NormalTok{(AD1)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{397}   \DecValTok{9}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{header\ =\ T}: the first line of the file contains the
+  variable names
+\item
+  \texttt{na.strings\ =\ "?"}: the string \texttt{?} indicates a missing
+  element in the data matrix
+\end{itemize}
+
+\subsection{Import and export data}\label{import-and-export-data-2}
+
+Import data from a csv file online:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{AD2 =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"http://faculty.marshall.usc.edu/gareth-james/ISL/Auto.csv"}\NormalTok{,}
+\NormalTok{+}\StringTok{                  }\DataTypeTok{header =} \NormalTok{T,}\DataTypeTok{na.strings =} \StringTok{"?"}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{class}\NormalTok{(AD2)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"data.frame"}
+\NormalTok{>}\StringTok{ }\KeywordTok{dim}\NormalTok{(AD2)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{397}   \DecValTok{9}
+\NormalTok{>}\StringTok{ }\NormalTok{AD3 =}\StringTok{ }\NormalTok{AD2[}\DecValTok{1}\NormalTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{>}\StringTok{ }\NormalTok{AD3}
+  \NormalTok{mpg cylinders displacement horsepower weight}
+\DecValTok{1}  \DecValTok{18}         \DecValTok{8}          \DecValTok{307}        \DecValTok{130}   \DecValTok{3504}
+\DecValTok{2}  \DecValTok{15}         \DecValTok{8}          \DecValTok{350}        \DecValTok{165}   \DecValTok{3693}
+\NormalTok{>}\StringTok{ }\CommentTok{# export AD3}
+\ErrorTok{>}\StringTok{ }\KeywordTok{write.csv}\NormalTok{(AD3,}\DataTypeTok{file=}\StringTok{"myFile.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Save and load objects}\label{save-and-load-objects}
+
+By default, R saves (loads) data to (from) \emph{current working
+directory}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{AD2 =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"http://faculty.marshall.usc.edu/gareth-james/ISL/Auto.csv"}\NormalTok{,}
+\NormalTok{+}\StringTok{                  }\DataTypeTok{header =} \NormalTok{T,}\DataTypeTok{na.strings =} \StringTok{"?"}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{save}\NormalTok{(AD2,}\DataTypeTok{file=}\StringTok{"Partial.RData"}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{save.image}\NormalTok{(}\StringTok{"Everything.RData"}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{load}\NormalTok{(}\StringTok{"Everything.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Caution:} Loading into the current workspace anything that
+contains variables with identical names to those in the currently
+workspace will overwrite these objects in the current workspace.
+
+\subsection{Check or clean data}\label{check-or-clean-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{AD1 =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"Auto.data"}\NormalTok{,}\DataTypeTok{header =} \NormalTok{T,}\DataTypeTok{na.strings =} \StringTok{"?"}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{class}\NormalTok{(AD1)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"data.frame"}
+\NormalTok{>}\StringTok{ }\KeywordTok{dim}\NormalTok{(AD1)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{397}   \DecValTok{9}
+\NormalTok{>}\StringTok{ }\CommentTok{# show variable names in data}
+\ErrorTok{>}\StringTok{ }\KeywordTok{colnames}\NormalTok{(AD1)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"mpg"}          \StringTok{"cylinders"}    \StringTok{"displacement"} \StringTok{"horsepower"}  
+\NormalTok{[}\DecValTok{5}\NormalTok{] }\StringTok{"weight"}       \StringTok{"acceleration"} \StringTok{"year"}         \StringTok{"origin"}      
+\NormalTok{[}\DecValTok{9}\NormalTok{] }\StringTok{"name"}        
+\NormalTok{>}\StringTok{ }\CommentTok{# remove na's from data}
+\ErrorTok{>}\StringTok{ }\NormalTok{AD1a =}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(AD1)}
+\NormalTok{>}\StringTok{ }\KeywordTok{dim}\NormalTok{(AD1a)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{392}   \DecValTok{9}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Note:} by default, a row with a missing value will be removed
+\texttt{na.omit}
+
+\subsection{Remarks}\label{remarks}
+
+\begin{itemize}
+\tightlist
+\item
+  There are other objects in R such as \texttt{list} and
+  \texttt{tibble}, which are even more versatile than
+  \texttt{data.frame}
+\item
+  There are other R commands to import data
+\item
+  The R package \texttt{dplyr} is a powerful tool for data processing,
+  and the course contains supplementary videos for interested students
+\end{itemize}
+
+\section{Basic graphics commands}\label{basic-graphics-commands}
+
+\subsection{\texorpdfstring{The \texttt{plot}
+function}{The plot function}}\label{the-plot-function}
+
+The \texttt{plot} function is a basic graphics command that creates 2D
+plots. Its basic syntax is:
+
+\begin{verbatim}
+plot(x, y, ...)
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{x}: the x coordinates of points in the plot
+\item
+  \texttt{y}: the y coordinates of points in the plot
+\item
+  \texttt{...}: other arguments such as \texttt{type} (what type of plot
+  should be drawn), \texttt{main} (an overall title for the plot),
+  \texttt{xlab} (a title for the x axis) and \texttt{ylab}(a title for
+  the y axis)
+\end{itemize}
+
+\subsection{\texorpdfstring{The \emph{Auto} data
+set}{The Auto data set}}\label{the-auto-data-set}
+
+The data set \texttt{Auto.data} (or file \texttt{Auto.csv}) contains
+\texttt{mpg} (miles per gallon) for cars of different numbers of
+\texttt{cylinders}, engine \texttt{displacement}, \texttt{horsepower},
+manufactures (\texttt{name}), etc.
+
+\begin{verbatim}
+  mpg cylinders displacement horsepower weight acceleration
+1  18         8          307        130   3504         12.0
+2  15         8          350        165   3693         11.5
+3  18         8          318        150   3436         11.0
+4  16         8          304        150   3433         12.0
+5  17         8          302        140   3449         10.5
+6  15         8          429        198   4341         10.0
+  year origin                      name
+1   70      1 chevrolet chevelle malibu
+2   70      1         buick skylark 320
+3   70      1        plymouth satellite
+4   70      1             amc rebel sst
+5   70      1               ford torino
+6   70      1          ford galaxie 500
+\end{verbatim}
+
+\subsection{Illustration}\label{illustration}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{plot}\NormalTok{(AD1a$displacement,AD1a$mpg,}\DataTypeTok{xlab=}\StringTok{"Engine displacement"}\NormalTok{,}
+\NormalTok{+}\StringTok{      }\DataTypeTok{ylab=}\StringTok{"Miles per gallon"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Stat435LabNotes1_notes_files/figure-latex/plot1-1} \end{center}
+
+\subsection{Illustration}\label{illustration-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{attach}\NormalTok{(AD1a)}
+\NormalTok{>}\StringTok{ }\KeywordTok{plot}\NormalTok{(cylinders,mpg,}\DataTypeTok{xlab=}\StringTok{"Number of cylinders"}\NormalTok{,}
+\NormalTok{+}\StringTok{      }\DataTypeTok{ylab=}\StringTok{"Miles per gallon"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Stat435LabNotes1_notes_files/figure-latex/plot2-1} \end{center}
+
+\subsection{\texorpdfstring{The \texttt{pairs}
+function}{The pairs function}}\label{the-pairs-function}
+
+The \texttt{pairs} function creates a \emph{scatterplot matrix}, i.e., a
+scatterplot for every pair of variables for a given data set.
+
+It can also produce a scatterplot matrix for a subset of variables (by
+using the \texttt{\textasciitilde{}} operator).
+
+\subsection{Illustration}\label{illustration-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{attach}\NormalTok{(AD1a)}
+\NormalTok{>}\StringTok{ }\KeywordTok{pairs}\NormalTok{(~mpg+displacement+horsepower,AD1a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Stat435LabNotes1_notes_files/figure-latex/plot3-1} \end{center}
+
+\subsection{\texorpdfstring{The \texttt{identify}
+function}{The identify function}}\label{the-identify-function}
+
+\texttt{identify} reads the position of the graphics pointer when the
+(first) mouse button is pressed. It then searches the coordinates given
+in \texttt{x} and \texttt{y} for the point closest to the pointer.
+
+If this point is close enough to the pointer, its index (as the index of
+the row that contains the corresponding coordinate measurements for this
+point) will be returned as part of the value of the call.
+
+\subsection{Illustration}\label{illustration-3}
+
+\begin{verbatim}
+attach(AD1a)
+plot(horsepower,mpg)
+identify(horsepower,mpg)
+# click on a point on the plot
+# Hit Esc key once you have selected the point.
+[1] 389 
+# 389 is the index (i.e., row) number of the point 
+# the Instructor selected
+\end{verbatim}
+
+\subsection{\texorpdfstring{The \texttt{hist}
+function}{The hist function}}\label{the-hist-function}
+
+The \texttt{hist} function creates histogram for a variable (or for
+several variables).
+
+\subsection{Illustration}\label{illustration-4}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{attach}\NormalTok{(AD1a)}
+\NormalTok{>}\StringTok{ }\KeywordTok{hist}\NormalTok{(horsepower,}\DataTypeTok{breaks=}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Stat435LabNotes1_notes_files/figure-latex/unnamed-chunk-16-1} \end{center}
+
+\subsection{Illustration}\label{illustration-5}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{attach}\NormalTok{(AD1a)}
+\NormalTok{>}\StringTok{ }\KeywordTok{hist}\NormalTok{(horsepower,}\DataTypeTok{breaks=}\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Stat435LabNotes1_notes_files/figure-latex/unnamed-chunk-17-1} \end{center}
+
+\subsection{Remark}\label{remark}
+
+The course Stat 437 covers approximately 3 weeks of materials for data
+visualization.
+
+\subsection{License and session
+Information}\label{license-and-session-information}
+
+\href{http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html}{License}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{sessionInfo}\NormalTok{()}
+\NormalTok{R version }\FloatTok{3.5.0} \NormalTok{(}\DecValTok{2018-04-23}\NormalTok{)}
+\NormalTok{Platform:}\StringTok{ }\NormalTok{x86_64-w64-mingw32/}\KeywordTok{x64} \NormalTok{(}\DecValTok{64}\NormalTok{-bit)}
+\NormalTok{Running under:}\StringTok{ }\NormalTok{Windows }\DecValTok{7} \KeywordTok{x64} \NormalTok{(build }\DecValTok{7601}\NormalTok{) Service Pack }\DecValTok{1}
+
+\NormalTok{Matrix products:}\StringTok{ }\NormalTok{default}
+
+\NormalTok{locale:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] LC_COLLATE=English_United States}\FloatTok{.1252} 
+\NormalTok{[}\DecValTok{2}\NormalTok{] LC_CTYPE=English_United States}\FloatTok{.1252}   
+\NormalTok{[}\DecValTok{3}\NormalTok{] LC_MONETARY=English_United States}\FloatTok{.1252}
+\NormalTok{[}\DecValTok{4}\NormalTok{] LC_NUMERIC=C                          }
+\NormalTok{[}\DecValTok{5}\NormalTok{] LC_TIME=English_United States}\FloatTok{.1252}    
+
+\NormalTok{attached base packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] stats     graphics  grDevices utils     datasets  methods  }
+\NormalTok{[}\DecValTok{7}\NormalTok{] base     }
+
+\NormalTok{other attached packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] knitr_1}\FloatTok{.21}
+
+\NormalTok{loaded via a }\KeywordTok{namespace} \NormalTok{(and not attached):}
+\StringTok{ }\NormalTok{[}\DecValTok{1}\NormalTok{] compiler_3}\FloatTok{.5.0}   \NormalTok{magrittr_1}\FloatTok{.5}     \NormalTok{tools_3}\FloatTok{.5.0}     
+ \NormalTok{[}\DecValTok{4}\NormalTok{] htmltools_0}\FloatTok{.3.6}  \NormalTok{yaml_2}\FloatTok{.2.0}       \NormalTok{Rcpp_1}\FloatTok{.0.0}      
+ \NormalTok{[}\DecValTok{7}\NormalTok{] codetools_0}\FloatTok{.2}\DecValTok{-15} \NormalTok{stringi_1}\FloatTok{.2.4}    \NormalTok{rmarkdown_1}\FloatTok{.11}  
+\NormalTok{[}\DecValTok{10}\NormalTok{] stringr_1}\FloatTok{.3.1}    \NormalTok{xfun_0}\FloatTok{.4}         \NormalTok{digest_0}\FloatTok{.6.18}   
+\NormalTok{[}\DecValTok{13}\NormalTok{] evaluate_0}\FloatTok{.12}   
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

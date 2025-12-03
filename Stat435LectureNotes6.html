@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Xiongzhi Chen" />
+  <meta name="author" content="Washington State University" />
+  <title>Stat 435 Lecture Notes 6</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css">
+p { 
+  text-align: left; 
+  }
+.reveal pre code { 
+  color: #000000; 
+  background-color: rgb(240,240,240);
+  font-size: 1.15em;
+  border:none; 
+  }
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none;
+  height: 500px;
+  }
+}
+</style>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Stat 435 Lecture Notes 6</h1>
+    <h2 class="author">Xiongzhi Chen</h2>
+    <h2 class="author">Washington State University</h2>
+</section>
+
+<section><section id="section" class="titleslide slide level1"><h1><img src="howto.jpg"></img></h1></section><section id="topics-to-discuss" class="slide level2">
+<h1>Topics to discuss</h1>
+<ul>
+<li>Multinomial regression</li>
+<li>Poisson regression</li>
+</ul>
+</section></section>
+<section><section id="multinomial-regression" class="titleslide slide level1"><h1>Multinomial regression</h1></section><section id="observations-in-classes" class="slide level2">
+<h1>Observations in classes</h1>
+<p>Each observations <span class="math inline">\(y_i,i=1,\cdots,n\)</span> belongs to one and only one of <span class="math inline">\(K\)</span> classes:</p>
+<ul>
+<li>Class <span class="math inline">\(1\)</span> obs: <span class="math inline">\(\tilde{y}_{11}\)</span>,<span class="math inline">\(\tilde{y}_{12}\)</span>,<span class="math inline">\(\cdots\)</span>, <span class="math inline">\(\tilde{y}_{1,n_{1}}\)</span></li>
+<li>Class <span class="math inline">\(2\)</span> obs: <span class="math inline">\(\tilde{y}_{21}\)</span>,<span class="math inline">\(\tilde{y}_{22}\)</span>,<span class="math inline">\(\cdots\)</span>, <span class="math inline">\(\tilde{y}_{2,n_{2}}\)</span></li>
+<li>Class … obs</li>
+<li>Class <span class="math inline">\(K\)</span> obs: <span class="math inline">\(\tilde{y}_{K1}\)</span>,<span class="math inline">\(\tilde{y}_{K2}\)</span>,<span class="math inline">\(\cdots\)</span>, <span class="math inline">\(\tilde{y}_{K,n_{K}}\)</span></li>
+</ul>
+</section><section id="probability-mass-function" class="slide level2">
+<h1>Probability mass function</h1>
+<ul>
+<li>Model: <span class="math inline">\(P(y_i=k) = p_{ik}\)</span></li>
+<li>Equivalent formulation: set <span class="math inline">\(y_{ij}=1\)</span> if and only if <span class="math inline">\(y_{i}=j\)</span>. Then <em>probability mass function (pmf)</em></li>
+</ul>
+<p><span class="math display">\[P(y_i=k) = p_{i1}^{y_{i1}}\cdots p_{ik}^{y_{ik}}\cdots
+p_{iK}^{y_{iK}}=\prod_{j=1}^{K}p_{ij}^{y_{ij}}\]</span></p>
+<ul>
+<li><p>Example with <span class="math inline">\(K=3\)</span>; comparison with Bernoulli setting</p></li>
+<li><p>When <span class="math inline">\(\left\{ y_{i}\right\} _{i=1}^{n}\)</span> are independent, their joint likelihood is <span class="math display">\[
+L=\prod_{i=1}^{n}p_{i1}^{y_{i1}}\cdots p_{ik}^{y_{ik}}\cdots p_{iK}^{y_{iK}%
+}=\prod_{i=1}^{n}\prod_{j=1}^{K}p_{ij}^{y_{ij}}%
+\]</span></p></li>
+</ul>
+</section><section id="model" class="slide level2">
+<h1>Model</h1>
+<ul>
+<li><span class="math inline">\(Y \in \left\{ 1,2,...,K\right\}\)</span> such that <span class="math display">\[
+\sum_{k=1}^{K}\Pr\left(  Y=k\right)  =1\text{ and }\prod_{k=1}^{K}\Pr\left(
+Y=k\right)  &gt;0
+\]</span></li>
+<li>Model <span class="math inline">\(\Pr\left( Y=k\right)\)</span> by <span class="math inline">\(X=\left( X_{1},X_{2},...,X_{p}\right) ^{T}\)</span>
+<ul>
+<li>Set <span class="math inline">\(p_{k}\left( X\right) =\Pr(Y=k|X)\)</span> for <span class="math inline">\(k=1,\ldots,K\)</span></li>
+<li>For <span class="math inline">\(k=1,\ldots,K-1\)</span>, set
+<span class="math display">\[\begin{equation}
+\log\left(  \frac{p_{k}\left(  X\right)  }{p_{K}\left(  X\right)  }\right)
+=\beta_{k0}+\beta_{k}^{T}X, 
+\end{equation}\]</span>
+where <span class="math inline">\(\beta_{k}=\left( \beta_{k1},\beta_{k2},...,\beta_{kp}\right) ^{T}\)</span></li>
+</ul></li>
+</ul>
+</section><section id="equivalent-model" class="slide level2">
+<h1>Equivalent model</h1>
+<p>Model is equivalent to:</p>
+<p><span class="math display">\[
+p_{k}\left(  x\right) = \Pr(Y=k|X=x)=\frac{\beta_{k0}+\beta_{k}^{T}x}{1+\sum_{l=1}^{K-1}\exp(\beta_{l0}+\beta_{l}^{T}x)}
+\]</span> for <span class="math inline">\(k=1,\ldots,K-1\)</span> and <span class="math display">\[
+p_{K}\left(  x\right) =\Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}\exp(\beta_{l0}+\beta_{l}^{T}x)}
+\]</span></p>
+</section><section id="model-sample-version" class="slide level2">
+<h1>Model: sample version</h1>
+<ul>
+<li>The modeling strategy <span class="math display">\[
+\log\left(  \frac{p_{k}\left(  x_i\right)  }{p_{K}\left(  x_i\right)  }\right)
+=\beta_{k0}+\beta_{k}^{T}x_{i}
+\]</span> is equivalent to the formulation provided by <code>glmnet</code> as <span class="math display">\[
+P\left(  y_{i}=k|X=x_{i}\right)  =\frac{\exp\left(  \tilde{\beta}_{k0}
++\tilde{\beta}_{k}^{T}x_{i}\right)  }{\sum_{l=1}^{K}\exp\left(  \tilde{\beta
+}_{l0}+\tilde{\beta}_{l}^{T}x_{i}\right)  }%
+\]</span></li>
+</ul>
+</section><section id="check-on-model" class="slide level2">
+<h1>Check on model</h1>
+<ul>
+<li><code>glmnet</code> fits model: <span class="math display">\[
+P\left(  Y=k|X=x\right)  =\frac{\exp\left(  \beta_{k0}+\beta_{k}^{T}x\right)
+}{\sum_{i=1}^{K}\exp\left(  \beta_{k0}+\beta_{k}^{T}x\right)  }\text{ for
+}k=1,...,K
+\]</span></li>
+<li><p>To check the linearity assumption, i.e., <span class="math display">\[
+\log\frac{P\left(  Y=k|X=x\right)  }{P\left(  Y=K|X=x\right)  }=\exp\left(
+\beta_{k0}+\beta_{k}^{T}x\right)  \text{ for }k=1,...,K-1
+\]</span> we need the estimated coefficients for each class probability <span class="math inline">\(P\left(Y=k|X=x\right)\)</span></p></li>
+<li><p>In general, a goodness-of-fit test for the multinomial logistic regression model can be the Pearson’s chi-square test or the likelihood ratio test</p></li>
+</ul>
+</section><section id="check-on-model-1" class="slide level2">
+<h1>Check on model</h1>
+<p>Checking if the multinomial logistic regression assumption is adequate:</p>
+<ul>
+<li><p>Under suitable conditions, <span class="math inline">\(E\left( y_{i}-\hat{\mu}_{i}\right)\rightarrow0\)</span> as sample size <span class="math inline">\(n\rightarrow\infty\)</span> when no regularization that induces bias in <span class="math inline">\(\hat{\mu}_{i}\)</span> is used in model fitting, where <span class="math inline">\(\hat{\mu}_{i}\)</span> is the estimated mean for <span class="math inline">\(y_{i}\)</span></p></li>
+<li><p>When LASSO is used, biased is often induced to <span class="math inline">\(\hat{\mu}_{i}\)</span> as an estimate of <span class="math inline">\(E\left( y_{i}\right)\)</span>, and in this case we can only have <span class="math inline">\(E\left(y_{i}-\hat{\mu}_{i}\right)\approx 0\)</span> as <span class="math inline">\(n\rightarrow\infty\)</span></p></li>
+</ul>
+</section></section>
+<section><section id="poisson-regression" class="titleslide slide level1"><h1>Poisson regression</h1></section><section id="poisson-random-variable" class="slide level2">
+<h1>Poisson random variable</h1>
+<ul>
+<li><p>A Poisson random variable <span class="math inline">\(Y\)</span> is defined via its <em>pmf</em> as <span class="math display">\[
+\Pr\left(  Y=k\right)  =\frac{\mu^{k}}{k!}e^{-\mu}\text{ for }k\in\left\{
+0,1,2,\ldots\right\}
+\]</span> where <span class="math inline">\(\mu&gt;0\)</span> is fixed. So, <span class="math inline">\(E\left( Y\right) =V\left( Y\right)=\mu\)</span>.</p></li>
+<li>Given observations <span class="math inline">\(\left( y_{i},x_{i}\right), i=1,...,n\)</span>, set <span class="math display">\[p\left(  x_{i}\right)  =E\left(  y_{i}|x_{i}\right)  =\mu_{i}\]</span></li>
+<li><p><em>Poisson linear regression</em> model: <span class="math display">\[
+\log\left(  p\left(  x_{i}\right)  \right)  =\beta_{0}+\beta_{1}x_{i}
+\]</span></p></li>
+<li><p>Above model is equivalent to <span class="math display">\[
+\mu_{i}=p\left(  x_{i}\right)  =\exp\left(  \beta_{0}+\beta_{1}x_{i}\right)
+\]</span></p></li>
+</ul>
+</section><section id="model-assumptions" class="slide level2">
+<h1>Model assumptions</h1>
+<ul>
+<li><p>Each <span class="math inline">\(y_{i}\)</span> is a Poisson random variable with mean <span class="math inline">\(\mu_{i}\)</span></p></li>
+<li><p><span class="math inline">\(\log\left( p\left( x_{i}\right) \right)\)</span> is a linear function of <span class="math inline">\(x_{i}\)</span> for <span class="math inline">\(1\leq i\leq n\)</span></p></li>
+<li><p>The pairs <span class="math inline">\(\left\{ \left( x_{i},y_{i}\right) \right\}_{i=1}^{n}\)</span> are independent</p></li>
+<li><p>Joint likelihood function is <span class="math inline">\(L\left(\beta\right) =\prod\nolimits_{i=1}^{n}\frac{\mu_{i}^{y_{i}}}{y_{i}!}e^{-\mu_{i}}\)</span> and <span class="math display">\[
+\log L\left(  \beta\right)  =\sum_{i=1}^{n}\left[  -\exp\left(  \beta
+_{0}+\beta_{1}x_{i}\right)  \right]  + \\
+\sum_{i=1}^{n}\left[  y_{i}\left(
+\beta_{0}+\beta_{1}x_{i}\right)  -\log\left(  y_{i}!\right)  \right]
+\]</span> with coefficients <span class="math inline">\(\beta=\left( \beta_{0},\beta_{1}\right)\)</span></p></li>
+</ul>
+</section><section id="estimated-model" class="slide level2">
+<h1>Estimated model</h1>
+<ul>
+<li><p><em>Maximum likelihood estimate (MLE)</em> <span class="math inline">\(\hat{\beta}=\left( \hat{\beta}_{0} ,\hat{\beta}_{1}\right)\)</span> of <span class="math inline">\(\beta=\left(\beta_{0},\beta_{1}\right)\)</span> satisfies <span class="math inline">\(\hat{\beta}\in\operatorname*{argmin}_{\beta}L\left( \beta\right)\)</span></p></li>
+<li>Predictions on <span class="math inline">\(y_{i}\)</span> can be made as <span class="math display">\[
+\Pr\left(  y_{i}=k|x_{i}\right)  =\frac{\hat{\mu}_{i}^{k}}{k!}e^{-\hat{\mu
+}_{i}}\text{  with }\hat{\mu}_{i}=\exp\left(  \hat{\beta}_{0}+\hat{\beta}
+_{1}x_{i}\right)
+\]</span></li>
+<li><p>Namely, <span class="math inline">\(y_{i}\)</span> is predicted by <span class="math inline">\(\hat{y}_{i}\)</span> for which <span class="math display">\[
+\Pr\left(  \hat{y}_{i}=k|x_{i}\right)  =\frac{\hat{\mu}_{i}^{k}}{k!}e^{-\hat{\mu}_{i}}
+\]</span></p></li>
+</ul>
+</section><section id="model-diagnosis" class="slide level2">
+<h1>Model diagnosis</h1>
+<ul>
+<li><p><em>Reduced model</em> <span class="math inline">\(\mu_{i}=p\left( x_{i}\right) =\exp\left( \beta_{0}+\beta_{1}x_{i}\right)\)</span> versus <em>Full model</em> <span class="math inline">\(E\left( y_{i}\right) =\mu_{i}\)</span></p></li>
+<li><p>Model deviance is <!-- \begin{align*} --> <!-- D  &  =-2\times\left[  \ln L\left(  \text{Reduced model}\right)  -\ln L\left( --> <!-- \text{Full model}\right)  \right] \\ --> <!-- &  =-2\left[  \sum_{i=1}^{n}y_{i}\ln\frac{\hat{\mu}_{i}}{y_{i}}+\sum_{i=1}% --> <!-- ^{n}\left(  y_{i}-\hat{\mu}_{i}\right)  \right]  =\sum_{i=1}^{n}d_{i}^{2}% --> <!-- \end{align*} --> <span class="math display">\[
+D   =-2\times\left[  \ln L\left(  \text{Reduced model}\right)  -\ln L\left(
+\text{Full model}\right)  \right] \\
+ =-2\left[  \sum_{i=1}^{n}y_{i}\ln\frac{\hat{\mu}_{i}}{y_{i}}+\sum_{i=1}
+^{n}\left(  y_{i}-\hat{\mu}_{i}\right)  \right]  =\sum_{i=1}^{n}d_{i}^{2}
+\]</span></p></li>
+</ul>
+</section><section id="model-diagnosis-1" class="slide level2">
+<h1>Model diagnosis</h1>
+<ul>
+<li>Deviance residual <span class="math display">\[
+d_{i}=\operatorname{sgn}\left(  y_{i}-\hat{\mu}_{i}\right)  \sqrt{-2y_{i}
+\ln\frac{\hat{\mu}_{i}}{y_{i}}-\left(  y_{i}-\hat{\mu}_{i}\right)  }
+\]</span></li>
+<li>Pearson residual <span class="math display">\[
+r_{i}=\frac{y_{i}-\hat{\mu}_{i}}{\sqrt{\hat{\mu}_{i}}}
+\]</span> and Pearson chi-square goodness of fit statistic <span class="math display">\[
+\xi^{2}=\sum_{i=1}^{n}\frac{\left(  y_{i}-\hat{\mu}_{i}\right)  ^{2}}{\hat
+{\mu}_{i}}=\sum_{i=1}^{n}r_{i}^{2}
+\]</span></li>
+</ul>
+</section><section id="model-diagnosis-2" class="slide level2">
+<h1>Model diagnosis</h1>
+<ul>
+<li>Studentized Pearson residual <span class="math display">\[
+\tilde{r}_{i}=\frac{r_{i}}{\sqrt{1-h_{ii}}},
+\]</span> where
+<ul>
+<li><p><span class="math inline">\(h_{ii}\)</span> is the <span class="math inline">\(i\)</span>-th diagonal entry of <span class="math display">\[
+H=W^{1/2}X\left(  X^{\prime}WX\right)  ^{-1}X^{\prime}W^{1/2}
+\]</span></p></li>
+<li><p><span class="math inline">\(W\)</span> is the <span class="math inline">\(n\times n\)</span> diagonal matrix with entries <span class="math inline">\(\hat{\mu}_{i}\)</span></p></li>
+<li><p><span class="math inline">\(X\)</span> is the <span class="math inline">\(n\times p\)</span> design matrix</p></li>
+</ul></li>
+</ul>
+</section><section id="model-diagnosis-3" class="slide level2">
+<h1>Model diagnosis</h1>
+<ul>
+<li>Poisson model is correct <span class="math inline">\(\implies\)</span> <span class="math inline">\(E\left( y_{i}-\hat{\mu}_{i}\right) =0\)</span> asymptotically</li>
+<li><p>Check linearity assumption: plot <span class="math inline">\(\ln\hat{\mu}_{i}\)</span> against <span class="math inline">\(x_{i}\)</span></p></li>
+<li>Check Poisson model adequacy: plot <span class="math inline">\(r_{i}\)</span> against <span class="math inline">\(\hat{\mu}_{i}\)</span></li>
+<li><p>Check for influential observations: plot <em>delta chi-square statistic</em> <span class="math display">\[
+\Delta\xi_{\left(  i\right)  }^{2}=\xi^{2}-\xi_{\left(  i\right)  }^{2}
+\]</span> and <em>delta deviance statistic</em> <span class="math display">\[
+\Delta D_{\left(  i\right)  }=D-D_{\left(  i\right)  }
+\]</span> against <span class="math inline">\(i\)</span> (or against <span class="math inline">\(\hat{\mu}_{i}\)</span> or <span class="math inline">\(\hat{\eta}_{i}\)</span>)</p></li>
+</ul>
+</section><section id="example-data" class="slide level2">
+<h1>Example: data</h1>
+<p>Miller Lumber Company survey data:</p>
+<ul>
+<li><span class="math inline">\(X_1\)</span>: number of housing units</li>
+<li><span class="math inline">\(X_2\)</span>: average income, in dollars</li>
+<li><span class="math inline">\(X_3\)</span>: average housing unit age, in years</li>
+<li><span class="math inline">\(X_4\)</span>: distance to nearest competitor, in miles</li>
+<li><span class="math inline">\(X_5\)</span>: distance to store, in miles</li>
+<li><span class="math inline">\(Y\)</span>: number of customers who visited store from census tract</li>
+</ul>
+<p>(Credit: authors of book “Applied linear statistical models”)</p>
+</section><section id="example-partial-data" class="slide level2">
+<h1>Example: partial data</h1>
+<p><img src="tab14.14.png" width="85%" style="display: block; margin: auto;" /></p>
+</section><section id="example-fitted-model" class="slide level2">
+<h1>Example: fitted model</h1>
+<p><img src="tab14.15.png" width="85%" style="display: block; margin: auto;" /> - <span class="math inline">\(G^2 = - 2 \ln [L(R)/L(R)] \sim\)</span> chi-square distribution</p>
+</section><section id="example-diagnosis" class="slide level2">
+<h1>Example: diagnosis</h1>
+<p><img src="fig14_16.png" width="85%" style="display: block; margin: auto;" /> - deviance residual vs fitted value; table shows no serious issue</p>
+</section><section id="example-diagnosis-1" class="slide level2">
+<h1>Example: diagnosis</h1>
+<p><img src="fig14_20.png" width="85%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>a few large negative deviance residuals associated tracts with zero customers; hard to fit these values</li>
+</ul>
+</section><section id="license-and-session-information" class="slide level2">
+<h1>License and session Information</h1>
+<p><a href="http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html">License</a></p>
+<section style="font-size: 0.75em;">
+<pre class="r"><code>&gt; sessionInfo()
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19044)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] knitr_1.21
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0  magrittr_1.5    tools_3.5.0    
+ [4] htmltools_0.3.6 revealjs_0.9    yaml_2.2.0     
+ [7] Rcpp_1.0.12     stringi_1.2.4   rmarkdown_1.11 
+[10] stringr_1.3.1   xfun_0.4        digest_0.6.18  
+[13] evaluate_0.13  </code></pre>
+</section>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

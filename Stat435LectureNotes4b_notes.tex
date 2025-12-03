@@ -1,0 +1,709 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[left=1.1in, right=1.1in, top=1.1in, bottom=1.1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stat 435 Lecture Notes 4b},
+            pdfauthor={Xiongzhi Chen; Washington State University},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stat 435 Lecture Notes 4b}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Xiongzhi Chen \\ Washington State University}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx,float}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{}\label{section}
+
+\section{Ridge regression: basics}\label{ridge-regression-basics}
+
+\subsection{Overview}\label{overview}
+
+Ridge regression
+
+\begin{itemize}
+\tightlist
+\item
+  applies regardless of magnitues of sample size \(n\) and number of
+  predictors \(p\)
+\item
+  shrinks estimated coefficients compared to \emph{least squares
+  estimate (LSE)}
+\item
+  is able to produce LSE
+\item
+  presents a way to estimate coefficients when \(n < p+1\)
+\end{itemize}
+
+\emph{Ridge regression often produces a biased estimate with smaller
+variance than LSE, and it is a bias-variance trade-off technique.}
+
+\subsection{Settings}\label{settings}
+
+\begin{itemize}
+\item
+  Model:
+  \(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)
+\item
+  Observations: \((y_i,x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\),
+  where \(y_i\) is the \(i\)th observation for \(Y\) and \(x_{ij}\) that
+  for \(X_j\)
+\item
+  Estimate
+  \(\hat{\boldsymbol{\beta}}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\) of
+  \({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\), and
+  \(\hat{\beta}_0\) of \({\beta}_0\)
+\item
+  Fitted model:
+  \(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \ldots + \hat{\beta}_p x_{ip}\)
+\item
+  Residuals: \(e_i=y_i - \hat{y}_i\)
+\end{itemize}
+
+\subsection{Optimization}\label{optimization}
+
+\begin{itemize}
+\tightlist
+\item
+  The ridge estimate
+  \(\hat{\boldsymbol{\beta}}^R_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)
+  is the \({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\) that
+  minimizes \[
+  L_2(\beta_0,\boldsymbol{\beta},\lambda)= \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p \beta_i^2
+  \]
+\item
+  \(\sqrt{\sum_{i=1}^p \beta_i^2}\) is written as
+  \(\Vert\boldsymbol{\beta}\Vert_2\), i.e., the \(l_2\)-norm of
+  \(\boldsymbol{\beta}\)\\
+\item
+  \(\sum_{i=1}^n (y_i - \hat{y}_i)^2\) is just the RSS
+\item
+  \(\lambda \sum_{i=1}^p \beta_i^2\) is called a \emph{regularizer} or
+  \emph{penalty}
+\item
+  \(L_2(\beta_0,\boldsymbol{\beta},\lambda)\) is referred to as an
+  \emph{\(l_2\)-regularized RSS}
+\item
+  no penalty on \(\beta_0\)
+\end{itemize}
+
+\subsection{Intercept term}\label{intercept-term}
+
+\begin{itemize}
+\tightlist
+\item
+  Recall \(\mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\),
+  where \(x_{ij}\) is the \(i\)th observation for \(X_j\)
+\item
+  Let \(\mathbf{X}\) be the \(n \times p\) matrix whose \(i\)th row is
+  \(\mathbf{x}_i\)
+\item
+  \(\mathbf{X}\) is called a \emph{design matrix} (when factors as
+  predictors are properly coded)
+\end{itemize}
+
+If the variables \(X_i,i=1,\ldots,p\) are centered, i.e., the columns of
+\(\mathbf{X}\), to have mean zero before ridge regression is performed,
+then the estimated intercept will be
+\[\hat{\beta}_0=\bar{y}=\sum_{i=1}^n y_i/n\]
+
+\subsection{Solution path}\label{solution-path}
+
+Recall the objective function \[
+L_2(\beta_0,\boldsymbol{\beta},\lambda)= \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p \beta_i^2
+\] and its solution
+\(\hat{\boldsymbol{\beta}}^R_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)
+
+\begin{itemize}
+\tightlist
+\item
+  no penalty on estimated \(\beta_0\)
+\item
+  \(\lambda=0\) gives the LSE, and \(\lambda=\infty\) forces
+  \(\hat{\boldsymbol{\beta}}^R_{\lambda}=0\)
+\item
+  some \(0 < \lambda < \infty\) strikes a balance between LSE and
+  \(\hat{\boldsymbol{\beta}}^R_{\lambda}=0\)
+\end{itemize}
+
+\emph{Note:} The ridge solution has explicit reprentation.
+
+\subsection{Bias-variance trade-off}\label{bias-variance-trade-off}
+
+Ridge regression works best in situations where the least squares
+estimates have high variance:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\lambda=0\): ridge estimate is the LSE and is unbiased
+\item
+  \(\lambda >0\): bias increases and variance decreases usually
+\item
+  \(\lambda=\infty\): estimated coefficients are all zero
+\end{itemize}
+
+\subsection{Bias-variance trade-off}\label{bias-variance-trade-off-1}
+
+\(p=45\) predictors and \(n=50\) observations; all \(\beta_j \ne 0\)
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_5} \end{center}
+
+\subsection{Select tuning parameter}\label{select-tuning-parameter}
+
+The optimal value \(\lambda^{\ast}\) of the tuning parameter \(\lambda\)
+is ofen determined by \(k\)-fold cross-validation:
+
+\begin{itemize}
+\tightlist
+\item
+  Pick a sequence of \(s\) values for \(\lambda\) as
+  \(\lambda_1, \lambda_2, \ldots, \lambda_s\)
+\item
+  For each \(\lambda_l\), apply \(k\)-fold cross-validation to estimate
+  the test error of the corresponding model
+\item
+  Set \(\lambda^{\ast}\) as the value among the \(s\) values of
+  \(\lambda\) for which the estimated test error is the smallest
+\end{itemize}
+
+\section{Ridge regression: special
+case}\label{ridge-regression-special-case}
+
+\subsection{Special model}\label{special-model}
+
+\begin{itemize}
+\tightlist
+\item
+  Assume the design matrix \(\mathbf{X}=\mathbf{I}_p\), i.e., the
+  identity matrix
+\item
+  Consider a linear regression model without an intercept, i.e., forcing
+  \(\beta_0=0\)
+\end{itemize}
+
+If \(n=p\) and \(\mathbf{X}=\mathbf{I}_p\), then we have a very special
+model: \[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p\]
+
+\emph{Note:} \(\mathbf{X}=\mathbf{I}_p\) is referred to as an
+\emph{orthogonal design}
+
+\subsection{LSE and ridge estimate}\label{lse-and-ridge-estimate}
+
+For the special model \[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p,\]
+
+\begin{itemize}
+\tightlist
+\item
+  the LSE (i.e., least squares estimate) is \[\hat{\beta}_j=y_j\]
+\item
+  the \(l_2\)-regularized RSS becomes \[
+  L_2(\beta_{0},\boldsymbol{\beta},\lambda)= \sum_{j=1}^p (y_i - \beta_j)^2 + \lambda \sum_{i=1}^p \beta_i^2
+  \] and the ridge estimate is
+  \[\hat{\beta}_{j,\lambda}^R=y_j/(1+\lambda)\]
+\end{itemize}
+
+\subsection{Three estimators}\label{three-estimators}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_10} \end{center}
+
+\section{Ridge regression:
+application}\label{ridge-regression-application}
+
+\subsection{Scale equivariance}\label{scale-equivariance}
+
+\begin{itemize}
+\tightlist
+\item
+  Recall the design matrix \(\mathbf{X}\), whose \((i,j)\)th entry
+  \(x_{ij}\) is the \(i\)th observation of predictor \(X_j\)
+\item
+  Ridge regression estimates depend on the scale of predictors
+\item
+  Before applying ridge regression, it is best to standardize predictors
+  as follows \[
+  \tilde{x}_{ij}= \frac{x_{ij}}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_{ij}-\bar{x}_j)^2}}
+  \] where \(\bar{x}_j=n^{-1}\sum_{i=1}^n x_{ij}\)
+\item
+  The resulting ridge gression estimates are called \emph{standardized
+  estimates}
+\end{itemize}
+
+\subsection{Illustration}\label{illustration}
+
+Modelling the \texttt{Credit} data set
+
+\begin{itemize}
+\tightlist
+\item
+  Response \texttt{Balance}
+\item
+  Predictors \texttt{Income}, \texttt{Limit}, \texttt{Rating} and
+  \texttt{Student}
+\end{itemize}
+
+\subsection{Illustration}\label{illustration-1}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_4} \end{center}
+
+\subsection{Inference}\label{inference}
+
+\begin{itemize}
+\tightlist
+\item
+  The method of \emph{bias correction} can be used to conduct inference
+  on ridge estimates
+\item
+  Canonical assumptions involve Gaussian random errors
+\item
+  Asymptotic theory on testing coefficients is based on Gaussian
+  limiting distributions
+\item
+  P-values from testing can be obtained
+\end{itemize}
+
+\emph{Note:} ``High-Dimensional Inference: Confidence Intervals,
+p-Values and R-Software hdi'' by Ruben Dezeure, Peter Buhlmann, Lukas
+Meier and Nicolai Meinshausen
+
+\subsection{Inference}\label{inference-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Tesing \(H_{j0}:\beta_j =0\) versus \(H_{j1}:\beta_j \ne 0\)
+\item
+  P-values for testing if the coefficient of each of \texttt{Income},
+  \texttt{Limit}, \texttt{Rating} and \texttt{Student}:
+\end{itemize}
+
+\begin{verbatim}
+       Income         Limit        Rating    StudentYes 
+1.183510e-236  1.655880e-15  6.850389e-19 1.808087e-132 
+\end{verbatim}
+
+\section{LASSO: basics}\label{lasso-basics}
+
+\subsection{Settings}\label{settings-1}
+
+\begin{itemize}
+\item
+  Model:
+  \(Y=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \varepsilon\)
+\item
+  Observations: \((y_i,x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\),
+  where \(y_i\) is the \(i\)th observation for \(Y\) and \(x_{ij}\) that
+  for \(X_j\)
+\item
+  Estimate
+  \(\hat{\boldsymbol{\beta}}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\) of
+  \({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\), and
+  \(\hat{\beta}_0\) of \({\beta}_0\)
+\item
+  Fitted model:
+  \(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \ldots + \hat{\beta}_p x_{ip}\)
+\item
+  Residuals: \(e_i=y_i - \hat{y}_i\)
+\end{itemize}
+
+\subsection{Optimization}\label{optimization-1}
+
+\begin{itemize}
+\tightlist
+\item
+  The LASSO estimate
+  \(\hat{\boldsymbol{\beta}}^L_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)
+  is the \({\boldsymbol{\beta}}=({\beta}_1,\ldots,{\beta}_p)\) that
+  minimizes \[
+  L_1(\beta_0,\boldsymbol{\beta},\lambda)= \frac{1}{2}\sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p\vert \beta_i \vert
+  \]
+\item
+  \(\sum_{i=1}^p \vert\beta_i\vert\) is written as
+  \(\Vert\boldsymbol{\beta}\Vert_1\), i.e., the \(l_1\)-norm of
+  \(\boldsymbol{\beta}\)\\
+\item
+  \(\sum_{i=1}^n (y_i - \hat{y}_i)^2\) is just the RSS
+\item
+  \(\lambda \sum_{i=1}^p \vert\beta_i\vert\) is called a
+  \emph{regularizer} or \emph{penalty}
+\item
+  \(L_1(\beta_0,\boldsymbol{\beta},\lambda)\) is referred to as an
+  \emph{\(l_1\)-regularized RSS}
+\item
+  no penalty on \(\beta_0\)
+\end{itemize}
+
+\subsection{Solution path}\label{solution-path-1}
+
+Recall the objective function \[
+L_1(\beta_0,\boldsymbol{\beta},\lambda)= \frac{1}{2}\sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{i=1}^p \vert \beta_i \vert
+\] and its solution
+\(\hat{\boldsymbol{\beta}}^L_{\lambda}=(\hat{\beta}_1,\ldots,\hat{\beta}_p)\)
+
+\begin{itemize}
+\tightlist
+\item
+  no penalty on estimated \(\beta_0\)
+\item
+  \(\lambda=0\) gives the LSE, and \(\lambda=\infty\) forces
+  \(\hat{\boldsymbol{\beta}}^L_{\lambda}=0\)
+\item
+  some \(0 < \lambda < \infty\) strikes a balance between LSE and
+  \(\hat{\boldsymbol{\beta}}^L_{\lambda}=0\)
+\item
+  \emph{some \(\hat{\beta}_j\)'s,\(j=1,\ldots,p,\) can be exactly zero}
+\end{itemize}
+
+\subsection{Bias-variance trade-off}\label{bias-variance-trade-off-2}
+
+LASSO works best in situations where some coefficeints are extactly
+zero:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\lambda=0\): LASSO estimate is the LSE and is unbiased
+\item
+  \(\lambda >0\): bias increases and variance decreases usually, and
+  some estimated coefficients are zero
+\item
+  \(\lambda=\infty\): estimated coefficients are all zero
+\end{itemize}
+
+\subsection{Select tuning parameter}\label{select-tuning-parameter-1}
+
+The optimal value \(\lambda^{\ast}\) of the tuning parameter \(\lambda\)
+is ofen determined by \(k\)-fold cross-validation:
+
+\begin{itemize}
+\tightlist
+\item
+  Pick a sequence of \(s\) values for \(\lambda\) as
+  \(\lambda_1, \lambda_2, \ldots, \lambda_s\)
+\item
+  For each \(\lambda_l\), apply \(k\)-fold cross-validation to estimate
+  the test error of the corresponding model
+\item
+  Set \(\lambda^{\ast}\) as the value among \(\lambda\) as
+  \(\lambda_1, \lambda_2, \ldots, \lambda_s\) for which the estimated
+  test error is the smallest
+\end{itemize}
+
+\section{LASSO estimate: special
+case}\label{lasso-estimate-special-case}
+
+\subsection{Special model}\label{special-model-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Recall \(\mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip}),i=1,\ldots,n\),
+  where \(x_{ij}\) is the \(i\)th observation for \(X_j\)
+\item
+  Let \(\mathbf{X}\) be the \(n \times p\) matrix whose \(i\)th row is
+  \(\mathbf{x}_i\)
+\item
+  Consider a linear regression model without an intercept, i.e., forcing
+  \(\beta_0=0\)
+\end{itemize}
+
+If \(n=p\) and \(\mathbf{X}=\mathbf{I}_p\), then we have a very special
+model: \[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p\]
+
+\subsection{LSE and LASSO estimate}\label{lse-and-lasso-estimate}
+
+For the special model \[y_j = \beta_j+\varepsilon_j,j=1,\ldots,p,\]
+
+\begin{itemize}
+\tightlist
+\item
+  the LSE (i.e., least squares estimate) is \[\hat{\beta}_j=y_j\]
+\item
+  the \(l_1\)-regularized RSS becomes \[
+  L_1(\beta_{0},\boldsymbol{\beta},\lambda)= \sum_{j=1}^p (y_i - \beta_j)^2 + \lambda \sum_{i=1}^p \vert\beta_i\vert
+  \]
+\end{itemize}
+
+\subsection{LSE and LASSO estimate}\label{lse-and-lasso-estimate-1}
+
+The LASSO estimate, more complicated than LSE and ridge estimate, is:
+
+\[\hat{\beta}_{j,\lambda}^L = \left\{
+\begin{array}
+{lll}
+0 & \text{if} & \vert y_j \vert \le \lambda \\
+y_j -\lambda & \text{if} & y_j > \lambda \\
+y_j +\lambda & \text{if} & y_j < -\lambda
+\end{array}\right.
+\] \emph{Note:} compare the above with LSE \(\hat{\beta}_j=y_j\) and
+ridge estimate \[\hat{\beta}_{j,\lambda}^R=y_j/(1+\lambda)\]
+
+\subsection{Three estimators}\label{three-estimators-1}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_10} \end{center}
+
+\section{LASSO: application}\label{lasso-application}
+
+\subsection{Illustration}\label{illustration-2}
+
+Modelling the \texttt{Credit} data set
+
+\begin{itemize}
+\tightlist
+\item
+  Response \texttt{Balance}
+\item
+  Predictors \texttt{Income}, \texttt{Limit}, \texttt{Rating} and
+  \texttt{Student}
+\end{itemize}
+
+\subsection{Illustration}\label{illustration-3}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_6} \end{center}
+
+\subsection{Illustration}\label{illustration-4}
+
+\(p=45\) predictors and \(n=50\) observations; 43 \(\beta_j\)'s are 0
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_13} \end{center}
+
+\subsection{Inference}\label{inference-2}
+
+\begin{itemize}
+\tightlist
+\item
+  The method of \emph{bias correction} can be used to conduct inference
+  on LASSO estimates
+\item
+  Canonical assumptions involve Gaussian random errors
+\item
+  Asymptotic theory on testing coefficients is based on Gaussian
+  limiting distributions
+\item
+  P-values from testing can be obtained
+\end{itemize}
+
+\emph{Note:} ``High-Dimensional Inference: Confidence Intervals,
+p-Values and R-Software hdi'' by Ruben Dezeure, Peter Buhlmann, Lukas
+Meier and Nicolai Meinshausen
+
+\subsection{Inference}\label{inference-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Tesing \(H_{j0}:\beta_j =0\) versus \(H_{j1}:\beta_j \ne 0\)
+\item
+  P-values for testing if the coefficient of each of \texttt{Income},
+  \texttt{Limit}, \texttt{Rating} and \texttt{Student}:
+\end{itemize}
+
+\begin{verbatim}
+       Income         Limit        Rating    StudentYes 
+2.160475e-255 1.039480e-101 1.923041e-133 1.896622e-128 
+\end{verbatim}
+
+\section{Ridge and LASSO estimates}\label{ridge-and-lasso-estimates}
+
+\subsection{Three optimizations}\label{three-optimizations}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_7} \end{center}
+
+\subsection{Three estimators}\label{three-estimators-2}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_10} \end{center}
+
+\subsection{Ridge and LASSO
+estimates}\label{ridge-and-lasso-estimates-1}
+
+\(p=45\) predictors and \(n=50\) observations; all \(\beta_j \ne 0\)
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_8} \end{center}
+
+\subsection{Ridge and LASSO
+estimates}\label{ridge-and-lasso-estimates-2}
+
+\(p=45\) predictors and \(n=50\) observations; 43 \(\beta_j\)'s are 0
+
+\begin{center}\includegraphics[width=0.85\linewidth]{fig6_9} \end{center}
+
+\subsection{Ridge and LASSO
+regressions}\label{ridge-and-lasso-regressions}
+
+\begin{itemize}
+\tightlist
+\item
+  Ridge regression performs better when the response is a function of
+  many predictors, all with coefficients of roughly equal size
+\item
+  LASSO performs better when a relatively small number of predictors
+  have substantial coefficients and the remaining predictors have very
+  small or zero coefficients
+\item
+  Both ridge and LASSO regression yield a reduction in variance at the
+  expense of a small increase in biases, when the LSE have excessively
+  high variance
+\item
+  LASSO performs variable selection while ridge regression does not
+\end{itemize}
+
+\subsection{License and session
+Information}\label{license-and-session-information}
+
+\href{http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html}{License}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{sessionInfo}\NormalTok{()}
+\NormalTok{R version }\FloatTok{3.5.0} \NormalTok{(}\DecValTok{2018-04-23}\NormalTok{)}
+\NormalTok{Platform:}\StringTok{ }\NormalTok{x86_64-w64-mingw32/}\KeywordTok{x64} \NormalTok{(}\DecValTok{64}\NormalTok{-bit)}
+\NormalTok{Running under:}\StringTok{ }\NormalTok{Windows }\DecValTok{10} \KeywordTok{x64} \NormalTok{(build }\DecValTok{19045}\NormalTok{)}
+
+\NormalTok{Matrix products:}\StringTok{ }\NormalTok{default}
+
+\NormalTok{locale:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] LC_COLLATE=English_United States}\FloatTok{.1252} 
+\NormalTok{[}\DecValTok{2}\NormalTok{] LC_CTYPE=English_United States}\FloatTok{.1252}   
+\NormalTok{[}\DecValTok{3}\NormalTok{] LC_MONETARY=English_United States}\FloatTok{.1252}
+\NormalTok{[}\DecValTok{4}\NormalTok{] LC_NUMERIC=C                          }
+\NormalTok{[}\DecValTok{5}\NormalTok{] LC_TIME=English_United States}\FloatTok{.1252}    
+
+\NormalTok{attached base packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] stats     graphics  grDevices utils     datasets  methods  }
+\NormalTok{[}\DecValTok{7}\NormalTok{] base     }
+
+\NormalTok{other attached packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] knitr_1}\FloatTok{.21}
+
+\NormalTok{loaded via a }\KeywordTok{namespace} \NormalTok{(and not attached):}
+\StringTok{ }\NormalTok{[}\DecValTok{1}\NormalTok{] compiler_3}\FloatTok{.5.0}  \NormalTok{magrittr_1}\FloatTok{.5}    \NormalTok{tools_3}\FloatTok{.5.0}    
+ \NormalTok{[}\DecValTok{4}\NormalTok{] htmltools_0}\FloatTok{.3.6} \NormalTok{yaml_2}\FloatTok{.2.0}      \NormalTok{Rcpp_1}\FloatTok{.0.3}     
+ \NormalTok{[}\DecValTok{7}\NormalTok{] stringi_1}\FloatTok{.2.4}   \NormalTok{rmarkdown_1}\FloatTok{.11}  \NormalTok{stringr_1}\FloatTok{.3.1}  
+\NormalTok{[}\DecValTok{10}\NormalTok{] xfun_0}\FloatTok{.4}        \NormalTok{digest_0}\FloatTok{.6.18}   \NormalTok{evaluate_0}\FloatTok{.12}  
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

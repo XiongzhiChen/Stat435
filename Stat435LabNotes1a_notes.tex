@@ -1,0 +1,383 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[left=1.1in, right=1.1in, top=1.1in, bottom=1.1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stat 435 Lab Notes 1a},
+            pdfauthor={Xiongzhi Chen; Washington State University},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stat 435 Lab Notes 1a}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Xiongzhi Chen \\ Washington State University}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx,float}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{}\label{section}
+
+\section{Samples and summary
+statistics}\label{samples-and-summary-statistics}
+
+\subsection{Samples from Gaussian
+r.v.'s}\label{samples-from-gaussian-r.v.s}
+
+Generate a sample from a Gaussian \emph{random variable (r.v.)}. Basic
+syntax:
+
+\begin{verbatim}
+rnorm(n, mean = 0, sd = 1)
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{n}: sample size
+\item
+  \texttt{mean} and \texttt{sd}: vector of means and vector of standard
+  deviations
+\end{itemize}
+
+\emph{Note:} \texttt{mean} and \texttt{sd} can be specified by user.
+
+\subsection{Samples from Gaussian
+r.v.'s}\label{samples-from-gaussian-r.v.s-1}
+
+Generate a sample of size 10 from the standard Gaussian random variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\FloatTok{1.0232784} \NormalTok{-}\FloatTok{0.2619924} \NormalTok{-}\FloatTok{0.9133355}  \FloatTok{0.2224917}
+\NormalTok{>}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{]  }\FloatTok{1.0373423}  \FloatTok{1.0353384} \NormalTok{-}\FloatTok{2.0348301} \NormalTok{-}\FloatTok{0.6773427}
+\NormalTok{>}\StringTok{ }\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\FloatTok{0.56047565} \NormalTok{-}\FloatTok{0.23017749}  \FloatTok{1.55870831}  \FloatTok{0.07050839}
+\NormalTok{>}\StringTok{ }\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\FloatTok{0.56047565} \NormalTok{-}\FloatTok{0.23017749}  \FloatTok{1.55870831}  \FloatTok{0.07050839}
+\NormalTok{>}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{]  }\FloatTok{0.1292877}  \FloatTok{1.7150650}  \FloatTok{0.4609162} \NormalTok{-}\FloatTok{1.2650612}
+\end{Highlighting}
+\end{Shaded}
+
+Note the use of \texttt{set.seed}.
+
+\subsection{Samples from Gaussian
+r.v.'s}\label{samples-from-gaussian-r.v.s-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{1000}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{hist}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Stat435LabNotes1a_notes_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+\subsection{Summary statistics}\label{summary-statistics}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{^}\DecValTok{3}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\CommentTok{# sample mean}
+\ErrorTok{>}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\FloatTok{0.01164814}
+\NormalTok{>}\StringTok{ }\CommentTok{# sample standard deviation}
+\ErrorTok{>}\StringTok{ }\CommentTok{# denominator (n-1) used for sd and var}
+\ErrorTok{>}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{1.034916}
+\NormalTok{>}\StringTok{ }\CommentTok{# sample variance}
+\ErrorTok{>}\StringTok{ }\KeywordTok{var}\NormalTok{(x)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{1.071051}
+\NormalTok{>}\StringTok{ }\CommentTok{# increase sample size}
+\ErrorTok{>}\StringTok{ }\NormalTok{y =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{^}\DecValTok{5}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{mean}\NormalTok{(y)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\FloatTok{0.001946423}
+\NormalTok{>}\StringTok{ }\KeywordTok{sd}\NormalTok{(y)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{1.003034}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{What do sample mean and sample variance converge to as sample size
+increases indefinitely?}
+
+\subsection{Summary statistics}\label{summary-statistics-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{u =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{^}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{w =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{^}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\CommentTok{# sample covariance; default "pearson"}
+\ErrorTok{>}\StringTok{ }\KeywordTok{cov}\NormalTok{(u,w)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\FloatTok{0.0008554794}
+\NormalTok{>}\StringTok{ }\CommentTok{# sample correlation; default "pearson"}
+\ErrorTok{>}\StringTok{ }\KeywordTok{cor}\NormalTok{(u,w)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] -}\FloatTok{0.0009943199}
+\NormalTok{>}\StringTok{ }\CommentTok{# increase sample size}
+\ErrorTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{^}\DecValTok{4}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{z =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{^}\DecValTok{4}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\KeywordTok{cov}\NormalTok{(x,z, }\DataTypeTok{method =} \StringTok{"pearson"}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{0.006632814}
+\NormalTok{>}\StringTok{ }\KeywordTok{cor}\NormalTok{(x,z)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{0.006609744}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Why is the absolute value of the sample covariance close to that
+of the sample correlation in the above example?}
+
+\subsection{Student t test}\label{student-t-test}
+
+Test if the mean \(\mu\) of a Gaussian random variable is \(0\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{n=}\DecValTok{20}
+\NormalTok{>}\StringTok{ }\NormalTok{x =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n)}
+\NormalTok{>}\StringTok{ }\NormalTok{sampleMean =}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{>}\StringTok{ }\NormalTok{sampleStd =}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\NormalTok{>}\StringTok{ }\NormalTok{tTestValue =}\StringTok{ }\NormalTok{sampleMean/(sampleStd/}\KeywordTok{sqrt}\NormalTok{(n)) }
+\NormalTok{>}\StringTok{ }\NormalTok{tTestValue}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{0.9329813}
+\NormalTok{>}\StringTok{ }\CommentTok{# use p-value for decision}
+\ErrorTok{>}\StringTok{ }\NormalTok{TwoSidedPvalue =}\StringTok{ }\DecValTok{2}\NormalTok{*}\KeywordTok{pt}\NormalTok{(-}\KeywordTok{abs}\NormalTok{(tTestValue),}\DataTypeTok{df=}\DecValTok{19}\NormalTok{,}\DataTypeTok{ncp=}\DecValTok{0}\NormalTok{,}\DataTypeTok{lower.tail=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{TwoSidedPvalue}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{0.3625352}
+\NormalTok{>}\StringTok{ }\CommentTok{# Type I error level}
+\ErrorTok{>}\StringTok{ }\NormalTok{alpha =}\StringTok{ }\FloatTok{0.05}
+\NormalTok{>}\StringTok{ }\CommentTok{# use critical value for decision}
+\ErrorTok{>}\StringTok{ }\NormalTok{criticalValue =}\StringTok{ }\KeywordTok{qt}\NormalTok{(alpha/}\DecValTok{2}\NormalTok{,}\DataTypeTok{df=}\DecValTok{19}\NormalTok{,}\DataTypeTok{ncp=}\DecValTok{0}\NormalTok{,}\DataTypeTok{lower.tail=}\OtherTok{FALSE}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{criticalValue}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{2.093024}
+\NormalTok{>}\StringTok{ }\KeywordTok{abs}\NormalTok{(tTestValue) >}\StringTok{ }\NormalTok{criticalValue}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\OtherTok{FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Student t test}\label{student-t-test-1}
+
+Student t test (mean=0, df=19), decision rule at Type I error level
+\(\alpha=0.05\), and two-side p-value:
+
+\begin{center}\includegraphics{Stat435LabNotes1a_notes_files/figure-latex/shade2e-1} \end{center}
+
+\subsection{The auto data set}\label{the-auto-data-set}
+
+The data set \texttt{Auto.data} contains \texttt{mpg} (miles per gallon)
+for cars of different numbers of \texttt{cylinders}, engine
+\texttt{displacement}, \texttt{horsepower}, manufactures
+(\texttt{name}), etc.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\NormalTok{AD1 =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"Auto.data"}\NormalTok{,}\DataTypeTok{header =} \NormalTok{T,}\DataTypeTok{na.strings =} \StringTok{"?"}\NormalTok{)}
+\NormalTok{>}\StringTok{ }\NormalTok{AD1a =}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(AD1)}
+\NormalTok{>}\StringTok{ }\KeywordTok{head}\NormalTok{(AD1a[,}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{])}
+  \NormalTok{mpg cylinders displacement horsepower weight}
+\DecValTok{1}  \DecValTok{18}         \DecValTok{8}          \DecValTok{307}        \DecValTok{130}   \DecValTok{3504}
+\DecValTok{2}  \DecValTok{15}         \DecValTok{8}          \DecValTok{350}        \DecValTok{165}   \DecValTok{3693}
+\DecValTok{3}  \DecValTok{18}         \DecValTok{8}          \DecValTok{318}        \DecValTok{150}   \DecValTok{3436}
+\DecValTok{4}  \DecValTok{16}         \DecValTok{8}          \DecValTok{304}        \DecValTok{150}   \DecValTok{3433}
+\DecValTok{5}  \DecValTok{17}         \DecValTok{8}          \DecValTok{302}        \DecValTok{140}   \DecValTok{3449}
+\DecValTok{6}  \DecValTok{15}         \DecValTok{8}          \DecValTok{429}        \DecValTok{198}   \DecValTok{4341}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{The auto data set}\label{the-auto-data-set-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{summary}\NormalTok{(AD1a)}
+      \NormalTok{mpg          cylinders      displacement  }
+ \NormalTok{Min.   :}\StringTok{ }\FloatTok{9.00}   \NormalTok{Min.   :}\FloatTok{3.000}   \NormalTok{Min.   :}\StringTok{ }\FloatTok{68.0}  
+ \NormalTok{1st Qu.:}\FloatTok{17.00}   \NormalTok{1st Qu.:}\FloatTok{4.000}   \NormalTok{1st Qu.:}\FloatTok{105.0}  
+ \NormalTok{Median :}\FloatTok{22.75}   \NormalTok{Median :}\FloatTok{4.000}   \NormalTok{Median :}\FloatTok{151.0}  
+ \NormalTok{Mean   :}\FloatTok{23.45}   \NormalTok{Mean   :}\FloatTok{5.472}   \NormalTok{Mean   :}\FloatTok{194.4}  
+ \NormalTok{3rd Qu.:}\FloatTok{29.00}   \NormalTok{3rd Qu.:}\FloatTok{8.000}   \NormalTok{3rd Qu.:}\FloatTok{275.8}  
+ \NormalTok{Max.   :}\FloatTok{46.60}   \NormalTok{Max.   :}\FloatTok{8.000}   \NormalTok{Max.   :}\FloatTok{455.0}  
+                                                
+   \NormalTok{horsepower        weight      acceleration  }
+ \NormalTok{Min.   :}\StringTok{ }\FloatTok{46.0}   \NormalTok{Min.   :}\DecValTok{1613}   \NormalTok{Min.   :}\StringTok{ }\FloatTok{8.00}  
+ \NormalTok{1st Qu.:}\StringTok{ }\FloatTok{75.0}   \NormalTok{1st Qu.:}\DecValTok{2225}   \NormalTok{1st Qu.:}\FloatTok{13.78}  
+ \NormalTok{Median :}\StringTok{ }\FloatTok{93.5}   \NormalTok{Median :}\DecValTok{2804}   \NormalTok{Median :}\FloatTok{15.50}  
+ \NormalTok{Mean   :}\FloatTok{104.5}   \NormalTok{Mean   :}\DecValTok{2978}   \NormalTok{Mean   :}\FloatTok{15.54}  
+ \NormalTok{3rd Qu.:}\FloatTok{126.0}   \NormalTok{3rd Qu.:}\DecValTok{3615}   \NormalTok{3rd Qu.:}\FloatTok{17.02}  
+ \NormalTok{Max.   :}\FloatTok{230.0}   \NormalTok{Max.   :}\DecValTok{5140}   \NormalTok{Max.   :}\FloatTok{24.80}  
+                                               
+      \NormalTok{year           origin                      name    }
+ \NormalTok{Min.   :}\FloatTok{70.00}   \NormalTok{Min.   :}\FloatTok{1.000}   \NormalTok{amc matador       :}\StringTok{  }\DecValTok{5}  
+ \NormalTok{1st Qu.:}\FloatTok{73.00}   \NormalTok{1st Qu.:}\FloatTok{1.000}   \NormalTok{ford pinto        :}\StringTok{  }\DecValTok{5}  
+ \NormalTok{Median :}\FloatTok{76.00}   \NormalTok{Median :}\FloatTok{1.000}   \NormalTok{toyota corolla    :}\StringTok{  }\DecValTok{5}  
+ \NormalTok{Mean   :}\FloatTok{75.98}   \NormalTok{Mean   :}\FloatTok{1.577}   \NormalTok{amc gremlin       :}\StringTok{  }\DecValTok{4}  
+ \NormalTok{3rd Qu.:}\FloatTok{79.00}   \NormalTok{3rd Qu.:}\FloatTok{2.000}   \NormalTok{amc hornet        :}\StringTok{  }\DecValTok{4}  
+ \NormalTok{Max.   :}\FloatTok{82.00}   \NormalTok{Max.   :}\FloatTok{3.000}   \NormalTok{chevrolet chevette:}\StringTok{  }\DecValTok{4}  
+                                 \NormalTok{(Other)           :}\DecValTok{365}  
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{License and session
+Information}\label{license-and-session-information}
+
+\href{http://math.wsu.edu/faculty/xchen/stat412/LICENSE.html}{License}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\StringTok{ }\KeywordTok{sessionInfo}\NormalTok{()}
+\NormalTok{R version }\FloatTok{3.5.0} \NormalTok{(}\DecValTok{2018-04-23}\NormalTok{)}
+\NormalTok{Platform:}\StringTok{ }\NormalTok{x86_64-w64-mingw32/}\KeywordTok{x64} \NormalTok{(}\DecValTok{64}\NormalTok{-bit)}
+\NormalTok{Running under:}\StringTok{ }\NormalTok{Windows }\DecValTok{7} \KeywordTok{x64} \NormalTok{(build }\DecValTok{7601}\NormalTok{) Service Pack }\DecValTok{1}
+
+\NormalTok{Matrix products:}\StringTok{ }\NormalTok{default}
+
+\NormalTok{locale:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] LC_COLLATE=English_United States}\FloatTok{.1252} 
+\NormalTok{[}\DecValTok{2}\NormalTok{] LC_CTYPE=English_United States}\FloatTok{.1252}   
+\NormalTok{[}\DecValTok{3}\NormalTok{] LC_MONETARY=English_United States}\FloatTok{.1252}
+\NormalTok{[}\DecValTok{4}\NormalTok{] LC_NUMERIC=C                          }
+\NormalTok{[}\DecValTok{5}\NormalTok{] LC_TIME=English_United States}\FloatTok{.1252}    
+
+\NormalTok{attached base packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] stats     graphics  grDevices utils     datasets  methods  }
+\NormalTok{[}\DecValTok{7}\NormalTok{] base     }
+
+\NormalTok{other attached packages:}
+\NormalTok{[}\DecValTok{1}\NormalTok{] knitr_1}\FloatTok{.21}
+
+\NormalTok{loaded via a }\KeywordTok{namespace} \NormalTok{(and not attached):}
+\StringTok{ }\NormalTok{[}\DecValTok{1}\NormalTok{] compiler_3}\FloatTok{.5.0}   \NormalTok{magrittr_1}\FloatTok{.5}     \NormalTok{tools_3}\FloatTok{.5.0}     
+ \NormalTok{[}\DecValTok{4}\NormalTok{] htmltools_0}\FloatTok{.3.6}  \NormalTok{yaml_2}\FloatTok{.2.0}       \NormalTok{Rcpp_1}\FloatTok{.0.0}      
+ \NormalTok{[}\DecValTok{7}\NormalTok{] codetools_0}\FloatTok{.2}\DecValTok{-15} \NormalTok{stringi_1}\FloatTok{.2.4}    \NormalTok{rmarkdown_1}\FloatTok{.11}  
+\NormalTok{[}\DecValTok{10}\NormalTok{] stringr_1}\FloatTok{.3.1}    \NormalTok{xfun_0}\FloatTok{.4}         \NormalTok{digest_0}\FloatTok{.6.18}   
+\NormalTok{[}\DecValTok{13}\NormalTok{] evaluate_0}\FloatTok{.12}   
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
